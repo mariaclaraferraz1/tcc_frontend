@@ -26,7 +26,5 @@ cadastroForm.addEventListener("submit", function(event) {
 
     console.log("Nome:", nome);
     console.log("E-mail:", email);
-
-    // Depois podemos colocar aqui o salvamento
-    // dos dados em um banco de dados.
+    
 });

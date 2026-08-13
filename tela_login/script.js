@@ -11,9 +11,7 @@ loginForm.addEventListener("submit", function(event) {
         mensagem.textContent = "Login realizado com sucesso!";
         mensagem.style.color = "green";
 
-        // Aqui você pode redirecionar para outra página
-        // window.location.href = "home.html";
-
+        
     } else {
         mensagem.textContent = "E-mail ou senha incorretos!";
         mensagem.style.color = "red";
