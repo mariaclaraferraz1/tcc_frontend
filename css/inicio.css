@@ -1,0 +1,460 @@
+/* =========================
+   DASHBOARD
+========================= */
+
+main {
+    padding: 30px;
+    margin-left: 260px;
+}
+
+
+/* BOAS-VINDAS */
+
+.boas-vindas {
+    margin-bottom: 30px;
+}
+
+.boas-vindas span {
+    color: #6b7d55;
+    font-size: 15px;
+}
+
+.boas-vindas h1 {
+    margin: 8px 0;
+    color: #30452c;
+    font-size: 30px;
+}
+
+.boas-vindas p {
+    color: #777;
+}
+
+
+/* CARDS */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+.icone {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: #e8f0df;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #557342;
+    font-size: 21px;
+}
+
+.card p {
+    margin: 0 0 5px;
+    color: #777;
+}
+
+.card strong {
+    display: block;
+    color: #30452c;
+    font-size: 21px;
+}
+
+.card small {
+    color: #71805f;
+}
+
+
+/* SEÇÕES */
+
+.secao {
+    margin-top: 35px;
+}
+
+.titulo-secao {
+    color: #30452c;
+    margin-bottom: 18px;
+}
+
+
+/* GRÁFICOS */
+
+.graficos {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.grafico-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+.grafico-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.grafico-topo h3 {
+    margin: 0;
+    color: #30452c;
+}
+
+.grafico-topo p {
+    margin-top: 5px;
+    color: #888;
+    font-size: 13px;
+}
+
+.grafico-topo i {
+    color: #66834d;
+    font-size: 22px;
+}
+
+
+/* GRÁFICO DE BARRAS */
+
+.grafico {
+    height: 220px;
+    margin-top: 25px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+
+    border-bottom: 1px solid #ddd;
+}
+
+.barra {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+}
+
+.barra div {
+    width: 35px;
+    background: #71945a;
+    border-radius: 7px 7px 0 0;
+    transition: 0.3s;
+}
+
+.barra div:hover {
+    transform: translateY(-5px);
+}
+
+.barra span {
+    font-size: 12px;
+    color: #777;
+}
+
+
+/* CULTURAS */
+
+.culturas {
+    margin-top: 20px;
+}
+
+.cultura {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 18px;
+
+    color: #555;
+    font-size: 14px;
+}
+
+.cultura strong {
+    color: #30452c;
+}
+
+.barra-progresso {
+    width: 100%;
+    height: 8px;
+    background: #edf1e9;
+    border-radius: 10px;
+    margin-top: 7px;
+}
+
+.barra-progresso div {
+    height: 100%;
+    background: #71945a;
+    border-radius: 10px;
+}
+
+
+/* FINANCEIRO */
+
+.financeiro {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.financeiro-item {
+    background: #fff;
+    padding: 24px;
+    border-radius: 16px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+.financeiro-item span {
+    color: #777;
+}
+
+.financeiro-item strong {
+    color: #30452c;
+    font-size: 22px;
+}
+
+.financeiro-item.lucro {
+    border-left: 5px solid #71945a;
+}
+
+
+/* ATIVIDADES */
+
+.atividades {
+    background: #fff;
+    border-radius: 16px;
+    padding: 5px 20px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+.atividade {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 18px 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.atividade:last-child {
+    border-bottom: none;
+}
+
+.atividade-icone {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+    background: #e8f0df;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #557342;
+}
+
+.atividade div:nth-child(2) {
+    flex: 1;
+}
+
+.atividade strong {
+    color: #30452c;
+}
+
+.atividade p {
+    margin: 5px 0 0;
+    color: #888;
+    font-size: 13px;
+}
+
+.atividade > span {
+    color: #999;
+    font-size: 12px;
+}
+
+
+/* ACESSO RÁPIDO */
+
+.atalhos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.atalhos a {
+    background: #fff;
+    padding: 25px;
+
+    border-radius: 16px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    text-decoration: none;
+    color: #30452c;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+
+    transition: 0.3s;
+}
+
+.atalhos a:hover {
+    transform: translateY(-4px);
+}
+
+.atalhos i {
+    font-size: 25px;
+    color: #71945a;
+}
+
+
+/* =========================
+   MENU LATERAL
+========================= */
+
+.menu-lateral {
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    width: 250px;
+    height: 100vh;
+
+    background: #30452c;
+
+    padding: 25px 15px;
+
+    z-index: 1000;
+
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.08);
+}
+
+
+/* LOGO */
+
+.menu-topo {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 5px 10px 30px;
+}
+
+.menu-topo img {
+    width: 45px;
+    height: 45px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+}
+
+.menu-topo span {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+/* LISTA */
+
+.menu-lateral ul {
+    list-style: none;
+
+    padding: 0;
+    margin: 0;
+}
+
+
+/* LINKS */
+
+.menu-lateral li {
+    margin-bottom: 8px;
+}
+
+.menu-lateral a {
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 13px 15px;
+
+    border-radius: 10px;
+
+    color: #dce6d7;
+
+    text-decoration: none;
+
+    transition: 0.3s;
+}
+
+
+/* ÍCONES */
+
+.menu-lateral a i {
+    width: 22px;
+
+    font-size: 17px;
+
+    text-align: center;
+}
+
+
+/* HOVER */
+
+.menu-lateral a:hover {
+    background: #49643f;
+
+    color: white;
+
+    transform: translateX(3px);
+}
+
+
+/* PÁGINA ATUAL */
+
+.menu-lateral a.ativo {
+    background: #71945a;
+
+    color: white;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   CONTEÚDO
+========================= */
+
+main {
+    margin-left: 250px;
+
+    min-height: 100vh;
+
+    padding: 35px;
+
+    background: #f5f7f2;
+}
