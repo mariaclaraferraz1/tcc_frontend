@@ -7,16 +7,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rural Tech</title>
-    <link rel="stylesheet" href="../css/style.css"">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/inicio.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 </head>
 
 <body>
 
+    <nav class="menu-lateral">
+
+        <div class="menu-topo">
+            <img src="../img/logotcc.png" alt="Logo Rural Tech">
+            <span>Rural Tech</span>
+        </div>
+    
+        <ul>
+    
+            <li>
+                <a href="inicio.html">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Início</span>
+                </a>
+            </li>
+    
+            <li>
+                <a href="cadastro_produto.html" class="ativo">
+                    <i class="fa-solid fa-box"></i>
+                    <span>Produtos</span>
+                </a>
+            </li>
+    
+            <li>
+                <a href="producao.html">
+                    <i class="fa-solid fa-seedling"></i>
+                    <span>Produção</span>
+                </a>
+            </li>
+    
+            <li>
+                <a href="comercial.html">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>Comercial</span>
+                </a>
+            </li>
+    
+            <li>
+                <a href="relatorios.html">
+                    <i class="fa-solid fa-chart-column"></i>
+                    <span>Relatórios</span>
+                </a>
+            </li>
+    
+            <li>
+                <a href="consulta.html">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>Consulta</span>
+                </a>
+            </li>
+    
+            <li>
+                <a href="configuracoes.html">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Configurações</span>
+                </a>
+            </li>
+    
+        </ul>
+    
+    </nav>
+    
+    <div class="fundo-menu"></div>
+
     <header>
 
-        <button class="menu-btn">
+        <button class="menu-btn" id="menuBtn">
             <i class="fa-solid fa-bars"></i>
         </button>
 
@@ -48,7 +113,7 @@
         </form>
 
     </main>
-
+    <script src="../menu_lateral.js"></script>
 </body>
 
 </html>
