@@ -1,89 +1,232 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
+/* ==============================
+   CONFIGURAÇÕES GERAIS
+============================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-img{
-    width: 50px;
-    height: auto;
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #F8F7F3;
+    color: #2E2E2E;
 }
 
-body{
-    background:#F8F7F3;
-    color:#2E2E2E;
+
+/* ==============================
+   MENU LATERAL
+============================== */
+
+.menu-lateral {
+    position: fixed;
+
+    top: 0;
+    left: -280px;
+
+    width: 260px;
+    height: 100vh;
+
+    background: white;
+
+    z-index: 1000;
+
+    padding: 25px 15px;
+
+    box-shadow: 3px 0 15px rgba(0, 0, 0, 0.12);
+
+    transition: left 0.3s ease;
 }
 
-header{
-    display:flex;
-    align-items:center;
-    gap:15px;
-
-    padding:20px;
-    background:white;
-
-    box-shadow:0 2px 8px rgba(0,0,0,.05);
+.menu-lateral.aberto {
+    left: 0;
 }
 
-.menu-btn{
-    border:none;
-    background:none;
-    font-size:24px;
-    cursor:pointer;
+
+/* ==============================
+   TOPO DO MENU
+============================== */
+
+.menu-topo {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 5px 10px 25px;
+
+    border-bottom: 1px solid #eeeeee;
 }
 
-main{
-    padding:25px;
+.menu-topo img {
+    width: 42px;
+    height: 42px;
+
+    object-fit: contain;
 }
 
-h1{
-    color:#5E8F66;
-    margin-bottom:25px;
-    font-size:28px;
+.menu-topo span {
+    font-size: 20px;
+    font-weight: bold;
+
+    color: #315C3A;
 }
 
-form{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
+
+/* ==============================
+   LINKS DO MENU
+============================== */
+
+.menu-lateral ul {
+    list-style: none;
+    margin-top: 25px;
 }
 
-label{
-    font-weight:bold;
+.menu-lateral li {
+    margin-bottom: 8px;
 }
 
-input{
-    height:50px;
+.menu-lateral a {
+    display: flex;
+    align-items: center;
 
-    border:none;
-    border-radius:12px;
+    gap: 15px;
 
-    padding:12px;
+    padding: 13px 15px;
 
-    background:white;
+    border-radius: 10px;
 
-    box-shadow:0 2px 6px rgba(0,0,0,.08);
+    text-decoration: none;
+
+    color: #526157;
+
+    font-size: 15px;
+
+    transition: 0.2s;
 }
 
-input[type="file"]{
-    padding:10px;
+.menu-lateral a i {
+    width: 20px;
+
+    font-size: 17px;
+
+    text-align: center;
 }
 
-button[type="submit"]{
-    margin-top:15px;
-
-    height:50px;
-
-    border:none;
-    border-radius:12px;
-
-    background:#5E8F66;
-    color:white;
-
-    font-size:16px;
-    font-weight:bold;
-
-    cursor:pointer;
+.menu-lateral a:hover {
+    background: #EEF6EF;
+    color: #315C3A;
 }
 
+.menu-lateral a.ativo {
+    background: #315C3A;
+    color: white;
+
+    box-shadow: 0 4px 10px rgba(49, 92, 58, 0.2);
+}
+
+
+/* ==============================
+   FUNDO DO MENU
+============================== */
+
+.fundo-menu {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.35);
+
+    z-index: 999;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: 0.3s;
+}
+
+.fundo-menu.ativo {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* ==============================
+   BOTÃO MENU ☰
+============================== */
+
+.menu-btn {
+    position: fixed;
+
+    top: 18px;
+    left: 20px;
+
+    width: 42px;
+    height: 42px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: white;
+
+    color: #315C3A;
+
+    font-size: 19px;
+
+    cursor: pointer;
+
+    z-index: 1100;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+
+/* ==============================
+   CABEÇALHO
+============================== */
+
+header {
+    height: 75px;
+
+    background: white;
+
+    display: flex;
+    align-items: center;
+
+    padding-left: 80px;
+
+    gap: 15px;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+header img {
+    width: 42px;
+    height: 42px;
+
+    object-fit: contain;
+}
+
+header h2 {
+    color: #315C3A;
+    font-size: 21px;
+}
+
+
+/* ==============================
+   CONTEÚDO
+============================== */
+
+main {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding: 30px 18px;
+}

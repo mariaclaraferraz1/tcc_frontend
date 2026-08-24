@@ -1,46 +1,232 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-    <link rel="stylesheet" href="../css/inicio.css">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Produtos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Rural Tech - Produtos</title>
+
+    <link rel="stylesheet" href="../css/produtos.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
+
 <body>
 
-    <h1>produtos</h1>
+    <!-- MENU LATERAL -->
 
-   <section>
+    <nav class="menu-lateral">
 
-    <div class="cards">
+        <div class="menu-topo">
 
-        <div class="card">
+            <img src="../img/logotcc.png" alt="Logo Rural Tech">
 
-            <div class="icone">
-                <i class="fa-solid fa-seedling"></i>
-            </div>
-        <!-- Produto 1 -->
-        <div>
-            <p>Alface Crespa</p>
-            <strong>0 uni</strong>
+            <span>Rural Tech</span>
+
         </div>
 
-    </div>
+        <ul>
 
-        <div class="card">
+            <li>
+                <a href="inicio.html">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Início</span>
+                </a>
+            </li>
 
-            <div class="icone">
-                <i class="fa-solid fa-seedling"></i>
+            <li>
+                <a href="produtos.html" class="ativo">
+                    <i class="fa-solid fa-box"></i>
+                    <span>Produtos</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="producao.html">
+                    <i class="fa-solid fa-seedling"></i>
+                    <span>Produção</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="comercial.html">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>Comercial</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="relatorios.html">
+                    <i class="fa-solid fa-chart-column"></i>
+                    <span>Relatórios</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="consulta.html">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>Consulta</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="configuracoes.html">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Configurações</span>
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <!-- FUNDO DO MENU -->
+
+    <div class="fundo-menu"></div>
+
+
+    <!-- CABEÇALHO -->
+
+    <header>
+
+        <button class="menu-btn" id="menuBtn">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <img src="../img/logotcc.png" alt="Logo Rural Tech">
+
+        <h2>Rural Tech</h2>
+
+    </header>
+
+
+    <!-- CONTEÚDO -->
+
+    <main>
+
+        <section class="cabecalho-produtos">
+
+            <span class="subtitulo">GERENCIAMENTO</span>
+
+            <h1>Produtos cadastrados</h1>
+
+            <p>
+                Visualize e gerencie os produtos cadastrados no sistema.
+            </p>
+
+        </section>
+
+
+        <!-- BOTÃO CADASTRAR -->
+
+        <a href="cadastro_produto.html" class="btn-cadastrar">
+
+            <i class="fa-solid fa-plus"></i>
+
+            Cadastrar novo produto
+
+        </a>
+
+
+        <!-- PRODUTOS -->
+
+        <section class="lista-produtos">
+
+            <h2>Seus produtos</h2>
+
+
+            <!-- PRODUTO 1 -->
+
+            <div class="produto-card">
+
+                <div class="produto-imagem">
+
+                    <i class="fa-solid fa-wheat-awn"></i>
+
+                </div>
+
+                <div class="produto-info">
+
+                    <h3>Milho</h3>
+
+                    <p>Grãos</p>
+
+                    <span>Estoque: 0 kg</span>
+
+                </div>
+
+                <button class="btn-opcoes">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+
             </div>
 
-               <!-- Produto 2 -->
-        <div>
-            <p>Alface Americano</p>
-            <strong>0 uni</strong>
-        </div>
-    </div>
 
-</div>
-</section>
+            <!-- PRODUTO 2 -->
+
+            <div class="produto-card">
+
+                <div class="produto-imagem">
+
+                    <i class="fa-solid fa-seedling"></i>
+
+                </div>
+
+                <div class="produto-info">
+
+                    <h3>Soja</h3>
+
+                    <p>Grãos</p>
+
+                    <span>Estoque: 0 kg</span>
+
+                </div>
+
+                <button class="btn-opcoes">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+
+            </div>
+
+
+            <!-- PRODUTO 3 -->
+
+            <div class="produto-card">
+
+                <div class="produto-imagem">
+
+                    <i class="fa-solid fa-carrot"></i>
+
+                </div>
+
+                <div class="produto-info">
+
+                    <h3>Hortaliças</h3>
+
+                    <p>Vegetais</p>
+
+                    <span>Estoque: 0 kg</span>
+
+                </div>
+
+                <button class="btn-opcoes">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- JAVASCRIPT DO MENU -->
+
+    <script src="../js/menu_lateral.js"></script>
 
 </body>
+
 </html>

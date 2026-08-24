@@ -1,286 +1,36 @@
 /* ==============================
-   CONFIGURAÇÕES GERAIS
+   DASHBOARD
 ============================== */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-body {
-    font-family: Arial, sans-serif;
-    background: #f6f8f5;
-    color: #26352b;
-}
-
-
-/* ==============================
-   MENU LATERAL
-============================== */
-
-.menu-lateral {
-    position: fixed;
-    top: 0;
-    left: -280px;
-
-    width: 260px;
-    height: 100vh;
-
-    background: #ffffff;
-
-    z-index: 1000;
-
-    padding: 25px 15px;
-
-    box-shadow: 3px 0 15px rgba(0, 0, 0, 0.12);
-
-    transition: left 0.3s ease;
-}
-
-.menu-lateral.aberto {
-    left: 0;
-}
-
-
-/* ==============================
-   TOPO DO MENU
-============================== */
-
-.menu-topo {
-    display: flex;
-    align-items: center;
-
-    gap: 12px;
-
-    padding: 5px 10px 25px;
-
-    border-bottom: 1px solid #eeeeee;
-}
-
-.menu-topo img {
-    width: 42px;
-    height: 42px;
-
-    object-fit: contain;
-}
-
-.menu-topo span {
-    font-size: 20px;
-    font-weight: bold;
-
-    color: #315c3a;
-}
-
-
-/* ==============================
-   LINKS DO MENU
-============================== */
-
-.menu-lateral ul {
-    list-style: none;
-
-    margin-top: 25px;
-}
-
-.menu-lateral li {
-    margin-bottom: 8px;
-}
-
-.menu-lateral a {
-    display: flex;
-    align-items: center;
-
-    gap: 15px;
-
-    padding: 13px 15px;
-
-    border-radius: 10px;
-
-    text-decoration: none;
-
-    color: #526157;
-
-    font-size: 15px;
-
-    transition: all 0.2s ease;
-}
-
-.menu-lateral a i {
-    width: 20px;
-
-    font-size: 17px;
-
-    text-align: center;
-}
-
-.menu-lateral a:hover {
-    background: #eef6ef;
-
-    color: #315c3a;
-
-    transform: translateX(3px);
-}
-
-
-/* ITEM ATIVO */
-
-.menu-lateral a.ativo {
-    background: #315c3a;
-
-    color: white;
-
-    box-shadow: 0 4px 10px rgba(49, 92, 58, 0.2);
-}
-
-
-/* ==============================
-   BOTÃO ☰
-============================== */
-
-.menu-btn {
-    position: fixed;
-
-    top: 18px;
-    left: 20px;
-
-    width: 42px;
-    height: 42px;
-
-    border: none;
-
-    border-radius: 10px;
-
-    background: white;
-
-    color: #315c3a;
-
-    font-size: 19px;
-
-    cursor: pointer;
-
-    z-index: 1100;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
-
-    transition: all 0.2s ease;
-}
-
-.menu-btn:hover {
-    background: #315c3a;
-
-    color: white;
-
-    transform: scale(1.05);
-}
-
-
-/* ==============================
-   FUNDO ESCURO
-============================== */
-
-.fundo-menu {
-    position: fixed;
-
-    inset: 0;
-
-    background: rgba(0, 0, 0, 0.35);
-
-    z-index: 999;
-
-    opacity: 0;
-
-    visibility: hidden;
-
-    transition: 0.3s ease;
-}
-
-.fundo-menu.ativo {
-    opacity: 1;
-
-    visibility: visible;
-}
-
-
-/* ==============================
-   CABEÇALHO
-============================== */
-
-header {
-    height: 75px;
-
-    background: white;
-
-    display: flex;
-
-    align-items: center;
-
-    padding-left: 80px;
-
-    gap: 15px;
-
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-header img {
-    width: 42px;
-    height: 42px;
-
-    object-fit: contain;
-}
-
-header h2 {
-    color: #315c3a;
-
-    font-size: 21px;
-}
-
-
-/* ==============================
-   CONTEÚDO
-============================== */
-
-main {
-    width: 100%;
-
-    max-width: 1200px;
-
-    margin: 0 auto;
-
-    padding: 40px 30px;
-}
-
-
-/* ==============================
-   BOAS-VINDAS
-============================== */
+/* BOAS-VINDAS */
 
 .boas-vindas {
-    margin-bottom: 35px;
+    margin-bottom: 25px;
 }
 
 .boas-vindas span {
-    color: #6c7a70;
+    color: #5E8F66;
 
-    font-size: 15px;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .boas-vindas h1 {
     margin-top: 8px;
+    margin-bottom: 8px;
 
-    font-size: 30px;
+    font-size: 25px;
 
-    color: #26352b;
+    color: #2E2E2E;
 }
 
 .boas-vindas p {
-    margin-top: 8px;
+    color: #777;
 
-    color: #758078;
+    font-size: 14px;
+
+    line-height: 1.5;
 }
 
 
@@ -289,15 +39,11 @@ main {
 ============================== */
 
 .titulo-secao {
-    margin-bottom: 18px;
+    color: #2E2E2E;
 
     font-size: 20px;
 
-    color: #315c3a;
-}
-
-.secao {
-    margin-top: 40px;
+    margin-bottom: 15px;
 }
 
 
@@ -308,66 +54,64 @@ main {
 .cards {
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 1fr 1fr;
 
-    gap: 18px;
+    gap: 12px;
 }
 
 .card {
     background: white;
 
-    padding: 20px;
+    min-height: 85px;
 
-    border-radius: 14px;
+    padding: 14px;
+
+    border-radius: 12px;
 
     display: flex;
-
     align-items: center;
 
-    gap: 15px;
+    gap: 10px;
 
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-
-    transition: 0.2s;
-}
-
-.card:hover {
-    transform: translateY(-3px);
-
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.09);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .icone {
-    width: 45px;
-    height: 45px;
-
-    border-radius: 10px;
-
-    background: #eef6ef;
-
-    color: #315c3a;
+    width: 40px;
+    height: 40px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
-    font-size: 19px;
+    border-radius: 12px;
+
+    background: #DDE8D8;
+
+    color: #5E8F66;
+
+    font-size: 18px;
 }
 
 .card p {
-    color: #78827b;
+    color: #777;
 
-    font-size: 14px;
+    font-size: 12px;
 
-    margin-bottom: 5px;
+    margin-bottom: 4px;
 }
 
 .card strong {
-    font-size: 18px;
+    font-size: 14px;
+}
 
-    color: #26352b;
+
+/* ==============================
+   SEÇÕES
+============================== */
+
+.secao {
+    margin-top: 30px;
 }
 
 
@@ -376,35 +120,43 @@ main {
 ============================== */
 
 .financeiro {
-    display: grid;
+    background: white;
 
-    grid-template-columns: repeat(3, 1fr);
+    padding: 10px 18px;
 
-    gap: 18px;
+    border-radius: 12px;
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .financeiro-item {
-    background: white;
-
-    padding: 22px;
-
-    border-radius: 14px;
-
     display: flex;
 
     justify-content: space-between;
 
     align-items: center;
 
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+    padding: 14px 0;
+
+    border-bottom: 1px solid #EEEEEE;
+}
+
+.financeiro-item:last-child {
+    border-bottom: none;
 }
 
 .financeiro-item span {
-    color: #69756d;
+    color: #777;
+
+    font-size: 14px;
 }
 
 .financeiro-item strong {
-    color: #315c3a;
+    font-size: 14px;
+}
+
+.financeiro-item.lucro strong {
+    color: #5E8F66;
 }
 
 
@@ -415,60 +167,38 @@ main {
 .atalhos {
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 1fr 1fr;
 
-    gap: 18px;
+    gap: 12px;
 }
 
 .atalhos a {
-    background: white;
+    background: #DDE8D8;
 
-    padding: 22px;
-
-    border-radius: 14px;
+    color: #2E2E2E;
 
     text-decoration: none;
 
-    color: #315c3a;
+    min-height: 80px;
+
+    border-radius: 12px;
 
     display: flex;
 
     flex-direction: column;
 
     align-items: center;
+    justify-content: center;
 
-    gap: 10px;
+    gap: 8px;
 
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-
-    transition: 0.2s;
+    font-size: 14px;
 }
 
-.atalhos a:hover {
-    transform: translateY(-3px);
+.atalhos a i {
+    color: #5E8F66;
 
-    background: #eef6ef;
-}
-
-.atalhos i {
-    font-size: 22px;
-}
-
-
-/* ==============================
-   NOTEBOOK
-============================== */
-
-@media (max-width: 1000px) {
-
-    .cards {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .atalhos {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
+    font-size: 20px;
 }
 
 
@@ -478,43 +208,12 @@ main {
 
 @media (max-width: 600px) {
 
-    header {
-        height: 65px;
-
-        padding-left: 70px;
-    }
-
-    header img {
-        width: 35px;
-        height: 35px;
-    }
-
-    header h2 {
-        font-size: 18px;
-    }
-
-    main {
-        padding: 30px 18px;
+    .cards {
+        grid-template-columns: 1fr 1fr;
     }
 
     .boas-vindas h1 {
         font-size: 24px;
-    }
-
-    .cards {
-        grid-template-columns: 1fr;
-    }
-
-    .financeiro {
-        grid-template-columns: 1fr;
-    }
-
-    .atalhos {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .atalhos a {
-        padding: 18px 10px;
     }
 
 }
