@@ -1,9 +1,28 @@
 /* ==============================
-   DASHBOARD
+   DASHBOARD - INÍCIO
 ============================== */
 
 
-/* BOAS-VINDAS */
+/* ==============================
+   LOGOS
+============================== */
+
+header img {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+}
+
+.menu-topo img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+
+/* ==============================
+   BOAS-VINDAS
+============================== */
 
 .boas-vindas {
     margin-bottom: 25px;
@@ -11,7 +30,6 @@
 
 .boas-vindas span {
     color: #5E8F66;
-
     font-size: 14px;
     font-weight: bold;
 }
@@ -35,7 +53,7 @@
 
 
 /* ==============================
-   TÍTULOS
+   TÍTULOS DAS SEÇÕES
 ============================== */
 
 .titulo-secao {
@@ -69,18 +87,23 @@
     border-radius: 12px;
 
     display: flex;
+
     align-items: center;
 
     gap: 10px;
 
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
 }
+
+
+/* ÍCONE DOS CARDS */
 
 .icone {
     width: 40px;
     height: 40px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -92,6 +115,9 @@
 
     font-size: 18px;
 }
+
+
+/* TEXTO DOS CARDS */
 
 .card p {
     color: #777;
@@ -126,7 +152,7 @@
 
     border-radius: 12px;
 
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
 }
 
 .financeiro-item {
@@ -203,17 +229,43 @@
 
 
 /* ==============================
+   AJUSTE DO MENU NO CELULAR
+============================== */
+
+.menu-lateral {
+    overflow: hidden;
+}
+
+
+/* ==============================
    CELULAR
 ============================== */
 
 @media (max-width: 600px) {
 
-    .cards {
-        grid-template-columns: 1fr 1fr;
+    header img {
+        width: 35px;
+        height: 35px;
+    }
+
+    .menu-topo img {
+        width: 40px;
+        height: 40px;
     }
 
     .boas-vindas h1 {
         font-size: 24px;
     }
 
+    .cards {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .financeiro {
+        width: 100%;
+    }
+
+    .atalhos {
+        grid-template-columns: 1fr 1fr;
+    }
 }
