@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Rural Tech - Comercial</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/comercial.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- MENU LATERAL -->
+    <nav class="menu-lateral">
+
+        <div class="menu-topo">
+            <img src="../img/logotcc.png" alt="Logo Rural Tech">
+            <span>Rural Tech</span>
+        </div>
+
+        <ul>
+
+            <li>
+                <a href="inicio.html">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Início</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="produtos.html">
+                    <i class="fa-solid fa-box"></i>
+                    <span>Produtos</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="producao.html">
+                    <i class="fa-solid fa-seedling"></i>
+                    <span>Produção</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="comercial.html" class="ativo">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>Comercial</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="relatorios.html">
+                    <i class="fa-solid fa-chart-column"></i>
+                    <span>Relatórios</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="consulta.html">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>Consulta</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="configuracoes.html">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Configurações</span>
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <div class="fundo-menu"></div>
+
+
+    <!-- CABEÇALHO -->
+    <header>
+
+        <button class="menu-btn" id="menuBtn">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <img src="../img/logotcc.png" alt="Logo Rural Tech">
+
+        <h2>Rural Tech</h2>
+
+    </header>
+
+
+    <!-- CONTEÚDO -->
+    <main>
+
+        <section class="cabecalho-comercial">
+
+            <h1>
+                <i class="fa-solid fa-arrow-left"></i>
+                Registrar Venda
+            </h1>
+
+            <p>
+                Informe os dados da venda realizada.
+            </p>
+
+        </section>
+
+
+        <!-- CARD -->
+        <section class="card-venda">
+
+            <div class="titulo-venda">
+
+                <i class="fa-solid fa-clipboard-list"></i>
+
+                <h2>Dados da Venda</h2>
+
+            </div>
+
+
+            <!-- DICA -->
+            <div class="dica">
+
+                <i class="fa-solid fa-lightbulb"></i>
+
+                <div>
+
+                    <strong>Dica importante</strong>
+
+                    <p>
+                        Manter o registro das vendas ajuda no controle
+                        financeiro e no planejamento da sua produção.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUTO / CLIENTE -->
+
+            <div class="linha">
+
+                <div class="campo produto">
+
+                    <label>Produto</label>
+
+                    <select>
+                        <option>Selecione o produto</option>
+                        <option>Milho</option>
+                        <option>Soja</option>
+                        <option>Café</option>
+                        <option>Feijão</option>
+                    </select>
+
+                </div>
+
+
+                <div class="campo cliente">
+
+                    <label>
+                        Cliente <span>(opcional)</span>
+                    </label>
+
+                    <select>
+                        <option>Selecione o cliente</option>
+                        <option>Cliente 1</option>
+                        <option>Cliente 2</option>
+                    </select>
+
+                </div>
+
+
+                <button class="btn-novo-cliente">
+                    <i class="fa-solid fa-plus"></i>
+                    Novo cliente
+                </button>
+
+            </div>
+
+
+            <!-- DATA / QUANTIDADE / UNIDADE -->
+
+            <div class="linha">
+
+                <div class="campo">
+
+                    <label>Data da venda</label>
+
+                    <input type="date">
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>Quantidade vendida</label>
+
+                    <input
+                        type="number"
+                        placeholder="Ex: 50">
+
+                </div>
+
+
+                <div class="campo unidade">
+
+                    <label>Unidade</label>
+
+                    <select>
+
+                        <option>KG</option>
+                        <option>Sacas</option>
+                        <option>Toneladas</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- VALORES -->
+
+            <div class="linha">
+
+                <div class="campo">
+
+                    <label>Valor unitário (R$)</label>
+
+                    <input
+                        type="number"
+                        placeholder="Ex: 5,50">
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>Valor total</label>
+
+                    <input
+                        type="text"
+                        value="R$ 0,00"
+                        readonly>
+
+                    <small class="calculado">
+                        ● calculado automaticamente
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- PAGAMENTO -->
+
+            <div class="campo pagamento">
+
+                <label>Forma de pagamento</label>
+
+                <select>
+
+                    <option>
+                        Selecione a forma de pagamento
+                    </option>
+
+                    <option>Pix</option>
+                    <option>Dinheiro</option>
+                    <option>Cartão</option>
+                    <option>Transferência</option>
+
+                </select>
+
+            </div>
+
+
+            <!-- OBSERVAÇÕES -->
+
+            <div class="campo observacoes">
+
+                <label>
+                    Observações <span>(opcional)</span>
+                </label>
+
+                <textarea
+                    placeholder="Ex: Informações adicionais sobre a venda..."></textarea>
+
+            </div>
+
+
+            <!-- BOTÕES -->
+
+            <div class="botoes">
+
+                <button class="btn-cancelar">
+                    <i class="fa-solid fa-xmark"></i>
+                    Cancelar
+                </button>
+
+                <button class="btn-salvar">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Salvar Venda
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="../js/menu_lateral.js"></script>
+   <script src="../js/comercial.js"></script>
+
+</body>
+
+</html>
