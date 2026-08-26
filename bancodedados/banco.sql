@@ -7,17 +7,76 @@
 >gastos
 */
 CREATE DATABASE rural_tech;
+
 USE rural_tech;
 
-CREATE TABLE Usuarios (
+-- =========================
+-- TABELA: USUÁRIOS
+-- =========================
+CREATE TABLE usuarios (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
+    email VARCHAR(150) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL
-)
+);
 
-CREATE TABLE Produtos (
-    id_produtos INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(30),
-    
-)
+-- =========================
+-- TABELA: PRODUTOS
+-- =========================
+CREATE TABLE produtos (
+    id_produto INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    descricao VARCHAR(255),
+    unidade VARCHAR(30),
+    preco DECIMAL(10,2),
+    estoque INT DEFAULT 0
+);
+
+-- =========================
+-- TABELA: PRODUÇÃO
+-- =========================
+CREATE TABLE producao (
+    id_producao INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_produto INT NOT NULL,
+    quantidade DECIMAL(10,2) NOT NULL,
+    data_producao DATE NOT NULL,
+
+    FOREIGN KEY (id_usuario)
+        REFERENCES usuarios(id_usuario),
+
+    FOREIGN KEY (id_produto)
+        REFERENCES produtos(id_produto)
+);
+
+-- =========================
+-- TABELA: VENDAS
+-- =========================
+CREATE TABLE vendas (
+    id_venda INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_produto INT NOT NULL,
+    quantidade DECIMAL(10,2) NOT NULL,
+    valor_total DECIMAL(10,2) NOT NULL,
+    data_venda DATE NOT NULL,
+
+    FOREIGN KEY (id_usuario)
+        REFERENCES usuarios(id_usuario),
+
+    FOREIGN KEY (id_produto)
+        REFERENCES produtos(id_produto)
+);
+
+-- =========================
+-- TABELA: GASTOS
+-- =========================
+CREATE TABLE gastos (
+    id_gasto INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    descricao VARCHAR(255) NOT NULL,
+    valor DECIMAL(10,2) NOT NULL,
+    data_gasto DATE NOT NULL,
+
+    FOREIGN KEY (id_usuario)
+        REFERENCES usuarios(id_usuario)
+);
