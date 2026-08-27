@@ -1,0 +1,226 @@
+/* ==============================
+   DADOS DA COLHEITA
+============================== */
+
+
+/* ==============================
+   TÍTULO
+============================== */
+
+main h1 {
+    color: #315C3A;
+
+    font-size: 28px;
+
+    margin-bottom: 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+/* ==============================
+   FORMULÁRIO
+============================== */
+
+form {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+/* ==============================
+   LABELS
+============================== */
+
+label {
+    font-size: 14px;
+
+    font-weight: bold;
+
+    color: #2E2E2E;
+
+    margin-top: 5px;
+}
+
+
+/* ==============================
+   CAMPOS
+============================== */
+
+input,
+select,
+textarea {
+    width: 100%;
+
+    border: none;
+
+    border-radius: 12px;
+
+    padding: 12px;
+
+    background: white;
+
+    font-size: 14px;
+
+    outline: none;
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+
+/* Campos de texto e número */
+
+input {
+    height: 48px;
+}
+
+
+/* ==============================
+   SELECT
+============================== */
+
+select {
+    height: 48px;
+
+    cursor: pointer;
+}
+
+
+/* ==============================
+   TEXTAREA
+============================== */
+
+textarea {
+    min-height: 120px;
+
+    resize: vertical;
+
+    font-family: Arial, sans-serif;
+}
+
+
+/* ==============================
+   EFEITO AO CLICAR NOS CAMPOS
+============================== */
+
+input:focus,
+select:focus,
+textarea:focus {
+    box-shadow: 0 0 0 2px #B8D3BA;
+}
+
+
+/* ==============================
+   PESO + KG
+============================== */
+
+#peso {
+    display: inline-block;
+}
+
+
+/* ==============================
+   BOTÕES
+============================== */
+
+form button {
+    height: 50px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+/* Botão Salvar */
+
+button[type="submit"] {
+    width: 100%;
+
+    margin-top: 15px;
+
+    background: #5E8F66;
+
+    color: white;
+}
+
+
+button[type="submit"]:hover {
+    background: #4E7C56;
+}
+
+
+/* ==============================
+   BOTÃO CANCELAR
+============================== */
+
+button[type="reset"] {
+    width: 100%;
+
+    margin-top: 5px;
+
+    background: #E8E8E8;
+
+    color: #444;
+}
+
+
+button[type="reset"]:hover {
+    background: #DADADA;
+}
+
+
+/* ==============================
+   KG
+============================== */
+
+span {
+    color: #315C3A;
+
+    font-size: 14px;
+
+    font-weight: bold;
+}
+
+
+/* ==============================
+   CELULAR
+============================== */
+
+@media (max-width: 600px) {
+
+    main {
+        padding: 25px 18px;
+    }
+
+    main h1 {
+        font-size: 25px;
+
+        margin-bottom: 22px;
+    }
+
+    input,
+    select {
+        height: 48px;
+    }
+
+    textarea {
+        min-height: 110px;
+    }
+
+}

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../css/dados_colheita.css">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <title>Registro de Colheita</title>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==============================
+         MENU LATERAL
+    =============================== -->
+
+    <nav class="menu-lateral">
+
+        <div class="menu-topo">
+
+            <img src="../img/logotcc.png" alt="Logo Rural Tech">
+
+            <span>Rural Tech</span>
+
+        </div>
+
+
+        <ul>
+
+
+            <!-- INÍCIO -->
+
+            <li>
+
+                <a href="inicio.html">
+
+                    <i class="fa-solid fa-house"></i>
+
+                    <span>Início</span>
+
+                </a>
+
+            </li>
+
+
+            <!-- PRODUTOS -->
+
+            <li>
+
+                <a href="produtos.html">
+
+                    <i class="fa-solid fa-box"></i>
+
+                    <span>Produtos</span>
+
+                </a>
+
+            </li>
+
+
+            <!-- PRODUÇÃO -->
+
+            <!-- O JavaScript vai colocar o submenu aqui -->
+
+            <li id="menuProducao"></li>
+
+
+            <!-- COMERCIAL -->
+
+            <li>
+
+                <a href="comercial.html">
+
+                    <i class="fa-solid fa-cart-shopping"></i>
+
+                    <span>Comercial</span>
+
+                </a>
+
+            </li>
+
+
+            <!-- RELATÓRIOS -->
+
+            <li>
+
+                <a href="relatorios.html">
+
+                    <i class="fa-solid fa-chart-column"></i>
+
+                    <span>Relatórios</span>
+
+                </a>
+
+            </li>
+
+
+            <!-- CONSULTA -->
+
+            <li>
+
+                <a href="consulta.html">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <span>Consulta</span>
+
+                </a>
+
+            </li>
+
+
+            <!-- CONFIGURAÇÕES -->
+
+            <li>
+
+                <a href="configuracoes.html">
+
+                    <i class="fa-solid fa-gear"></i>
+
+                    <span>Configurações</span>
+
+                </a>
+
+            </li>
+
+
+        </ul>
+
+    </nav>
+
+
+    <!-- FUNDO DO MENU -->
+
+    <div class="fundo-menu"></div>
+
+
+    <!-- ==============================
+         CABEÇALHO
+    =============================== -->
+
+    <header>
+
+        <button class="menu-btn" id="menuBtn">
+
+            <i class="fa-solid fa-bars"></i>
+
+        </button>
+
+
+        <img src="../img/logotcc.png" alt="Logo Rural Tech">
+
+        <h2>Rural Tech</h2>
+
+    </header>
+
+
+    <!-- ==============================
+         TELA DE DADOS DA COLHEITA
+    =============================== -->
+
+    <main>
+
+        <h1>Registrar Colheita</h1>
+
+
+        <form action="#" method="post">
+
+
+            <!-- PRODUTO -->
+
+            <div>
+
+                <label for="produto">
+                    Produto:
+                </label>
+
+
+                <select id="produto" name="produto" required>
+
+                    <option value="">
+                        Selecione o produto
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <br>
+
+
+            <!-- DATA DO PLANTIO -->
+
+            <div>
+
+                <label for="dataPlantio">
+                    Data do plantio:
+                </label>
+
+
+                <input
+                    type="date"
+                    id="dataPlantio"
+                    name="dataPlantio"
+                    required
+                >
+
+            </div>
+
+
+            <br>
+
+
+            <!-- QUANTIDADE COLHIDA -->
+
+            <div>
+
+                <label for="quantidade">
+                    Quantidade colhida:
+                </label>
+
+
+                <input
+                    type="number"
+                    id="quantidade"
+                    name="quantidade"
+                    placeholder="Ex: 10"
+                    min="0"
+                    required
+                >
+
+            </div>
+
+
+            <br>
+
+
+            <!-- PESO -->
+
+            <div>
+
+                <label for="peso">
+                    Peso:
+                </label>
+
+
+                <input
+                    type="number"
+                    id="peso"
+                    name="peso"
+                    placeholder="Ex: 250"
+                    min="0"
+                    step="0.01"
+                    required
+                >
+
+                <span>KG</span>
+
+            </div>
+
+
+            <br>
+
+
+            <!-- DATA DA COLHEITA -->
+
+            <div>
+
+                <label for="dataColheita">
+                    Data da colheita:
+                </label>
+
+
+                <input
+                    type="date"
+                    id="dataColheita"
+                    name="dataColheita"
+                    required
+                >
+
+            </div>
+
+
+            <br>
+
+
+            <!-- OBSERVAÇÕES -->
+
+            <div>
+
+                <label for="observacoes">
+                    Observações:
+                </label>
+
+
+                <br>
+
+
+                <textarea
+                    id="observacoes"
+                    name="observacoes"
+                    rows="5"
+                    cols="50"
+                    placeholder="Digite alguma observação sobre a colheita..."
+                ></textarea>
+
+            </div>
+
+
+            <br>
+
+
+            <!-- BOTÕES -->
+
+            <div>
+
+                <button type="reset">
+                    Cancelar
+                </button>
+
+
+                <button type="submit">
+                    Salvar Colheita
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </main>
+
+
+    <!-- ==============================
+         JAVASCRIPT
+    =============================== -->
+
+    <script src="../js/menu_lateral.js"></script>
+
+    <script src="../js/dados_colheita.js"></script>
+
+
+</body>
+
+</html>

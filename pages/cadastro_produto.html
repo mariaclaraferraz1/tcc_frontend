@@ -6,10 +6,14 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Rural Tech</title>
+
     <link rel="stylesheet" href="../css/cadastro_produto.css">
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 </head>
 
@@ -18,65 +22,63 @@
     <nav class="menu-lateral">
 
         <div class="menu-topo">
+
             <img src="../img/logotcc.png" alt="Logo Rural Tech">
+
             <span>Rural Tech</span>
+
         </div>
-    
+
         <ul>
-    
+
             <li>
                 <a href="inicio.html">
                     <i class="fa-solid fa-house"></i>
                     <span>Início</span>
                 </a>
             </li>
-    
+
             <li>
                 <a href="cadastro_produto.html" class="ativo">
                     <i class="fa-solid fa-box"></i>
                     <span>Produtos</span>
                 </a>
             </li>
-    
-            <li>
-                <a href="producao.html">
-                    <i class="fa-solid fa-seedling"></i>
-                    <span>Produção</span>
-                </a>
-            </li>
-    
+
+            <li id="menuProducao"></li>
+
             <li>
                 <a href="comercial.html">
                     <i class="fa-solid fa-cart-shopping"></i>
                     <span>Comercial</span>
                 </a>
             </li>
-    
+
             <li>
                 <a href="relatorios.html">
                     <i class="fa-solid fa-chart-column"></i>
                     <span>Relatórios</span>
                 </a>
             </li>
-    
+
             <li>
                 <a href="consulta.html">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <span>Consulta</span>
                 </a>
             </li>
-    
+
             <li>
                 <a href="configuracoes.html">
                     <i class="fa-solid fa-gear"></i>
                     <span>Configurações</span>
                 </a>
             </li>
-    
+
         </ul>
-    
+
     </nav>
-    
+
     <div class="fundo-menu"></div>
 
     <header>
@@ -85,38 +87,59 @@
             <i class="fa-solid fa-bars"></i>
         </button>
 
-        <img src="../img/logotcc.png" alt=" ">
+        <img src="../img/logotcc.png" alt="Logo Rural Tech">
+
         <h2>Rural Tech</h2>
 
     </header>
 
     <main>
-    <a href="produtos.html" class="btn-voltar">
-        <i class="fa-solid fa-arrow-left"></i>
-        Voltar para produtos
-    </a>
-        <h1><i class="fa-solid fa-box"></i>Cadastro de Produtos</h1>
+
+        <a href="produtos.html" class="btn-voltar">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Voltar para produtos
+
+        </a>
+
+        <h1>
+
+            <i class="fa-solid fa-box"></i>
+
+            Cadastro de Produtos
+
+        </h1>
 
         <form>
 
             <label>Nome do Produto</label>
+
             <input type="text">
 
             <label>Preço</label>
+
             <input type="number">
 
             <label>Categoria</label>
+
             <input type="text">
 
             <label>Imagem</label>
+
             <input type="file">
 
-            <button type="submit">Salvar Produto</button>
+            <button type="submit">
+                Salvar Produto
+            </button>
 
         </form>
 
     </main>
+
     <script src="../js/menu_lateral.js"></script>
+    <script src="../js/cadastro.js"></script>
+
 </body>
 
 </html>

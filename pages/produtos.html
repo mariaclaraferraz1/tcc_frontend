@@ -8,14 +8,13 @@
     <title>Rural Tech - Produtos</title>
 
     <link rel="stylesheet" href="../css/produtos.css">
+    <link rel="stylesheet" href="../css/style.css">
 
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
-
-    <!-- MENU LATERAL -->
 
     <nav class="menu-lateral">
 
@@ -43,12 +42,7 @@
                 </a>
             </li>
 
-            <li>
-                <a href="producao.html">
-                    <i class="fa-solid fa-seedling"></i>
-                    <span>Produção</span>
-                </a>
-            </li>
+            <li id="menuProducao"></li>
 
             <li>
                 <a href="comercial.html">
@@ -82,13 +76,7 @@
 
     </nav>
 
-
-    <!-- FUNDO DO MENU -->
-
     <div class="fundo-menu"></div>
-
-
-    <!-- CABEÇALHO -->
 
     <header>
 
@@ -101,9 +89,6 @@
         <h2>Rural Tech</h2>
 
     </header>
-
-
-    <!-- CONTEÚDO -->
 
     <main>
 
@@ -119,9 +104,6 @@
 
         </section>
 
-
-        <!-- BOTÃO CADASTRAR -->
-
         <a href="cadastro_produto.html" class="btn-cadastrar">
 
             <i class="fa-solid fa-plus"></i>
@@ -130,15 +112,9 @@
 
         </a>
 
-
-        <!-- PRODUTOS -->
-
         <section class="lista-produtos">
 
             <h2>Seus produtos</h2>
-
-
-            <!-- PRODUTO 1 -->
 
             <div class="produto-card">
 
@@ -164,9 +140,6 @@
 
             </div>
 
-
-            <!-- PRODUTO 2 -->
-
             <div class="produto-card">
 
                 <div class="produto-imagem">
@@ -190,9 +163,6 @@
                 </button>
 
             </div>
-
-
-            <!-- PRODUTO 3 -->
 
             <div class="produto-card">
 
@@ -222,10 +192,8 @@
 
     </main>
 
-
-    <!-- JAVASCRIPT DO MENU -->
-
     <script src="../js/menu_lateral.js"></script>
+    <script src="../js/produtos.js"></script>
 
 </body>
 
