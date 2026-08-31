@@ -1,7 +1,6 @@
 {
   "name": "tcc_frontend",
   "version": "1.0.0",
-  "description": "",
   "main": "menu_lateral.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,5 +19,10 @@
   "homepage": "https://github.com/mariaclaraferraz1/tcc_frontend#readme",
   "devDependencies": {
     "vite": "^8.2.2"
-  }
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mysql2": "^3.24.2"
+  },
+  "description": ""
 }

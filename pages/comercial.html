@@ -2,6 +2,7 @@
 <html lang="pt-br">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -12,7 +13,9 @@
 
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
+
 
 <body>
 
@@ -20,59 +23,125 @@
     <nav class="menu-lateral">
 
         <div class="menu-topo">
+
             <img src="../img/logotcc.png" alt="Logo Rural Tech">
+
             <span>Rural Tech</span>
+
         </div>
+
 
         <ul>
 
+            <!-- INÍCIO -->
             <li>
+
                 <a href="inicio.html">
+
                     <i class="fa-solid fa-house"></i>
+
                     <span>Início</span>
+
                 </a>
+
             </li>
 
+
+            <!-- PRODUTOS -->
             <li>
+
                 <a href="produtos.html">
+
                     <i class="fa-solid fa-box"></i>
+
                     <span>Produtos</span>
+
                 </a>
+
             </li>
 
+
+            <!-- PRODUÇÃO -->
             <li>
+
                 <a href="producao.html">
+
                     <i class="fa-solid fa-seedling"></i>
+
                     <span>Produção</span>
+
                 </a>
+
             </li>
 
+
+            <!-- COMERCIAL -->
             <li>
+
                 <a href="comercial.html" class="ativo">
+
                     <i class="fa-solid fa-cart-shopping"></i>
+
                     <span>Comercial</span>
+
                 </a>
+
             </li>
 
+
+            <!-- VENDAS -->
             <li>
+
+                <a href="vendas.html">
+
+                    <i class="fa-solid fa-receipt"></i>
+
+                    <span>Vendas</span>
+
+                </a>
+
+            </li>
+
+
+            <!-- RELATÓRIOS -->
+            <li>
+
                 <a href="relatorios.html">
+
                     <i class="fa-solid fa-chart-column"></i>
+
                     <span>Relatórios</span>
+
                 </a>
+
             </li>
 
+
+            <!-- CONSULTA -->
             <li>
+
                 <a href="consulta.html">
+
                     <i class="fa-solid fa-magnifying-glass"></i>
+
                     <span>Consulta</span>
+
                 </a>
+
             </li>
 
+
+            <!-- CONFIGURAÇÕES -->
             <li>
+
                 <a href="configuracoes.html">
+
                     <i class="fa-solid fa-gear"></i>
+
                     <span>Configurações</span>
+
                 </a>
+
             </li>
 
         </ul>
@@ -80,6 +149,7 @@
     </nav>
 
 
+    <!-- FUNDO DO MENU -->
     <div class="fundo-menu"></div>
 
 
@@ -87,7 +157,9 @@
     <header>
 
         <button class="menu-btn" id="menuBtn">
+
             <i class="fa-solid fa-bars"></i>
+
         </button>
 
         <img src="../img/logotcc.png" alt="Logo Rural Tech">
@@ -100,226 +172,95 @@
     <!-- CONTEÚDO -->
     <main>
 
-        <section class="cabecalho-comercial">
+        <div class="topo-vendas">
 
-            <h1>
-                <i class="fa-solid fa-arrow-left"></i>
-                Registrar Venda
-            </h1>
+            <div>
 
-            <p>
-                Informe os dados da venda realizada.
-            </p>
+                <h1>Registro de Vendas</h1>
 
-        </section>
-
-
-        <!-- CARD -->
-        <section class="card-venda">
-
-            <div class="titulo-venda">
-
-                <i class="fa-solid fa-clipboard-list"></i>
-
-                <h2>Dados da Venda</h2>
+                <h2>Vendas realizadas</h2>
 
             </div>
 
+        </div>
 
-            <!-- DICA -->
-            <div class="dica">
 
-                <i class="fa-solid fa-lightbulb"></i>
+        <!-- TABELA DE VENDAS -->
+        <section class="tabela-vendas">
 
-                <div>
+            <table>
 
-                    <strong>Dica importante</strong>
+                <thead>
 
-                    <p>
-                        Manter o registro das vendas ajuda no controle
-                        financeiro e no planejamento da sua produção.
-                    </p>
+                    <tr>
 
-                </div>
+                        <th>Cliente</th>
 
-            </div>
+                        <th>Produto</th>
 
+                        <th>Quantidade</th>
 
-            <!-- PRODUTO / CLIENTE -->
+                        <th>Valor</th>
 
-            <div class="linha">
+                        <th>Data</th>
 
-                <div class="campo produto">
+                    </tr>
 
-                    <label>Produto</label>
+                </thead>
 
-                    <select>
-                        <option>Selecione o produto</option>
-                        <option>Milho</option>
-                        <option>Soja</option>
-                        <option>Café</option>
-                        <option>Feijão</option>
-                    </select>
 
-                </div>
+                <tbody>
 
+                    <tr>
 
-                <div class="campo cliente">
+                        <td>Mariana</td>
 
-                    <label>
-                        Cliente <span>(opcional)</span>
-                    </label>
+                        <td>Milho</td>
 
-                    <select>
-                        <option>Selecione o cliente</option>
-                        <option>Cliente 1</option>
-                        <option>Cliente 2</option>
-                    </select>
+                        <td>10</td>
 
-                </div>
+                        <td>R$ 500,00</td>
 
+                        <td>31/08/2026</td>
 
-                <button class="btn-novo-cliente">
-                    <i class="fa-solid fa-plus"></i>
-                    Novo cliente
-                </button>
+                    </tr>
 
-            </div>
 
+                    <tr>
 
-            <!-- DATA / QUANTIDADE / UNIDADE -->
+                        <td>João</td>
 
-            <div class="linha">
+                        <td>Soja</td>
 
-                <div class="campo">
+                        <td>5</td>
 
-                    <label>Data da venda</label>
+                        <td>R$ 350,00</td>
 
-                    <input type="date">
+                        <td>30/08/2026</td>
 
-                </div>
+                    </tr>
 
+                </tbody>
 
-                <div class="campo">
-
-                    <label>Quantidade vendida</label>
-
-                    <input
-                        type="number"
-                        placeholder="Ex: 50">
-
-                </div>
-
-
-                <div class="campo unidade">
-
-                    <label>Unidade</label>
-
-                    <select>
-
-                        <option>KG</option>
-                        <option>Sacas</option>
-                        <option>Toneladas</option>
-
-                    </select>
-
-                </div>
-
-            </div>
-
-
-            <!-- VALORES -->
-
-            <div class="linha">
-
-                <div class="campo">
-
-                    <label>Valor unitário (R$)</label>
-
-                    <input
-                        type="number"
-                        placeholder="Ex: 5,50">
-
-                </div>
-
-
-                <div class="campo">
-
-                    <label>Valor total</label>
-
-                    <input
-                        type="text"
-                        value="R$ 0,00"
-                        readonly>
-
-                    <small class="calculado">
-                        ● calculado automaticamente
-                    </small>
-
-                </div>
-
-            </div>
-
-
-            <!-- PAGAMENTO -->
-
-            <div class="campo pagamento">
-
-                <label>Forma de pagamento</label>
-
-                <select>
-
-                    <option>
-                        Selecione a forma de pagamento
-                    </option>
-
-                    <option>Pix</option>
-                    <option>Dinheiro</option>
-                    <option>Cartão</option>
-                    <option>Transferência</option>
-
-                </select>
-
-            </div>
-
-
-            <!-- OBSERVAÇÕES -->
-
-            <div class="campo observacoes">
-
-                <label>
-                    Observações <span>(opcional)</span>
-                </label>
-
-                <textarea
-                    placeholder="Ex: Informações adicionais sobre a venda..."></textarea>
-
-            </div>
-
-
-            <!-- BOTÕES -->
-
-            <div class="botoes">
-
-                <button class="btn-cancelar">
-                    <i class="fa-solid fa-xmark"></i>
-                    Cancelar
-                </button>
-
-                <button class="btn-salvar">
-                    <i class="fa-solid fa-floppy-disk"></i>
-                    Salvar Venda
-                </button>
-
-            </div>
+            </table>
 
         </section>
 
     </main>
 
 
+    <!-- BOTÃO PARA REGISTRAR NOVA VENDA -->
+    <a href="vendas.html" class="btn-nova-venda">
+
+        <i class="fa-solid fa-plus"></i>
+
+        Nova venda
+
+    </a>
+
+
+    <!-- JAVASCRIPT -->
     <script src="../js/menu_lateral.js"></script>
-   <script src="../js/comercial.js"></script>
 
 </body>
 
