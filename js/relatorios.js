@@ -7,9 +7,21 @@ const areaRelatorio = document.getElementById('areaRelatorio');
 btnGerar.addEventListener('click', async () => {
 
     const tipo = tipoRelatorio.value;
+    const inicio = dataInicial.value;
+    const fim = dataFinal.value;
 
     if (tipo === '') {
         alert('Selecione um tipo de relatório.');
+        return;
+    }
+
+    if ((inicio && !fim) || (!inicio && fim)) {
+        alert('Preencha as duas datas.');
+        return;
+    }
+
+    if (inicio && fim && inicio > fim) {
+        alert('A data inicial não pode ser maior que a data final.');
         return;
     }
 
@@ -32,6 +44,10 @@ btnGerar.addEventListener('click', async () => {
         return;
     }
 
+    if (inicio && fim) {
+        url += `?dataInicial=${inicio}&dataFinal=${fim}`;
+    }
+
     try {
 
         const resposta = await fetch(url);
@@ -46,7 +62,7 @@ btnGerar.addEventListener('click', async () => {
                 <h2>Nenhum dado encontrado</h2>
 
                 <p>
-                    Não existem dados cadastrados para este relatório.
+                    Não existem dados nesse período.
                 </p>
             `;
 
