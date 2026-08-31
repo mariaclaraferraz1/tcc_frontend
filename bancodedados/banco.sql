@@ -80,3 +80,36 @@ CREATE TABLE gastos (
     FOREIGN KEY (id_usuario)
         REFERENCES usuarios(id_usuario)
 );
+
+USE rural_tech
+-- =========================
+-- SELECT -- RELATORIOS 
+-- =========================
+-- PRODUÇÃO
+SELECT 
+    p.nome AS produto,
+    pr.quantidade,
+    pr.data_producao
+FROM producao pr
+INNER JOIN produtos p
+    ON pr.id_produto = p.id_produto
+ORDER BY pr.data_producao DESC;
+
+--VENDAS
+SELECT 
+    p.nome AS produto,
+    v.quantidade,
+    v.valor_total,
+    v.data_venda
+FROM vendas v
+INNER JOIN produtos p
+    ON v.id_produto = p.id_produto
+ORDER BY v.data_venda DESC;
+
+--GASTOS
+SELECT 
+    descricao,
+    valor,
+    data_gasto
+FROM gastos
+ORDER BY data_gasto DESC;
