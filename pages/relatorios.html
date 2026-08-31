@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Rural Tech - Relatórios</title>
+
+    <link rel="stylesheet" href="../css/relatorios.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+    <nav class="menu-lateral">
+
+        <div class="menu-topo">
+
+            <img src="../img/logotcc.png" alt="Logo Rural Tech">
+
+            <span>Rural Tech</span>
+
+        </div>
+
+        <ul>
+
+            <li>
+                <a href="inicio.html">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Início</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="produtos.html">
+                    <i class="fa-solid fa-box"></i>
+                    <span>Produtos</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="producao.html">
+                    <i class="fa-solid fa-seedling"></i>
+                    <span>Produção</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="comercial.html">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>Comercial</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="relatorios.html" class="ativo">
+                    <i class="fa-solid fa-chart-column"></i>
+                    <span>Relatórios</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="consulta.html">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>Consulta</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="configuracoes.html">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Configurações</span>
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+    <div class="fundo-menu"></div>
+
+
+    <header>
+
+        <button class="menu-btn" id="menuBtn">
+
+            <i class="fa-solid fa-bars"></i>
+
+        </button>
+
+        <img src="../img/logotcc.png" alt="Logo Rural Tech">
+
+        <h2>Rural Tech</h2>
+
+    </header>
+
+
+    <main>
+
+        <section class="cabecalho-pagina">
+
+            <span>GERENCIAMENTO</span>
+
+            <h1>Geração de Relatórios</h1>
+
+            <p>
+                Selecione o tipo de relatório e o período desejado.
+            </p>
+
+        </section>
+
+
+        <section class="filtros">
+
+            <h2>
+                <i class="fa-solid fa-filter"></i>
+                Filtros
+            </h2>
+
+
+            <div class="campo">
+
+                <label for="tipoRelatorio">
+                    Tipo de relatório
+                </label>
+
+                <select id="tipoRelatorio">
+
+                    <option value="">
+                        Selecione o relatório
+                    </option>
+
+                    <option value="producao">
+                        Relatório de Produção
+                    </option>
+
+                    <option value="vendas">
+                        Relatório de Vendas
+                    </option>
+
+                    <option value="gastos">
+                        Relatório de Gastos
+                    </option>
+
+                    <option value="produtos">
+                        Relatório de Produtos
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="dataInicial">
+                    Data inicial
+                </label>
+
+                <input
+                    type="date"
+                    id="dataInicial"
+                >
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="dataFinal">
+                    Data final
+                </label>
+
+                <input
+                    type="date"
+                    id="dataFinal"
+                >
+
+            </div>
+
+
+            <button
+                type="button"
+                class="btn-gerar"
+                id="btnGerar"
+            >
+
+                <i class="fa-solid fa-file-lines"></i>
+
+                Gerar Relatório
+
+            </button>
+
+        </section>
+
+
+        <section class="area-relatorio" id="areaRelatorio">
+
+            <div class="icone-relatorio">
+
+                <i class="fa-solid fa-file-lines"></i>
+
+            </div>
+
+            <h2>Relatório ainda não gerado</h2>
+
+            <p>
+                Preencha os filtros e clique em
+                <strong>"Gerar Relatório"</strong>
+                para visualizar os dados.
+            </p>
+
+        </section>
+
+
+        <button
+            type="button"
+            class="btn-exportar"
+            id="btnExportar"
+        >
+
+            <i class="fa-solid fa-file-pdf"></i>
+
+            Exportar PDF
+
+        </button>
+
+    </main>
+
+
+    <script src="../js/menu_lateral.js"></script>
+
+    <script src="../js/relatorios.js " ></script>
+
+</body>
+
+</html>
