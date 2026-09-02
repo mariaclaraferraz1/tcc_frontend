@@ -64,3 +64,5 @@ cadastroForm.addEventListener("submit", function(event) {
         window.location.href = "login.html";
     }, 1000);
 });
+
+
