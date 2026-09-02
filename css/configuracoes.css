@@ -1,0 +1,424 @@
+/* ==============================
+   CONFIGURAÇÕES
+============================== */
+
+
+/* ==============================
+   CABEÇALHO DA PÁGINA
+============================== */
+
+.cabecalho-pagina {
+    margin-bottom: 25px;
+}
+
+
+.cabecalho-pagina h1 {
+    color: #2E2E2E;
+
+    font-size: 28px;
+
+    margin-bottom: 8px;
+}
+
+
+.cabecalho-pagina p {
+    color: #777;
+
+    font-size: 15px;
+}
+
+
+
+/* ==============================
+   CARDS
+============================== */
+
+.config-card {
+    background: white;
+
+    border-radius: 14px;
+
+    padding: 22px;
+
+    margin-bottom: 18px;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+
+
+/* ==============================
+   TÍTULO DOS CARDS
+============================== */
+
+.card-titulo {
+    padding-bottom: 18px;
+
+    border-bottom: 1px solid #EEEEEE;
+}
+
+
+.titulo-icone {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.icone {
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 12px;
+
+    background: #DDE8D8;
+
+    color: #5E8F66;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 18px;
+}
+
+
+.titulo-icone h2 {
+    font-size: 18px;
+
+    color: #2E2E2E;
+
+    margin-bottom: 4px;
+}
+
+
+.titulo-icone p {
+    font-size: 13px;
+
+    color: #777;
+}
+
+
+
+/* ==============================
+   PERFIL
+============================== */
+
+.perfil-conteudo {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding-top: 20px;
+}
+
+
+.avatar {
+    width: 52px;
+
+    height: 52px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #DDE8D8;
+
+    color: #5E8F66;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 22px;
+}
+
+
+.dados-perfil {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    flex: 1;
+}
+
+
+.dados-perfil strong {
+    color: #2E2E2E;
+
+    font-size: 15px;
+}
+
+
+.dados-perfil span {
+    color: #777;
+
+    font-size: 13px;
+}
+
+
+
+/* ==============================
+   OPÇÕES
+============================== */
+
+.opcoes {
+    padding-top: 4px;
+}
+
+
+.opcao {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 25px;
+
+    padding: 18px 0;
+
+    border-bottom: 1px solid #EEEEEE;
+}
+
+
+.opcao:last-child {
+    border-bottom: none;
+
+    padding-bottom: 0;
+}
+
+
+.opcao div {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+
+.opcao strong {
+    color: #2E2E2E;
+
+    font-size: 15px;
+}
+
+
+.opcao span {
+    color: #777;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+
+/* ==============================
+   BOTÕES
+============================== */
+
+.btn-secundario {
+    border: 1px solid #5E8F66;
+
+    background: white;
+
+    color: #315C3A;
+
+    padding: 10px 15px;
+
+    border-radius: 9px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition: 0.2s;
+}
+
+
+.btn-secundario:hover {
+    background: #EEF6EF;
+}
+
+
+.btn-secundario i {
+    margin-right: 6px;
+}
+
+
+
+/* ==============================
+   SWITCH
+============================== */
+
+.switch {
+    position: relative;
+
+    width: 48px;
+
+    height: 26px;
+
+    flex-shrink: 0;
+}
+
+
+.switch input {
+    opacity: 0;
+
+    width: 0;
+
+    height: 0;
+}
+
+
+.slider {
+    position: absolute;
+
+    inset: 0;
+
+    background: #D5D5D5;
+
+    border-radius: 30px;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+
+.slider::before {
+    content: "";
+
+    position: absolute;
+
+    width: 20px;
+
+    height: 20px;
+
+    left: 3px;
+
+    bottom: 3px;
+
+    background: white;
+
+    border-radius: 50%;
+
+    transition: 0.25s;
+
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+.switch input:checked + .slider {
+    background: #5E8F66;
+}
+
+
+.switch input:checked + .slider::before {
+    transform: translateX(22px);
+}
+
+
+
+/* ==============================
+   INFORMAÇÕES DO SISTEMA
+============================== */
+
+.info-sistema {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 14px;
+
+    padding-top: 20px;
+}
+
+
+.info-sistema div {
+    background: #F8F7F3;
+
+    border-radius: 10px;
+
+    padding: 15px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+
+.info-sistema span {
+    color: #777;
+
+    font-size: 12px;
+}
+
+
+.info-sistema strong {
+    color: #2E2E2E;
+
+    font-size: 14px;
+}
+
+
+
+/* ==============================
+   RESPONSIVIDADE
+============================== */
+
+@media (max-width: 600px) {
+
+
+    .cabecalho-pagina h1 {
+        font-size: 24px;
+    }
+
+
+    .config-card {
+        padding: 17px;
+    }
+
+
+    .perfil-conteudo {
+        flex-wrap: wrap;
+    }
+
+
+    .perfil-conteudo .btn-secundario {
+        width: 100%;
+
+        margin-top: 5px;
+    }
+
+
+    .opcao {
+        gap: 15px;
+    }
+
+
+    .info-sistema {
+        grid-template-columns: 1fr;
+    }
+
+
+}
