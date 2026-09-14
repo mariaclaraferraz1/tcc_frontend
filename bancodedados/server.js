@@ -1,84 +1,50 @@
-const express = require('express');
-const conexao = require('./db');
+const express = require("express");
+const path = require("path");
 
 const app = express();
+
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-    res.send('Rural Tech funcionando!');
+app.use(express.static(path.join(__dirname, "css")));
+app.use(express.static(path.join(__dirname, "js")));
+app.use(express.static(path.join(__dirname, "img")));
+
+app.get("/", (req, res) => {
+    res.render("inicio");
 });
 
-app.get('/relatorio/producao', (req, res) => {
-    const sql = `
-        SELECT 
-            p.nome AS produto,
-            pr.quantidade,
-            pr.data_producao
-        FROM producao pr
-        INNER JOIN produtos p
-            ON pr.id_produto = p.id_produto
-        ORDER BY pr.data_producao DESC
-    `;
-
-    conexao.query(sql, (erro, resultado) => {
-        if (erro) {
-            console.log(erro);
-            return res.status(500).json({
-                erro: 'Erro ao buscar produção'
-            });
-        }
-
-        res.json(resultado);
-    });
+app.get("/produtos", (req, res) => {
+    res.send("Página de produtos");
 });
 
-app.get('/relatorio/vendas', (req, res) => {
-    const sql = `
-        SELECT 
-            p.nome AS produto,
-            v.quantidade,
-            v.valor_total,
-            v.data_venda
-        FROM vendas v
-        INNER JOIN produtos p
-            ON v.id_produto = p.id_produto
-        ORDER BY v.data_venda DESC
-    `;
-
-    conexao.query(sql, (erro, resultado) => {
-        if (erro) {
-            console.log(erro);
-            return res.status(500).json({
-                erro: 'Erro ao buscar vendas'
-            });
-        }
-        res.json(resultado);
-    });
+app.get("/producao", (req, res) => {
+    res.send("Página de produção");
 });
 
-app.get('/relatorio/gastos', (req, res) => {
-    const sql = `
-        SELECT 
-            descricao,
-            valor,
-            data_gasto
-        FROM gastos
-        ORDER BY data_gasto DESC
-    `;
+app.get("/comercial", (req, res) => {
+    res.send("Página comercial");
+});
 
-    conexao.query(sql, (erro, resultado) => {
-        if (erro) {
-            console.log(erro);
-            return res.status(500).json({
-                erro: 'Erro ao buscar gastos'
-            });
-        }
-        res.json(resultado);
-    });
+app.get("/relatorios", (req, res) => {
+    res.send("Página de relatórios");
+});
+
+app.get("/consulta", (req, res) => {
+    res.send("Página de consulta");
+});
+
+app.get("/configuracoes", (req, res) => {
+    res.send("Página de configurações");
+});
+
+app.get("/vendas", (req, res) => {
+    res.send("Página de vendas");
 });
 
 app.listen(3000, () => {
-    console.log('Servidor rodando em http://localhost:3000');
+    console.log("Rural Tech rodando em http://localhost:3000");
 });
