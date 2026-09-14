@@ -212,21 +212,7 @@ main {
     transform: translateY(0);
 }
 
-.fundo-menu {
-    pointer-events: none;
-}
 
-.fundo-menu.ativo {
-    pointer-events: auto;
-}
-
-.menu-lateral {
-    z-index: 1000;
-}
-
-.fundo-menu {
-    z-index: 999;
-}
 
 /* CELULAR */
 

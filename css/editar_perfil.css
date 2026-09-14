@@ -1,0 +1,141 @@
+.cabecalho-pagina {
+    margin-bottom: 30px;
+}
+
+.subtitulo {
+    display: block;
+    color: #5E8F66;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.cabecalho-pagina h1 {
+    color: #315C3A;
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.cabecalho-pagina p {
+    color: #68736B;
+    font-size: 15px;
+}
+
+.perfil-card {
+    max-width: 800px;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.titulo-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #eeeeee;
+    margin-bottom: 25px;
+}
+
+.icone-perfil {
+    width: 50px;
+    height: 50px;
+    background: #EEF6EF;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icone-perfil i {
+    color: #315C3A;
+    font-size: 21px;
+}
+
+.titulo-card h2 {
+    color: #315C3A;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.titulo-card p {
+    color: #68736B;
+    font-size: 14px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.campo label {
+    color: #315C3A;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.campo input {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid #D9DED9;
+    border-radius: 9px;
+    font-size: 15px;
+    outline: none;
+}
+
+.campo input:focus {
+    border-color: #5E8F66;
+}
+
+.botoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.btn-cancelar,
+.btn-salvar {
+    padding: 12px 18px;
+    border-radius: 9px;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-cancelar {
+    color: #526157;
+    background: #F1F3F1;
+}
+
+.btn-salvar {
+    border: none;
+    background: #315C3A;
+    color: white;
+}
+
+.btn-salvar:hover {
+    background: #264B2E;
+}
+
+@media (max-width: 600px) {
+
+    .perfil-card {
+        padding: 20px;
+    }
+
+    .botoes {
+        flex-direction: column;
+    }
+
+    .btn-cancelar,
+    .btn-salvar {
+        text-align: center;
+        width: 100%;
+    }
+
+}
