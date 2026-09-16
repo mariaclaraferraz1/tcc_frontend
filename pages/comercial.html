@@ -1,134 +1,218 @@
 <!DOCTYPE html>
+
 <html lang="pt-br">
 
 <head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Rural Tech - Comercial</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/comercial.css">
+<title>Rural Tech - Comercial</title>
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/comercial.css">
+
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 
 </head>
 
-
 <body>
 
-   <div id="menu-container"></div>
 
-    <!-- CABEÇALHO -->
-    <header>
-
-        <button class="menu-btn" id="menuBtn">
-
-            <i class="fa-solid fa-bars"></i>
-
-        </button>
-
-        <img src="../img/logotcc.png" alt="Logo Rural Tech">
-
-        <h2>Rural Tech</h2>
-
-    </header>
+<!-- MENU LATERAL -->
+<div id="menu-container"></div>
 
 
-    <!-- CONTEÚDO -->
-    <main>
+<!-- CABEÇALHO -->
+<header>
 
-        <div class="topo-vendas">
+    <button class="menu-btn" id="menuBtn">
 
-            <div>
+        <i class="fa-solid fa-bars"></i>
 
-                <h1>Registro de Vendas</h1>
+    </button>
 
-                <h2>Vendas realizadas</h2>
+    <img src="../img/logotcc.png" alt="Logo Rural Tech">
 
-            </div>
+    <h2>Rural Tech</h2>
+
+</header>
+
+
+<!-- CONTEÚDO -->
+<main>
+
+    <section class="cabecalho-comercial">
+
+        <span class="subtitulo">
+            COMERCIAL
+        </span>
+
+        <h1>
+
+            <i class="fa-solid fa-cart-shopping"></i>
+
+            Comercial
+
+        </h1>
+
+        <p>
+            Gerencie as vendas, gastos e resultados do seu negócio.
+        </p>
+
+    </section>
+
+
+    <section class="opcoes-comercial">
+
+        <h2>
+            Gerenciamento comercial
+        </h2>
+
+
+        <div class="cards-comercial">
+
+
+            <!-- REGISTRAR VENDA -->
+            <a href="registrar_vendas.html" class="card-comercial">
+
+                <div class="icone">
+
+                    <i class="fa-solid fa-receipt"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Registrar Venda
+                    </h3>
+
+                    <p>
+                        Registre uma nova venda realizada.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <!-- VENDAS -->
+            <a href="vendas.html" class="card-comercial">
+            <div class="icone">
+
+            <i class="fa-solid fa-cart-shopping"></i>
 
         </div>
 
+    <div>
 
-        <!-- TABELA DE VENDAS -->
-        <section class="tabela-vendas">
+    <h3>
+        Vendas
+    </h3>
 
-            <table>
+    <p>
+        Consulte e acompanhe as vendas realizadas.
+    </p>
 
-                <thead>
-
-                    <tr>
-
-                        <th>Cliente</th>
-
-                        <th>Produto</th>
-
-                        <th>Quantidade</th>
-
-                        <th>Valor</th>
-
-                        <th>Data</th>
-
-                    </tr>
-
-                </thead>
+</div>
 
 
-                <tbody>
-
-                    <tr>
-
-                        <td>Mariana</td>
-
-                        <td>Milho</td>
-
-                        <td>10</td>
-
-                        <td>R$ 500,00</td>
-
-                        <td>31/08/2026</td>
-
-                    </tr>
+</a>
 
 
-                    <tr>
 
-                        <td>João</td>
+            <!-- GASTOS -->
+            <a href="#" class="card-comercial">
 
-                        <td>Soja</td>
+                <div class="icone">
 
-                        <td>5</td>
+                    <i class="fa-solid fa-money-bill-wave"></i>
 
-                        <td>R$ 350,00</td>
-
-                        <td>30/08/2026</td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </section>
-
-    </main>
+                </div>
 
 
-    <!-- BOTÃO PARA REGISTRAR NOVA VENDA -->
-    <a href="vendas.html" class="btn-nova-venda">
+                <div>
 
-        <i class="fa-solid fa-plus"></i>
+                    <h3>
+                        Gastos
+                    </h3>
 
-        Nova venda
+                    <p>
+                        Registre e acompanhe os gastos do negócio.
+                    </p>
 
-    </a>
+                </div>
+
+            </a>
 
 
-    <!-- JAVASCRIPT -->
-    <script src="../js/menu_lateral.js"></script>
+            <!-- LUCROS -->
+            <a href="#" class="card-comercial">
+
+                <div class="icone">
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Lucros
+                    </h3>
+
+                    <p>
+                        Acompanhe os resultados e os lucros.
+                    </p>
+
+                </div>
+
+            </a>
+
+            <!-- PERDAS -->
+
+                <a href="perdas.html" class="card-comercial">
+
+
+                    <div class="icone">
+
+                <i class="fa-solid fa-triangle-exclamation"></i>
+
+            </div>
+
+        <div>
+
+    <h3>
+        Perdas
+    </h3>
+
+    <p>
+        Registre e acompanhe as perdas da produção.
+    </p>
+
+</div>
+
+
+</a>
+
+
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- JAVASCRIPT -->
+<script src="../js/menu_lateral.js"></script>
+
 
 </body>
 

@@ -1,231 +1,287 @@
 /* ==============================
-   PÁGINA DE VENDAS - RURAL TECH
+PÁGINA COMERCIAL - RURAL TECH
 ============================== */
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #F8F7F3;
-    color: #2E2E2E;
+font-family: Arial, Helvetica, sans-serif;
+background: #F8F7F3;
+color: #2E2E2E;
 }
 
 /* ==============================
-   CABEÇALHO
+CABEÇALHO
 ============================== */
 
 header {
-    height: 75px;
-    background: white;
-    display: flex;
-    align-items: center;
-    padding-left: 80px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+height: 75px;
+background: white;
+
+
+display: flex;
+align-items: center;
+
+padding-left: 80px;
+
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+
 }
 
-header h1 {
-    color: #315C3A;
-    font-size: 24px;
+header h2 {
+color: #315C3A;
+font-size: 24px;
 }
 
 /* ==============================
-   CONTEÚDO
+CONTEÚDO
 ============================== */
 
 main {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 35px 20px;
+width: 100%;
+max-width: 1200px;
+
+margin: 0 auto;
+
+padding: 35px 20px;
+
+
 }
 
 /* ==============================
-   TOPO DAS VENDAS
+CABEÇALHO DO COMERCIAL
 ============================== */
 
-.topo-vendas {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
+.cabecalho-comercial {
+margin-bottom: 35px;
 }
 
-.topo-vendas h2 {
-    color: #315C3A;
-    font-size: 22px;
+.cabecalho-comercial .subtitulo {
+color: #5E8F66;
+
+font-size: 14px;
+font-weight: bold;
+
+letter-spacing: 2px;
+
+
+}
+
+.cabecalho-comercial h1 {
+display: flex;
+align-items: center;
+gap: 12px;
+
+
+margin: 8px 0;
+
+color: #315C3A;
+font-size: 32px;
+
+
+}
+
+.cabecalho-comercial h1 i {
+font-size: 30px;
+}
+
+.cabecalho-comercial p {
+margin: 0;
+
+
+color: #526157;
+font-size: 16px;
+
+
 }
 
 /* ==============================
-   BOTÃO NOVA VENDA
+SEÇÃO DOS CARDS
 ============================== */
 
-.btn-venda {
-    display: inline-block;
-    background: #315C3A;
-    color: white;
-    padding: 12px 20px;
-    border-radius: 10px;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: bold;
-    transition: 0.3s;
-}
+.opcoes-comercial h2 {
+margin-bottom: 20px;
 
-.btn-venda:hover {
-    background: #5E8F66;
-    transform: translateY(-2px);
+
+color: #315C3A;
+font-size: 22px;
+
+
 }
 
 /* ==============================
-   TABELA
+CARDS
 ============================== */
 
-.tabela-vendas {
-    width: 100%;
-    background: white;
-    border-radius: 12px;
-    overflow-x: auto;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-}
+.cards-comercial {
+display: grid;
 
-.tabela-vendas table {
-    width: 100%;
-    border-collapse: collapse;
-}
 
-/* Cabeçalho da tabela */
+grid-template-columns: repeat(2, 1fr);
 
-.tabela-vendas th {
-    background: #315C3A;
-    color: white;
-    padding: 15px;
-    text-align: left;
-    font-size: 15px;
-}
+gap: 20px;
 
-/* Dados */
 
-.tabela-vendas td {
-    padding: 15px;
-    border-bottom: 1px solid #eeeeee;
-    color: #526157;
-}
-
-/* Linhas */
-
-.tabela-vendas tbody tr:hover {
-    background: #EEF6EF;
-}
-
-/* Última linha */
-
-.tabela-vendas tbody tr:last-child td {
-    border-bottom: none;
 }
 
 /* ==============================
-   RESPONSIVO
+CARD INDIVIDUAL
+============================== */
+
+.card-comercial {
+display: flex;
+align-items: center;
+
+
+gap: 20px;
+
+min-height: 140px;
+
+padding: 25px;
+
+background: white;
+
+border-radius: 14px;
+
+text-decoration: none;
+
+box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+
+transition: 0.3s;
+
+
+}
+
+/* ==============================
+EFEITO DO CARD
+============================== */
+
+.card-comercial:hover {
+transform: translateY(-4px);
+
+
+box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+
+background: #EEF6EF;
+
+
+}
+
+/* ==============================
+ÍCONE
+============================== */
+
+.card-comercial .icone {
+width: 65px;
+height: 65px;
+
+
+min-width: 65px;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+background: #EEF6EF;
+
+border-radius: 12px;
+
+color: #315C3A;
+
+font-size: 28px;
+
+
+}
+
+/* ==============================
+TÍTULO DO CARD
+============================== */
+
+.card-comercial h3 {
+margin: 0 0 8px;
+
+
+color: #315C3A;
+
+font-size: 19px;
+
+
+}
+
+/* ==============================
+DESCRIÇÃO
+============================== */
+
+.card-comercial p {
+margin: 0;
+
+
+color: #526157;
+
+font-size: 14px;
+
+line-height: 1.5;
+
+
+}
+
+/* ==============================
+RESPONSIVO
 ============================== */
 
 @media (max-width: 768px) {
 
-    header {
-        padding-left: 25px;
-    }
 
-    header h1 {
-        font-size: 20px;
-    }
-
-    main {
-        padding: 25px 15px;
-    }
-
-    .topo-vendas {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
-
-    .btn-venda {
-        width: 100%;
-        text-align: center;
-    }
-
-    .tabela-vendas th,
-    .tabela-vendas td {
-        padding: 12px;
-        font-size: 14px;
-    }
+header {
+    padding-left: 25px;
 }
 
-/* BOTÃO NOVA VENDA */
+header h2 {
+    font-size: 20px;
+}
 
-.btn-nova-venda {
-    position: fixed;
-    right: 30px;
-    bottom: 30px;
+main {
+    padding: 25px 15px;
+}
 
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.cabecalho-comercial h1 {
+    font-size: 27px;
+}
 
-    padding: 14px 22px;
-
-    background-color: #2e7d32;
-    color: #ffffff;
-
-    text-decoration: none;
-
-    border-radius: 10px;
-
-    font-size: 16px;
-    font-weight: 600;
-
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.20);
-
-    transition: 0.3s;
-
-    z-index: 1000;
+.cards-comercial {
+    grid-template-columns: 1fr;
 }
 
 
-/* ÍCONE */
-
-.btn-nova-venda i {
-    font-size: 18px;
 }
 
+/* ==============================
+CELULAR
+============================== */
 
-/* EFEITO AO PASSAR O MOUSE */
+@media (max-width: 500px) {
 
-.btn-nova-venda:hover {
-    background-color: #256b29;
 
-    transform: translateY(-2px);
+.card-comercial {
+    padding: 20px;
 
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+    gap: 15px;
 }
 
+.card-comercial .icone {
+    width: 55px;
+    height: 55px;
 
-/* EFEITO AO CLICAR */
+    min-width: 55px;
 
-.btn-nova-venda:active {
-    transform: translateY(0);
+    font-size: 23px;
 }
 
+.card-comercial h3 {
+    font-size: 17px;
+}
 
-
-/* CELULAR */
-
-@media (max-width: 600px) {
-
-    .btn-nova-venda {
-
-        right: 20px;
-        bottom: 20px;
-
-        padding: 12px 18px;
-
-        font-size: 14px;
-    }
+.card-comercial p {
+    font-size: 13px;
+}
 
 }

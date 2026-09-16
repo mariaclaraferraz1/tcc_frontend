@@ -1,0 +1,259 @@
+/* ==============================
+REGISTRAR VENDAS - RURAL TECH
+============================== */
+
+body {
+font-family: Arial, Helvetica, sans-serif;
+background: #F8F7F3;
+color: #2E2E2E;
+}
+
+/* ==============================
+CABEÇALHO
+============================== */
+
+header {
+height: 75px;
+background: white;
+
+
+display: flex;
+align-items: center;
+
+padding-left: 80px;
+
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+}
+
+header h2 {
+color: #315C3A;
+font-size: 24px;
+}
+
+/* ==============================
+CONTEÚDO
+============================== */
+
+main {
+width: 100%;
+max-width: 1200px;
+
+
+margin: 0 auto;
+
+padding: 35px 20px;
+
+
+}
+
+/* ==============================
+TOPO
+============================== */
+
+.topo-vendas {
+display: flex;
+justify-content: space-between;
+align-items: center;
+
+
+margin-bottom: 25px;
+
+}
+
+.topo-vendas h1 {
+color: #315C3A;
+font-size: 28px;
+margin: 0 0 8px;
+}
+
+.topo-vendas h2 {
+color: #526157;
+font-size: 20px;
+margin: 0;
+}
+
+/* ==============================
+TABELA
+============================== */
+
+.tabela-vendas {
+width: 100%;
+
+
+background: white;
+
+border-radius: 12px;
+
+overflow-x: auto;
+
+box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+
+
+}
+
+.tabela-vendas table {
+width: 100%;
+
+
+border-collapse: collapse;
+
+
+}
+
+/* Cabeçalho da tabela */
+
+.tabela-vendas th {
+background: #315C3A;
+color: white;
+
+
+padding: 15px;
+
+text-align: left;
+
+font-size: 15px;
+
+
+}
+
+/* Dados */
+
+.tabela-vendas td {
+padding: 15px;
+
+
+border-bottom: 1px solid #eeeeee;
+
+color: #526157;
+
+
+}
+
+/* Linhas */
+
+.tabela-vendas tbody tr:hover {
+background: #EEF6EF;
+}
+
+/* Última linha */
+
+.tabela-vendas tbody tr:last-child td {
+border-bottom: none;
+}
+
+/* ==============================
+BOTÃO NOVA VENDA
+============================== */
+
+.btn-nova-venda {
+position: fixed;
+
+
+right: 30px;
+bottom: 30px;
+
+display: flex;
+align-items: center;
+
+gap: 10px;
+
+padding: 14px 22px;
+
+background-color: #2e7d32;
+
+color: #ffffff;
+
+text-decoration: none;
+
+border-radius: 10px;
+
+font-size: 16px;
+font-weight: 600;
+
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.20);
+
+transition: 0.3s;
+
+z-index: 1000;
+
+
+}
+
+/* ÍCONE */
+
+.btn-nova-venda i {
+font-size: 18px;
+}
+
+/* Efeito ao passar o mouse */
+
+.btn-nova-venda:hover {
+background-color: #256b29;
+
+
+transform: translateY(-2px);
+
+box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+
+}
+
+/* Efeito ao clicar */
+
+.btn-nova-venda:active {
+transform: translateY(0);
+}
+
+/* ==============================
+RESPONSIVO
+============================== */
+
+@media (max-width: 768px) {
+
+header {
+    padding-left: 25px;
+}
+
+header h2 {
+    font-size: 20px;
+}
+
+main {
+    padding: 25px 15px;
+}
+
+.topo-vendas {
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 15px;
+}
+
+.tabela-vendas th,
+.tabela-vendas td {
+    padding: 12px;
+
+    font-size: 14px;
+}
+
+
+}
+
+/* ==============================
+CELULAR
+============================== */
+
+@media (max-width: 600px) {
+
+
+.btn-nova-venda {
+    right: 20px;
+    bottom: 20px;
+
+    padding: 12px 18px;
+
+    font-size: 14px;
+}
+
+
+}
