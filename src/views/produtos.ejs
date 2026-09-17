@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Rural Tech - Produtos</title>
+
+    <link rel="stylesheet" href="/css/produtos.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <%- include('partials/menu') %>
+
+    <header>
+      <button class="menu-btn" id="menuBtn">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <img src="/img/logotcc.png" alt="Logo Rural Tech" />
+
+      <h2>Rural Tech</h2>
+    </header>
+
+    <main>
+      <section class="cabecalho-produtos">
+        <span class="subtitulo">GERENCIAMENTO</span>
+
+        <h1>Produtos cadastrados</h1>
+
+        <p>Visualize e gerencie os produtos cadastrados no sistema.</p>
+      </section>
+
+      <!-- Mudado cadastro_produto.html para a rota /cadastro-produto -->
+      <a href="/cadastro-produto" class="btn-cadastrar">
+        <i class="fa-solid fa-plus"></i>
+
+        Cadastrar novo produto
+      </a>
+
+      <section class="lista-produtos">
+        <h2>Seus produtos</h2>
+
+        <div class="produto-card">
+          <div class="produto-imagem">
+            <i class="fa-solid fa-wheat-awn"></i>
+          </div>
+
+          <div class="produto-info">
+            <h3>Milho</h3>
+
+            <p>Grãos</p>
+
+            <span>Estoque: 0 kg</span>
+          </div>
+
+          <button class="btn-opcoes">
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+          </button>
+        </div>
+
+        <div class="produto-card">
+          <div class="produto-imagem">
+            <i class="fa-solid fa-seedling"></i>
+          </div>
+
+          <div class="produto-info">
+            <h3>Soja</h3>
+
+            <p>Grãos</p>
+
+            <span>Estoque: 0 kg</span>
+          </div>
+
+          <button class="btn-opcoes">
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+          </button>
+        </div>
+
+        <div class="produto-card">
+          <div class="produto-imagem">
+            <i class="fa-solid fa-carrot"></i>
+          </div>
+
+          <div class="produto-info">
+            <h3>Hortaliças</h3>
+
+            <p>Vegetais</p>
+
+            <span>Estoque: 0 kg</span>
+          </div>
+
+          <button class="btn-opcoes">
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <script src="/js/menu_lateral.js"></script>
+    <script src="/js/produtos.js"></script>
+  </body>
+</html>

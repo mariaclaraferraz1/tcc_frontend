@@ -2,167 +2,110 @@
 <html lang="pt-br">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Rural Tech - Consulta</title>
 
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/consulta.css">
+    <!-- Removido o ../ dos estilos -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/consulta.css">
 
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
 </head>
-
 
 <body>
 
     <!-- MENU LATERAL -->
-    <nav class="menu-lateral">
+    <%- include('partials/menu') %>
 
         <div class="menu-topo">
-
-            <img src="../img/logotcc.png" alt="Logo Rural Tech">
-
+            <!-- Removido o ../ da imagem -->
+            <img src="/img/logotcc.png" alt="Logo Rural Tech">
             <span>Rural Tech</span>
-
         </div>
 
-
         <ul>
-
             <!-- INÍCIO -->
             <li>
-
-                <a href="inicio.html">
-
+                <a href="/inicio">
                     <i class="fa-solid fa-house"></i>
-
                     <span>Início</span>
-
                 </a>
-
             </li>
-
 
             <!-- PRODUTOS -->
             <li>
-
-                <a href="produtos.html">
-
+                <a href="/produtos">
                     <i class="fa-solid fa-box"></i>
-
                     <span>Produtos</span>
-
                 </a>
-
             </li>
-
 
             <!-- PRODUÇÃO -->
             <li>
-
-                <a href="producao.html">
-
+                <a href="/producao">
                     <i class="fa-solid fa-seedling"></i>
-
                     <span>Produção</span>
-
                 </a>
-
             </li>
-
 
             <!-- COMERCIAL -->
             <li>
-
-                <a href="comercial.html" class="ativo">
-
+                <a href="/comercial">
                     <i class="fa-solid fa-cart-shopping"></i>
-
                     <span>Comercial</span>
-
                 </a>
-
             </li>
-
 
             <!-- VENDAS -->
             <li>
-
-                <a href="vendas.html">
-
+                <a href="/vendas">
                     <i class="fa-solid fa-receipt"></i>
-
                     <span>Vendas</span>
-
                 </a>
-
             </li>
-
 
             <!-- RELATÓRIOS -->
             <li>
-
-                <a href="relatorios.html">
-
+                <a href="/relatorios">
                     <i class="fa-solid fa-chart-column"></i>
-
                     <span>Relatórios</span>
-
                 </a>
-
             </li>
-
 
             <!-- CONSULTA -->
             <li>
-
-                <a href="consulta.html">
-
+                <a href="/consulta" class="ativo">
                     <i class="fa-solid fa-magnifying-glass"></i>
-
                     <span>Consulta</span>
-
                 </a>
-
             </li>
-
 
             <!-- CONFIGURAÇÕES -->
             <li>
-
-                <a href="configuracoes.html">
-
+                <a href="/configuracoes">
                     <i class="fa-solid fa-gear"></i>
-
                     <span>Configurações</span>
-
                 </a>
-
             </li>
-
         </ul>
 
     </nav>
 
-
     <!-- FUNDO DO MENU -->
     <div class="fundo-menu"></div>
-
 
     <!-- CABEÇALHO -->
     <header>
 
         <button class="menu-btn" id="menuBtn">
-
             <i class="fa-solid fa-bars"></i>
-
         </button>
 
-        <img src="../img/logotcc.png" alt="Logo Rural Tech">
+        <!-- Removido o ../ da imagem -->
+        <img src="/img/logotcc.png" alt="Logo Rural Tech">
 
         <h2>Rural Tech</h2>
 
@@ -172,9 +115,9 @@
         <section class="cabecalho-pagina">
             <span>CONSULTA</span>
             <h1>Consulta de informações</h1>
-        <p>
-            Consulte rapidamente as informações cadastradas no sistema.
-        </p>
+            <p>
+                Consulte rapidamente as informações cadastradas no sistema.
+            </p>
         </section>
 
         <section class="filtros">
@@ -184,124 +127,46 @@
             </h2>
             <div class="campo">
 
-                <label for="categoria">
-
-                    Categoria
-
-                </label>
+                <label for="categoria">Categoria</label>
 
                 <select id="categoria">
-
-                    <option value="">
-
-                        Selecione uma categoria
-
-                    </option>
-
-                    <option value="produtos">
-
-                        Produtos
-
-                    </option>
-
-                    <option value="producao">
-
-                        Produção
-
-                    </option>
-
-                    <option value="vendas">
-
-                        Vendas
-
-                    </option>
-
-                    <option value="gastos">
-
-                        Gastos
-
-                    </option>
-
+                    <option value="">Selecione uma categoria</option>
+                    <option value="produtos">Produtos</option>
+                    <option value="producao">Produção</option>
+                    <option value="vendas">Vendas</option>
+                    <option value="gastos">Gastos</option>
                 </select>
 
             </div>
 
             <div class="campo">
 
-                <label for="tipoInformacao">
-
-                    Tipo de informação
-
-                </label>
+                <label for="tipoInformacao">Tipo de informação</label>
 
                 <select id="tipoInformacao">
-
-                    <option value="">
-
-                        Selecione o tipo
-
-                    </option>
-
-                    <option value="nome">
-
-                        Nome
-
-                    </option>
-
-                    <option value="data">
-
-                        Data
-
-                    </option>
-
-                    <option value="quantidade">
-
-                        Quantidade
-
-                    </option>
-
-                    <option value="valor">
-
-                        Valor
-
-                    </option>
-
+                    <option value="">Selecione o tipo</option>
+                    <option value="nome">Nome</option>
+                    <option value="data">Data</option>
+                    <option value="quantidade">Quantidade</option>
+                    <option value="valor">Valor</option>
                 </select>
 
             </div>
 
             <div class="campo">
 
-                <label for="busca">
-
-                    Buscar
-
-                </label>
+                <label for="busca">Buscar</label>
 
                 <div class="campo-busca">
-
                     <i class="fa-solid fa-magnifying-glass"></i>
-
-                    <input
-
-                        type="text"
-
-                        id="busca"
-
-                        placeholder="Digite para buscar"
-
-                    >
-
+                    <input type="text" id="busca" placeholder="Digite para buscar">
                 </div>
 
             </div>
 
             <button type="button" class="btn-pesquisar" id="btnPesquisar">
-
                 <i class="fa-solid fa-magnifying-glass"></i>
-
                 Pesquisar
-
             </button>
 
         </section>
@@ -309,42 +174,29 @@
         <section class="resultados">
 
             <div class="titulo-resultados">
-
                 <h2>
-
                     <i class="fa-solid fa-chart-column"></i>
-
                     Resultados
-
                 </h2>
-
             </div>
 
             <div class="area-resultados" id="areaResultados">
-
                 <div class="icone-resultado">
-
                     <i class="fa-solid fa-file-lines"></i>
-
                 </div>
-
                 <h3>Nenhum resultado encontrado</h3>
-
                 <p>
-
                     Utilize os filtros acima para encontrar as informações desejadas.
-
                 </p>
-
             </div>
 
         </section>
 
     </main>
 
-    <script src="../js/menu_lateral.js"></script>
-
-    <script src="../js/consulta.js"></script>
+    <!-- Removido o ../ dos scripts -->
+    <script src="/js/menu_lateral.js"></script>
+    <script src="/js/consulta.js"></script>
 
 </body>
 

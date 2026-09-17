@@ -9,9 +9,8 @@
     <title>Rural Tech - Editar Perfil</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/editar_perfil.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/editar_perfil.css">
 
 </head>
 
@@ -19,11 +18,12 @@
 
     <!-- MENU LATERAL -->
 
-    <nav class="menu-lateral">
+    <%- include('partials/menu') %>
 
         <div class="menu-topo">
 
-            <img src="../img/logotcc.png" alt="Logo Rural Tech">
+            <!-- Removido o ../ da imagem -->
+            <img src="/img/logotcc.png" alt="Logo Rural Tech">
 
             <span>Rural Tech</span>
 
@@ -32,49 +32,49 @@
         <ul>
 
             <li>
-                <a href="inicio.html">
+                <a href="/inicio">
                     <i class="fa-solid fa-house"></i>
                     <span>Início</span>
                 </a>
             </li>
 
             <li>
-                <a href="produtos.html">
+                <a href="/produtos">
                     <i class="fa-solid fa-box"></i>
                     <span>Produtos</span>
                 </a>
             </li>
 
             <li>
-                <a href="producao.html">
+                <a href="/producao">
                     <i class="fa-solid fa-seedling"></i>
                     <span>Produção</span>
                 </a>
             </li>
 
             <li>
-                <a href="comercial.html">
+                <a href="/comercial">
                     <i class="fa-solid fa-cart-shopping"></i>
                     <span>Comercial</span>
                 </a>
             </li>
 
             <li>
-                <a href="relatorios.html">
+                <a href="/relatorios">
                     <i class="fa-solid fa-chart-column"></i>
                     <span>Relatórios</span>
                 </a>
             </li>
 
             <li>
-                <a href="consulta.html">
+                <a href="/consulta">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <span>Consulta</span>
                 </a>
             </li>
 
             <li>
-                <a href="configuracoes.html" class="ativo">
+                <a href="/configuracoes" class="ativo">
                     <i class="fa-solid fa-gear"></i>
                     <span>Configurações</span>
                 </a>
@@ -95,7 +95,7 @@
             <i class="fa-solid fa-bars"></i>
         </button>
 
-        <img src="../img/logotcc.png" alt="Logo Rural Tech">
+        <img src="/img/logotcc.png" alt="Logo Rural Tech">
 
         <h2>Rural Tech</h2>
 
@@ -186,7 +186,8 @@
 
                 <div class="botoes">
 
-                    <a href="configuracoes.html" class="btn-cancelar">
+                    <!-- Mudado para a rota /configuracoes -->
+                    <a href="/configuracoes" class="btn-cancelar">
                         Cancelar
                     </a>
 
@@ -206,9 +207,8 @@
 
     </main>
 
-
-    <script src="../js/menu_lateral.js"></script>
-    <script src="../js/editar_perfil.js"></script>
+    <script src="/js/menu_lateral.js"></script>
+    <script src="/js/editar_perfil.js"></script>
 
 </body>
 

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controle de Gastos</title>
+    <link rel="stylesheet" href="/css/gastos.css" />
+  </head>
+
+  <body>
+    <%- include('partials/menu') %>
+
+    <div class="container">
+      <h2>Registrar Gastos</h2>
+
+      <div class="tip-box">
+        <strong>Dica importante</strong>
+        <p>
+          Manter o controle dos gastos ajuda a conhecer melhor os custos da
+          produção e aumentar a lucratividade da sua propriedade.
+        </p>
+      </div>
+
+      <form id="gastoForm">
+        <div class="form-group">
+          <label for="descricao">Descrição do Gasto</label>
+          <input
+            type="text"
+            id="descricao"
+            placeholder="Ex: Compra de matéria-prima"
+            required
+          />
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="categoria">Categoria</label>
+            <select id="categoria" required>
+              <option value="" disabled selected>Selecione...</option>
+              <option>Alimentação</option>
+              <option>Aluguel/Espaço</option>
+              <option>Equipamentos</option>
+              <option>Impostos/Taxas</option>
+              <option>Marketing/Anúncios</option>
+              <option>Serviços Terceirizados</option>
+              <option>Utilidades (Água/Luz/Internet)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="dataGasto">Data do Gasto</label>
+            <input type="date" id="dataGasto" required />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="valor">Valor (R$)</label>
+            <input
+              type="number"
+              id="valor"
+              step="0.01"
+              placeholder="0,00"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="formaPagamento">Forma de Pagamento</label>
+            <select id="formaPagamento" required>
+              <option value="" disabled selected>Selecione...</option>
+              <option>Dinheiro</option>
+              <option>Pix</option>
+              <option>Cartão de Crédito</option>
+              <option>Cartão de Débito</option>
+              <option>Boleto Bancário</option>
+              <option>Transferência (TED/DOC)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="fornecedor">Fornecedor</label>
+          <input
+            type="text"
+            id="fornecedor"
+            placeholder="Nome da empresa ou prestador"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Classificação do Gasto (Clique para selecionar)</label>
+          <div class="area-options">
+            <div class="area-btn" onclick="selectArea(this, 'Produção')">
+              Produção
+            </div>
+            <div class="area-btn" onclick="selectArea(this, 'Infraestrutura')">
+              Infraestrutura
+            </div>
+            <div class="area-btn" onclick="selectArea(this, 'Transporte')">
+              Transporte
+            </div>
+            <div class="area-btn" onclick="selectArea(this, 'Outros')">
+              Outros
+            </div>
+          </div>
+          <input type="hidden" id="areaSelecionada" required />
+        </div>
+
+        <div class="form-group">
+          <label for="comprovante">Anexar Comprovante (Imagem ou PDF)</label>
+          <div class="file-input-wrapper">
+            <input
+              type="file"
+              id="comprovante"
+              accept="image/*, application/pdf"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="observacao">Observações</label>
+          <textarea
+            id="observacao"
+            placeholder="Informações adicionais importantes..."
+          ></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-submit">Salvar Gasto</button>
+        </div>
+      </form>
+    </div>
+    <script src="/js/gastos.js"></script>
+  </body>
+</html>
