@@ -3,14 +3,13 @@ const path = require("path");
 const app = express();
 
 // CONFIGURAÇÃO DO EJS E PASTAS ESTÁTICAS
-// Indica que as views estão na pasta src/views
 app.set("views", path.join(__dirname, "src", "views"));
 app.set("view engine", "ejs");
 
 // Indica onde ficam as pastas de CSS, JS do front e Imagens
 app.use(express.static(path.join(__dirname, "public")));
 
-// Middleware para processar dados de formulários (se necessário no cadastro/login)
+// Middleware para processar dados de formulários
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -19,7 +18,7 @@ app.get("/", (req, res) => {
   res.render("login");
 });
 
-// 2. ROTAS DE AUTENTICAÇÃO
+// 2. ROTAS DE AUTENTICAÇÃO (Exibição das Telas - GET)
 app.get("/login", (req, res) => {
   res.render("login");
 });
@@ -32,12 +31,25 @@ app.get("/alterar-senha", (req, res) => {
   res.render("alterar_senha");
 });
 
-// 3. PAINEL PRINCIPAL / DASHBOARD
+// 3. PROCESSAMENTO DE FORMULÁRIOS (Envio de Dados - POST)
+// Processa o cadastro e redireciona para o login
+app.post("/criar-conta", (req, res) => {
+  // Redireciona o usuário para a página de login após o cadastro
+  res.redirect("/login");
+});
+
+// Processa o login e redireciona para o início do sistema
+app.post("/login", (req, res) => {
+  // Redireciona o usuário para o dashboard após autenticar
+  res.redirect("/inicio");
+});
+
+// 4. PAINEL PRINCIPAL / DASHBOARD
 app.get("/inicio", (req, res) => {
   res.render("inicio");
 });
 
-// 4. MÓDULOS DO SISTEMA
+// 5. MÓDULOS DO SISTEMA
 app.get("/cadastro-produto", (req, res) => {
   res.render("cadastro_produto");
 });
@@ -90,7 +102,7 @@ app.get("/vendas", (req, res) => {
   res.render("vendas");
 });
 
-// 5. TRATAMENTO DE ERRO 404 (Sempre por último)
+// 6. TRATAMENTO DE ERRO 404 (Sempre por último)
 app.use((req, res) => {
   res.status(404).send("Página não encontrada!");
 });
