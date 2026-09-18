@@ -1,28 +1,46 @@
 const loginForm = document.getElementById("loginForm");
 const mensagem = document.getElementById("mensagem");
 
-loginForm.addEventListener("submit", function(event) {
+loginForm.addEventListener("submit", async function(event) {
 
     event.preventDefault();
 
     const email = document.getElementById("email").value;
     const senha = document.getElementById("senha").value;
 
-    const emailCadastrado = localStorage.getItem("email");
-    const senhaCadastrada = localStorage.getItem("senha");
+    try {
 
-    if (email === emailCadastrado && senha === senhaCadastrada) {
+        const resposta = await fetch("/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: email,
+                senha: senha
+            })
+        });
 
-        mensagem.textContent = "Login realizado com sucesso!";
-        mensagem.style.color = "green";
+        if (resposta.redirected) {
 
-        setTimeout(function() {
-            window.location.href = "../pages/inicio.html";
-        }, 500);
+            mensagem.textContent = "Login realizado com sucesso!";
+            mensagem.style.color = "green";
 
-    } else {
+            window.location.href = resposta.url;
 
-        mensagem.textContent = "E-mail ou senha incorretos!";
+        } else {
+
+            const mensagemErro = await resposta.text();
+
+            mensagem.textContent = mensagemErro;
+            mensagem.style.color = "red";
+        }
+
+    } catch (erro) {
+
+        console.error("Erro no login:", erro);
+
+        mensagem.textContent = "Erro ao conectar com o servidor.";
         mensagem.style.color = "red";
     }
 });

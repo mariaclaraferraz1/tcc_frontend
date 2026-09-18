@@ -1,142 +1,80 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    const menuContainer = document.getElementById("menu-container");
+    // ==============================
+    // ELEMENTOS DO MENU
+    // ==============================
 
-    if (!menuContainer) {
+    const menuLateral = document.querySelector(".menu-lateral");
+    const fundoMenu = document.querySelector(".fundo-menu");
+    const menuBtn = document.getElementById("menuBtn");
+
+    // Verifica se os elementos existem
+    if (!menuLateral || !fundoMenu || !menuBtn) {
+
+        console.error("Elementos do menu não encontrados.");
+
         return;
     }
 
-    fetch("../menu.html")
-        .then(function (response) {
 
-            if (!response.ok) {
-                throw new Error("Nao foi possivel carregar o menu.html");
-            }
+    // ==============================
+    // ABRIR / FECHAR MENU
+    // ==============================
 
-            return response.text();
+    menuBtn.addEventListener("click", function () {
 
-        })
-        .then(function (data) {
+        menuLateral.classList.toggle("aberto");
+        fundoMenu.classList.toggle("ativo");
 
-            // Coloca o menu na pagina
-            menuContainer.innerHTML = data;
+    });
 
 
-            // ==============================
-            // CORRIGIR CAMINHO DA LOGO
-            // ==============================
+    // ==============================
+    // FECHAR CLICANDO NO FUNDO
+    // ==============================
 
-            const logo = menuContainer.querySelector(".menu-topo img");
+    fundoMenu.addEventListener("click", function () {
 
-            if (logo) {
-                logo.src = "../img/logotcc.png";
-            }
+        menuLateral.classList.remove("aberto");
+        fundoMenu.classList.remove("ativo");
 
-
-            // ==============================
-            // ELEMENTOS DO MENU
-            // ==============================
-
-            const menuLateral =
-                menuContainer.querySelector(".menu-lateral");
-
-            const fundoMenu =
-                menuContainer.querySelector(".fundo-menu");
-
-            const menuBtn =
-                document.getElementById("menuBtn");
+    });
 
 
-            // Verifica se encontrou os elementos
-            if (!menuLateral || !fundoMenu || !menuBtn) {
+    // ==============================
+    // IDENTIFICAR PÁGINA ATUAL
+    // ==============================
 
-                console.error("Elementos do menu nao encontrados.");
-
-                return;
-            }
-
-
-            // ==============================
-            // ABRIR / FECHAR MENU
-            // ==============================
-
-            menuBtn.addEventListener("click", function () {
-
-                menuLateral.classList.toggle("aberto");
-
-                fundoMenu.classList.toggle("ativo");
-
-            });
+    const paginaAtual = window.location.pathname
+        .split("/")
+        .pop();
 
 
-            // ==============================
-            // FECHAR CLICANDO NO FUNDO
-            // ==============================
+    // ==============================
+    // MARCAR PÁGINA ATUAL
+    // ==============================
 
-            fundoMenu.addEventListener("click", function () {
+    const links = menuLateral.querySelectorAll("a");
 
-                menuLateral.classList.remove("aberto");
+    links.forEach(function (link) {
 
-                fundoMenu.classList.remove("ativo");
+        const href = link.getAttribute("href");
 
-            });
+        if (!href) {
+            return;
+        }
 
+        const paginaLink = href
+            .split("/")
+            .pop()
+            .split("?")[0];
 
-            // ==============================
-            // CORRIGIR OS LINKS DO MENU
-            // ==============================
+        if (paginaLink === paginaAtual) {
 
-            const links =
-                menuLateral.querySelectorAll("a");
+            link.classList.add("ativo");
 
-            links.forEach(function (link) {
+        }
 
-                const href = link.getAttribute("href");
-
-                if (href && href.startsWith("pages/")) {
-
-                    link.setAttribute(
-                        "href",
-                        "../" + href
-                    );
-
-                }
-
-            });
-
-
-            // ==============================
-            // IDENTIFICAR PAGINA ATUAL
-            // ==============================
-
-            const paginaAtual =
-                window.location.pathname.split("/").pop();
-
-
-            // ==============================
-            // MARCAR PAGINA ATUAL
-            // ==============================
-
-            links.forEach(function (link) {
-
-                const href = link.getAttribute("href");
-
-                if (href && href.endsWith(paginaAtual)) {
-
-                    link.classList.add("ativo");
-
-                }
-
-            });
-
-        })
-        .catch(function (error) {
-
-            console.error(
-                "Erro ao carregar o menu:",
-                error
-            );
-
-        });
+    });
 
 });
