@@ -1,271 +1,819 @@
-/* ==============================
-   DASHBOARD - INÍCIO
-============================== */
 
+/* =========================================================
+   RURAL TECH
+   TELA INICIAL — AGRO CHIC RURAL
+========================================================= */
 
-/* ==============================
-   LOGOS
-============================== */
+:root {
+    --verde-profundo: #293b2d;
+    --verde: #3f553f;
+    --verde-oliva: #667454;
+    --verde-sage: #9ca88e;
 
-header img {
-    width: 35px;
-    height: 35px;
-    object-fit: contain;
+    --terra: #8a7050;
+    --bronze: #a88b5a;
+
+    --creme: #f4f0e5;
+    --areia: #e5dfd0;
+    --palha: #d7ccb5;
+
+    --branco: #faf9f4;
+
+    --texto: #30372f;
+    --texto-suave: #777b70;
+
+    --borda: rgba(70, 78, 61, 0.16);
+
+    --sombra: 0 5px 18px rgba(45, 55, 43, 0.08);
+    --sombra-hover: 0 10px 25px rgba(45, 55, 43, 0.13);
 }
 
-.menu-topo img {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
+
+/* =========================================================
+   FUNDO GERAL
+========================================================= */
+
+body {
+    background:
+        radial-gradient(
+            circle at 8% 12%,
+            rgba(156, 168, 142, 0.22) 0,
+            transparent 24%
+        ),
+        radial-gradient(
+            circle at 92% 78%,
+            rgba(168, 139, 90, 0.12) 0,
+            transparent 23%
+        ),
+        linear-gradient(
+            135deg,
+            #e9e7dc 0%,
+            #f3f0e6 48%,
+            #e4e7dc 100%
+        );
+
+    color: var(--texto);
 }
 
 
-/* ==============================
-   BOAS-VINDAS
-============================== */
+/* =========================================================
+   HEADER DA PÁGINA
+========================================================= */
+
+body header {
+    background: rgba(250, 249, 244, 0.96);
+    border-bottom: 1px solid rgba(65, 76, 59, 0.10);
+    box-shadow: 0 2px 12px rgba(45, 55, 43, 0.05);
+}
+
+body header h2 {
+    color: var(--verde-profundo);
+    letter-spacing: 0.3px;
+}
+
+
+/* =========================================================
+   ÁREA PRINCIPAL
+========================================================= */
+
+body main {
+    position: relative;
+    max-width: 1120px;
+    padding: 30px 22px 55px;
+}
+
+
+/* =========================================================
+   DECORAÇÃO RURAL DO FUNDO
+========================================================= */
+
+body main::before {
+    content: "✦";
+    position: absolute;
+    top: 18px;
+    right: 35px;
+
+    color: rgba(168, 139, 90, 0.25);
+    font-size: 25px;
+}
+
+body main::after {
+    content: "";
+    position: absolute;
+
+    width: 210px;
+    height: 90px;
+
+    right: -80px;
+    top: 100px;
+
+    border-top: 1px solid rgba(102, 116, 84, 0.15);
+    border-radius: 50%;
+
+    transform: rotate(-12deg);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   BANNER DE BOAS-VINDAS
+========================================================= */
 
 .boas-vindas {
-    margin-bottom: 25px;
+    position: relative;
+
+    min-height: 165px;
+    margin-bottom: 32px;
+    padding: 27px 30px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            115deg,
+            #26382b 0%,
+            #354b38 52%,
+            #566348 100%
+        );
+
+    box-shadow:
+        0 10px 25px rgba(38, 56, 43, 0.18);
+
+    isolation: isolate;
 }
+
+
+/* brilho suave */
+
+.boas-vindas::before {
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    right: -100px;
+    top: -170px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+
+    box-shadow:
+        0 0 0 25px rgba(255, 255, 255, 0.025),
+        0 0 0 50px rgba(255, 255, 255, 0.018);
+
+    z-index: -1;
+}
+
+
+/* linhas de plantação */
+
+.boas-vindas::after {
+    content: "";
+
+    position: absolute;
+
+    right: 25px;
+    bottom: 18px;
+
+    width: 250px;
+    height: 65px;
+
+    background:
+        repeating-linear-gradient(
+            175deg,
+            transparent 0,
+            transparent 8px,
+            rgba(218, 208, 177, 0.15) 9px,
+            transparent 10px
+        );
+
+    transform: rotate(-5deg);
+
+    opacity: 0.8;
+}
+
+
+/* pequeno marcador */
 
 .boas-vindas span {
-    color: #5E8F66;
-    font-size: 14px;
-    font-weight: bold;
+    position: relative;
+    z-index: 2;
+
+    width: fit-content;
+
+    margin-bottom: 7px;
+    padding: 5px 10px;
+
+    color: #d4d6c7;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    letter-spacing: 0.3px;
 }
+
+
+/* título */
 
 .boas-vindas h1 {
-    margin-top: 8px;
-    margin-bottom: 8px;
+    position: relative;
+    z-index: 2;
+
+    margin: 0 0 7px;
+
+    color: #f8f5eb;
 
     font-size: 25px;
+    font-weight: 600;
 
-    color: #2E2E2E;
+    letter-spacing: -0.4px;
 }
+
+
+/* descrição */
 
 .boas-vindas p {
-    color: #777;
+    position: relative;
+    z-index: 2;
 
-    font-size: 14px;
+    margin: 0;
 
-    line-height: 1.5;
+    color: #d5d9cc;
+
+    font-size: 13px;
 }
 
 
-/* ==============================
+/* =========================================================
    TÍTULOS DAS SEÇÕES
-============================== */
+========================================================= */
 
 .titulo-secao {
-    color: #2E2E2E;
+    position: relative;
 
-    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
 
-    margin-bottom: 15px;
+    margin: 0 0 13px;
+
+    color: var(--verde-profundo);
+
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.titulo-secao::before {
+    content: "";
+
+    width: 4px;
+    height: 19px;
+
+    border-radius: 5px;
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--bronze),
+            var(--terra)
+        );
 }
 
 
-/* ==============================
-   CARDS
-============================== */
+/* pequeno detalhe ao lado do título */
+
+.titulo-secao::after {
+    content: "✦";
+
+    color: rgba(168, 139, 90, 0.55);
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   CARDS DE RESUMO
+   MESMO TAMANHO DA VERSÃO ANTERIOR
+========================================================= */
 
 .cards {
     display: grid;
 
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
 
     gap: 12px;
 }
 
+
 .card {
-    background: white;
+    position: relative;
 
-    min-height: 85px;
+    min-height: 96px;
 
-    padding: 14px;
+    padding: 15px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(250, 249, 244, 0.98),
+            rgba(242, 239, 228, 0.90)
+        );
+
+    border: 1px solid var(--borda);
 
     border-radius: 12px;
 
-    display: flex;
+    box-shadow: var(--sombra);
 
-    align-items: center;
-
-    gap: 10px;
-
-    box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
 }
 
 
-/* ÍCONE DOS CARDS */
+/* detalhe decorativo de folha */
+
+.card::after {
+    content: "⌁";
+
+    position: absolute;
+
+    right: -3px;
+    bottom: -15px;
+
+    color: rgba(102, 116, 84, 0.12);
+
+    font-size: 70px;
+
+    transform: rotate(-20deg);
+
+    pointer-events: none;
+}
+
+
+.card:hover {
+    transform: translateY(-3px);
+
+    border-color: rgba(102, 116, 84, 0.35);
+
+    box-shadow: var(--sombra-hover);
+}
+
+
+/* =========================================================
+   ÍCONES DOS CARDS
+========================================================= */
 
 .icone {
-    width: 40px;
-    height: 40px;
+    position: relative;
+    z-index: 2;
+
+    flex-shrink: 0;
+
+    width: 39px;
+    height: 39px;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
-    border-radius: 12px;
+    border-radius: 11px;
 
-    background: #DDE8D8;
+    background:
+        linear-gradient(
+            145deg,
+            #dfe3d3,
+            #ece8da
+        );
 
-    color: #5E8F66;
+    color: var(--verde);
 
-    font-size: 18px;
+    border: 1px solid rgba(102, 116, 84, 0.15);
+
+    font-size: 16px;
 }
 
 
-/* TEXTO DOS CARDS */
+/* =========================================================
+   TEXTOS DOS CARDS
+========================================================= */
 
 .card p {
-    color: #777;
+    position: relative;
+    z-index: 2;
 
-    font-size: 12px;
+    margin: 0 0 4px;
 
-    margin-bottom: 4px;
+    color: var(--texto-suave);
+
+    font-size: 11px;
 }
 
 .card strong {
-    font-size: 14px;
+    position: relative;
+    z-index: 2;
+
+    color: var(--verde-profundo);
+
+    font-size: 17px;
+    font-weight: 600;
 }
 
 
-/* ==============================
+/* =========================================================
    SEÇÕES
-============================== */
+========================================================= */
 
 .secao {
-    margin-top: 30px;
+    position: relative;
+
+    margin-top: 31px;
 }
 
 
-/* ==============================
+/* =========================================================
    RESUMO FINANCEIRO
-============================== */
+========================================================= */
 
 .financeiro {
-    background: white;
+    display: grid;
 
-    padding: 10px 18px;
+    grid-template-columns: repeat(3, 1fr);
+
+    overflow: hidden;
+
+    background: rgba(250, 249, 244, 0.91);
+
+    border: 1px solid var(--borda);
 
     border-radius: 12px;
 
-    box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
+    box-shadow: var(--sombra);
 }
+
 
 .financeiro-item {
-    display: flex;
+    min-height: 82px;
 
+    padding: 17px 20px;
+
+    display: flex;
+    align-items: center;
     justify-content: space-between;
 
-    align-items: center;
-
-    padding: 14px 0;
-
-    border-bottom: 1px solid #EEEEEE;
+    position: relative;
 }
 
-.financeiro-item:last-child {
-    border-bottom: none;
+
+/* separador */
+
+.financeiro-item:not(:last-child) {
+    border-right: 1px solid var(--borda);
 }
+
+
+/* pequena linha decorativa */
+
+.financeiro-item::before {
+    content: "";
+
+    position: absolute;
+
+    left: 20px;
+    bottom: 10px;
+
+    width: 24px;
+    height: 2px;
+
+    border-radius: 3px;
+
+    background: var(--palha);
+}
+
 
 .financeiro-item span {
-    color: #777;
+    color: var(--texto-suave);
 
-    font-size: 14px;
+    font-size: 12px;
 }
+
 
 .financeiro-item strong {
-    font-size: 14px;
+    color: var(--verde-profundo);
+
+    font-size: 16px;
+    font-weight: 600;
 }
 
-.financeiro-item.lucro strong {
-    color: #5E8F66;
+
+/* destaque do lucro */
+
+.financeiro-item:last-child {
+    background:
+        linear-gradient(
+            100deg,
+            rgba(215, 222, 201, 0.40),
+            rgba(244, 240, 229, 0.25)
+        );
 }
 
 
-/* ==============================
+.financeiro-item:last-child::before {
+    background: var(--bronze);
+}
+
+
+.financeiro-item:last-child strong {
+    color: var(--verde);
+}
+
+
+/* =========================================================
    ACESSO RÁPIDO
-============================== */
+========================================================= */
 
 .atalhos {
     display: grid;
 
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
 
     gap: 12px;
 }
 
+
 .atalhos a {
-    background: #DDE8D8;
+    position: relative;
 
-    color: #2E2E2E;
+    min-height: 82px;
 
-    text-decoration: none;
-
-    min-height: 80px;
-
-    border-radius: 12px;
+    padding: 14px;
 
     display: flex;
-
-    flex-direction: column;
-
     align-items: center;
     justify-content: center;
 
-    gap: 8px;
+    gap: 9px;
 
-    font-size: 14px;
+    color: var(--verde-profundo);
+
+    text-decoration: none;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(250, 249, 244, 0.95),
+            rgba(239, 235, 222, 0.88)
+        );
+
+    border: 1px solid var(--borda);
+
+    border-radius: 12px;
+
+    box-shadow: var(--sombra);
+
+    overflow: hidden;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease;
 }
+
+
+/* detalhe de campo */
+
+.atalhos a::after {
+    content: "";
+
+    position: absolute;
+
+    left: -20px;
+    bottom: -22px;
+
+    width: 100px;
+    height: 55px;
+
+    border-top: 1px solid rgba(102, 116, 84, 0.18);
+
+    border-radius: 50%;
+
+    transform: rotate(-12deg);
+}
+
 
 .atalhos a i {
-    color: #5E8F66;
+    position: relative;
+    z-index: 2;
 
-    font-size: 20px;
+    color: var(--bronze);
+
+    font-size: 17px;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
 }
 
 
-/* ==============================
-   AJUSTE DO MENU NO CELULAR
-============================== */
+.atalhos a span {
+    position: relative;
+    z-index: 2;
 
-.menu-lateral {
-    overflow: hidden;
+    font-size: 12px;
+    font-weight: 600;
 }
 
 
-/* ==============================
-   CELULAR
-============================== */
+.atalhos a:hover {
+    transform: translateY(-3px);
 
-@media (max-width: 600px) {
+    background: #f7f3e8;
 
-    header img {
-        width: 35px;
-        height: 35px;
-    }
+    border-color: rgba(102, 116, 84, 0.32);
 
-    .menu-topo img {
-        width: 40px;
-        height: 40px;
-    }
+    box-shadow: var(--sombra-hover);
+}
 
-    .boas-vindas h1 {
-        font-size: 24px;
-    }
+
+.atalhos a:hover i {
+    color: var(--verde);
+
+    transform: scale(1.08);
+}
+
+
+/* =========================================================
+   DETALHE DECORATIVO ENTRE SEÇÕES
+========================================================= */
+
+.secao + .secao {
+    position: relative;
+}
+
+.secao + .secao::before {
+    content: "";
+
+    position: absolute;
+
+    top: -16px;
+    left: 50%;
+
+    width: 70px;
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(168, 139, 90, 0.35),
+            transparent
+        );
+
+    transform: translateX(-50%);
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+========================================================= */
+
+@media (max-width: 900px) {
 
     .cards {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .financeiro {
-        width: 100%;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .atalhos {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .financeiro {
+        grid-template-columns: 1fr;
+    }
+
+    .financeiro-item:not(:last-child) {
+        border-right: none;
+
+        border-bottom: 1px solid var(--borda);
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    body main {
+        padding: 22px 14px 40px;
+    }
+
+    .boas-vindas {
+        min-height: 145px;
+
+        padding: 24px;
+
+        margin-bottom: 27px;
+
+        border-radius: 13px;
+    }
+
+    .boas-vindas h1 {
+        font-size: 22px;
+    }
+
+    .boas-vindas p {
+        font-size: 12px;
+    }
+
+    .boas-vindas::after {
+        width: 150px;
+    }
+
+    .cards {
+        gap: 9px;
+    }
+
+    .card {
+        min-height: 88px;
+
+        padding: 12px;
+
+        gap: 9px;
+    }
+
+    .icone {
+        width: 35px;
+        height: 35px;
+
+        font-size: 14px;
+    }
+
+    .card p {
+        font-size: 10px;
+    }
+
+    .card strong {
+        font-size: 15px;
+    }
+
+    .financeiro-item {
+        min-height: 70px;
+
+        padding: 15px;
+    }
+
+    .atalhos {
+        gap: 9px;
+    }
+
+    .atalhos a {
+        min-height: 70px;
+
+        padding: 11px;
+    }
+
+    .atalhos a i {
+        font-size: 15px;
+    }
+
+    .atalhos a span {
+        font-size: 11px;
+    }
+}
+
+
+@media (max-width: 380px) {
+
+    .boas-vindas {
+        padding: 21px;
+    }
+
+    .boas-vindas h1 {
+        font-size: 20px;
+    }
+
+    .cards {
         grid-template-columns: 1fr 1fr;
     }
 }
