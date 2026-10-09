@@ -1,202 +1,812 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap');
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
 }
 
-:root {
-    --verde-folha: #2f6b3f;
-    --verde-escuro: #214d2d;
-    --verde-claro: #dcefd9;
-    --branco: #ffffff;
-    --cinza-gelo: #eef1ef;
-    --cinza: #68736c;
+html,
+body {
+    width: 100%;
+    min-height: 100%;
 }
+
+
+/* =====================================================
+   FUNDO
+===================================================== */
 
 body {
     min-height: 100vh;
+    min-height: 100svh;
+
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    overflow-x: hidden;
+
+    font-family: 'DM Sans', sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 12% 18%,
+            rgba(139, 166, 113, 0.28),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 88% 78%,
+            rgba(183, 155, 92, 0.16),
+            transparent 27%
+        ),
+        radial-gradient(
+            circle at 50% 110%,
+            rgba(91, 126, 76, 0.20),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #10291c 0%,
+            #173725 38%,
+            #234831 68%,
+            #10271b 100%
+        );
+}
+
+
+/* =====================================================
+   TEXTURA DO FUNDO
+===================================================== */
+
+body::before {
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: 0.14;
 
     background-image:
-        linear-gradient(
-            rgba(33, 77, 45, 0.45),
-            rgba(33, 77, 45, 0.45)
-        ),
-        url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNmQIHoF_w2RyTjpv00HM5UKyTX29aumOveR4Qh4PruduNPqUAFGL_4Zw&s=10");
+        radial-gradient(
+            rgba(255, 255, 255, 0.45) 1px,
+            transparent 1px
+        );
 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-size: 30px 30px;
 }
+
+
+/* =====================================================
+   ELEMENTO DECORATIVO
+===================================================== */
+
+body::after {
+    content: "";
+
+    position: fixed;
+
+    width: 520px;
+    height: 520px;
+
+    right: -270px;
+    bottom: -280px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(218, 196, 143, 0.24);
+
+    box-shadow:
+        0 0 0 55px rgba(218, 196, 143, 0.025),
+        0 0 0 110px rgba(218, 196, 143, 0.018);
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   CONTAINER
+===================================================== */
 
 .login-container {
     width: 100%;
-    padding: 20px;
+    min-height: 100vh;
+    min-height: 100svh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 55px 20px 35px;
+
+    position: relative;
+
+    z-index: 2;
 }
+
+
+/* =====================================================
+   MARCA NO TOPO
+===================================================== */
+
+.login-container::before {
+    content: "RURAL TECH";
+
+    position: absolute;
+
+    top: 27px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    color: rgba(255, 255, 255, 0.78);
+
+    font-family: 'Manrope', sans-serif;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 4px;
+
+    white-space: nowrap;
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
 
 .login-box {
     width: 100%;
-    max-width: 400px;
-    margin: auto;
-    padding: 40px;
+    max-width: 430px;
 
-    background: var(--branco);
+    padding: 40px 38px 32px;
 
-    border: 1px solid #d9e4db;
-    border-radius: 18px;
+    position: relative;
 
-    box-shadow: 0 15px 35px rgba(33, 77, 45, 0.25);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.98),
+            rgba(247, 246, 238, 0.98)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.75);
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 35px 80px rgba(0, 0, 0, 0.30),
+        0 12px 28px rgba(0, 0, 0, 0.12);
+
+    overflow: hidden;
+}
+
+
+/* =====================================================
+   LINHA DECORATIVA DO CARD
+===================================================== */
+
+.login-box::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 5px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #234d31,
+            #789266,
+            #b79c62,
+            #789266,
+            #234d31
+        );
+}
+
+
+/* =====================================================
+   CABEÇALHO
+===================================================== */
+
+.login-header {
+    text-align: center;
+
+    margin-bottom: 28px;
+}
+
+.login-label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #789266;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 3px;
 }
 
 .login-box h1 {
-    margin-bottom: 30px;
-    text-align: center;
+    margin: 0;
 
-    color: var(--verde-folha);
+    color: #193625;
 
-    font-size: 30px;
-    font-weight: 700;
+    font-family: 'Manrope', sans-serif;
+
+    font-size: 32px;
+    font-weight: 800;
+
+    letter-spacing: -1.2px;
 }
 
+.login-header p {
+    margin-top: 8px;
+
+    color: #7b847d;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+/* =====================================================
+   GRUPOS DE INPUT
+===================================================== */
+
 .input-group {
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .input-group label {
     display: block;
+
     margin-bottom: 8px;
 
-    color: var(--verde-escuro);
+    color: #294735;
 
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 13px;
+    font-weight: 700;
 }
+
+
+/* =====================================================
+   INPUT
+===================================================== */
 
 .input-group input {
     width: 100%;
-    padding: 14px 15px;
+    height: 54px;
 
-    background: var(--cinza-gelo);
+    padding: 0 17px;
 
-    border: 1px solid #d7e0d9;
-    border-radius: 9px;
+    background: #f3f5ef;
 
-    color: #333;
-    font-size: 15px;
+    border: 1px solid #d9dfd5;
+
+    border-radius: 13px;
 
     outline: none;
 
-    transition: 0.25s;
+    color: #20382a;
+
+    font-family: 'DM Sans', sans-serif;
+
+    font-size: 15px;
+
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.2s ease;
 }
 
 .input-group input::placeholder {
-    color: #8a938d;
+    color: #929b94;
+}
+
+.input-group input:hover {
+    border-color: #bdcabb;
 }
 
 .input-group input:focus {
-    background: var(--branco);
+    background: #ffffff;
 
-    border-color: var(--verde-folha);
+    border-color: #5e8064;
 
-    box-shadow: 0 0 0 3px rgba(47, 107, 63, 0.12);
+    box-shadow:
+        0 0 0 4px rgba(74, 112, 82, 0.10);
 }
 
-.forgot-password {
-    display: block;
 
-    margin-bottom: 20px;
+/* =====================================================
+   BOTÃO ENTRAR
+===================================================== */
 
-    color: var(--verde-folha);
-
-    text-align: right;
-
-    font-size: 14px;
-
-    text-decoration: none;
-}
-
-.forgot-password:hover {
-    color: var(--verde-escuro);
-    text-decoration: underline;
-}
-
-button {
+button[type="submit"] {
     width: 100%;
-    padding: 14px;
+    height: 54px;
 
-    background: var(--verde-folha);
+    margin-top: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    position: relative;
+
+    overflow: hidden;
 
     border: none;
-    border-radius: 9px;
-
-    color: var(--branco);
-
-    font-size: 16px;
-    font-weight: bold;
+    border-radius: 14px;
 
     cursor: pointer;
 
-    transition: 0.25s;
+    background:
+        linear-gradient(
+            135deg,
+            #173a26,
+            #315f40
+        );
+
+    color: #ffffff;
+
+    font-family: 'Manrope', sans-serif;
+
+    font-size: 15px;
+    font-weight: 800;
+
+    letter-spacing: 0.2px;
+
+    box-shadow:
+        0 12px 25px rgba(24, 62, 39, 0.25);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
-button:hover {
-    background: var(--verde-escuro);
 
+/* brilho do botão */
+
+button[type="submit"]::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 70%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.20),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    transition: left 0.65s ease;
+}
+
+button[type="submit"]:hover::before {
+    left: 150%;
+}
+
+
+/* hover */
+
+button[type="submit"]:hover {
     transform: translateY(-2px);
 
-    box-shadow: 0 7px 15px rgba(33, 77, 45, 0.2);
+    box-shadow:
+        0 17px 32px rgba(24, 62, 39, 0.32);
 }
 
-button:active {
+
+/* clique */
+
+button[type="submit"]:active {
     transform: translateY(0);
+
+    box-shadow:
+        0 8px 18px rgba(24, 62, 39, 0.22);
 }
+
+
+/* seta */
+
+.button-arrow {
+    font-size: 19px;
+
+    line-height: 1;
+
+    transition:
+        transform 0.25s ease;
+}
+
+button[type="submit"]:hover .button-arrow {
+    transform: translateX(4px);
+}
+
+
+/* =====================================================
+   MENSAGEM DE ERRO
+===================================================== */
 
 #mensagem {
     margin-top: 15px;
 
-    text-align: center;
-
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.login-box > p {
-    margin-top: 25px;
-
-    color: var(--cinza);
+    min-height: 18px;
 
     text-align: center;
 
-    font-size: 14px;
+    color: #ad5142;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    line-height: 1.5;
 }
 
-.login-box > p a {
-    color: var(--verde-folha);
 
-    font-weight: bold;
+/* =====================================================
+   ÁREA DE CADASTRO
+===================================================== */
+
+.register-text {
+    margin-top: 24px;
+
+    padding-top: 21px;
+
+    border-top: 1px solid #dfe4dc;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    flex-wrap: wrap;
+
+    text-align: center;
+
+    color: #7a837c;
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
+
+/* texto "Cadastre-se" */
+
+.register-text a {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 4px;
+
+    color: #315f42;
+
+    font-weight: 800;
 
     text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
 }
 
-.login-box > p a:hover {
-    color: var(--verde-escuro);
-    text-decoration: underline;
+
+/* hover */
+
+.register-text a:hover {
+    color: #a68b55;
 }
 
-@media (max-width: 480px) {
-    .login-container {
-        padding: 15px;
+
+/* seta do cadastro */
+
+.register-arrow {
+    font-size: 15px;
+
+    transition:
+        transform 0.2s ease;
+}
+
+.register-text a:hover .register-arrow {
+    transform: translateX(3px);
+}
+
+/* =====================================================
+   TABLETS E CELULARES
+===================================================== */
+
+@media (max-width: 700px) {
+
+    body {
+        min-height: 100svh;
+
+        align-items: flex-start;
     }
+
+
+    .login-container {
+        width: 100%;
+        min-height: 100svh;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 58px 16px 25px;
+    }
+
+
+    /* marca */
+
+    .login-container::before {
+        top: 20px;
+
+        font-size: 9px;
+
+        letter-spacing: 3px;
+    }
+
+
+    /* card */
 
     .login-box {
-        padding: 30px 25px;
+        width: 100%;
+        max-width: 440px;
+
+        padding: 36px 24px 27px;
+
+        border-radius: 22px;
     }
+
+
+    /* cabeçalho */
+
+    .login-header {
+        margin-bottom: 25px;
+    }
+
+
+    .login-label {
+        margin-bottom: 7px;
+
+        font-size: 9px;
+
+        letter-spacing: 2.8px;
+    }
+
+
+    .login-box h1 {
+        font-size: 29px;
+
+        letter-spacing: -0.8px;
+    }
+
+
+    .login-header p {
+        margin-top: 7px;
+
+        font-size: 13px;
+    }
+
+
+    /* campos */
+
+    .input-group {
+        margin-top: 19px;
+    }
+
+
+    .input-group label {
+        margin-bottom: 7px;
+
+        font-size: 13px;
+    }
+
+
+    .input-group input {
+        width: 100%;
+        height: 53px;
+
+        padding: 0 15px;
+
+        border-radius: 12px;
+
+        font-size: 16px;
+    }
+
+
+    /* botão */
+
+    button[type="submit"] {
+        height: 53px;
+
+        margin-top: 24px;
+
+        border-radius: 13px;
+
+        font-size: 15px;
+    }
+
+
+    /* cadastro */
+
+    .register-text {
+        margin-top: 22px;
+
+        padding-top: 19px;
+
+        gap: 4px;
+
+        font-size: 12.5px;
+
+        line-height: 1.6;
+    }
+
+
+    .register-text a {
+        font-size: 13px;
+    }
+}
+
+
+/* =====================================================
+   CELULARES PEQUENOS
+===================================================== */
+
+@media (max-width: 380px) {
+
+    .login-container {
+        padding: 50px 12px 20px;
+    }
+
+
+    .login-box {
+        padding: 32px 19px 24px;
+
+        border-radius: 20px;
+    }
+
+
+    .login-label {
+        font-size: 8px;
+
+        letter-spacing: 2.3px;
+    }
+
 
     .login-box h1 {
         font-size: 26px;
     }
+
+
+    .login-header {
+        margin-bottom: 22px;
+    }
+
+
+    .login-header p {
+        font-size: 12px;
+    }
+
+
+    .input-group {
+        margin-top: 17px;
+    }
+
+
+    .input-group label {
+        font-size: 12px;
+    }
+
+
+    .input-group input {
+        height: 50px;
+
+        padding: 0 14px;
+
+        font-size: 16px;
+    }
+
+
+    button[type="submit"] {
+        height: 50px;
+
+        margin-top: 22px;
+
+        font-size: 14px;
+    }
+
+
+    .button-arrow {
+        font-size: 17px;
+    }
+
+
+    .register-text {
+        margin-top: 19px;
+
+        padding-top: 17px;
+
+        font-size: 11.5px;
+    }
+
+
+    .register-text a {
+        font-size: 12px;
+    }
 }
+
+
+/* =====================================================
+   CELULARES MUITO BAIXOS
+   Ex.: 320 x 568
+===================================================== */
+
+@media (max-width: 380px) and (max-height: 650px) {
+
+    .login-container {
+        align-items: flex-start;
+
+        padding-top: 42px;
+    }
+
+
+    .login-box {
+        padding-top: 29px;
+        padding-bottom: 21px;
+    }
+
+
+    .login-header {
+        margin-bottom: 18px;
+    }
+
+
+    .input-group {
+        margin-top: 14px;
+    }
+
+
+    button[type="submit"] {
+        margin-top: 19px;
+    }
+
+
+    .register-text {
+        margin-top: 17px;
+
+        padding-top: 15px;
+    }
+}
+
