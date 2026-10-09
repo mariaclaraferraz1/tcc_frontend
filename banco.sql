@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+/* ============ Tabelas ============ 
+> usuários > produtos > produção > vendas > gastos 
+*/ 
+
+CREATE DATABASE IF NOT EXISTS rural_tech; 
+USE rural_tech; 
+=======
 /*
 ============TABELAS============
 >usuários
@@ -9,57 +17,77 @@
 
 CREATE DATABASE rural_tech;
 USE rural_tech;
+>>>>>>> 3a80222d24b060d077f2ffd853982aa7a5e662c9
 
--- =========================
--- TABELA: USUÁRIOS
--- =========================
-CREATE TABLE usuarios (
-    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    email VARCHAR(150) NOT NULL UNIQUE,
-    senha VARCHAR(255) NOT NULL
-);
+-- ========================= 
+-- TABELA: USUÁRIOS 
+-- ========================= 
+CREATE TABLE IF NOT EXISTS usuarios ( 
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY, 
+    nome VARCHAR(100) NOT NULL, 
+    email VARCHAR(150) NOT NULL UNIQUE, 
+    senha VARCHAR(255) NOT NULL 
+); 
 
--- =========================
--- TABELA: PRODUTOS
--- =========================
-CREATE TABLE produtos (
-    id_produto INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    descricao VARCHAR(255),
-    unidade VARCHAR(30),
-    preco DECIMAL(10,2),
-    estoque INT DEFAULT 0
-);
+-- ========================= 
+-- TABELA: PRODUTOS 
+-- ========================= 
+CREATE TABLE IF NOT EXISTS produtos ( 
+    id_produto INT AUTO_INCREMENT PRIMARY KEY, 
+    nome VARCHAR(100) NOT NULL, 
+    descricao VARCHAR(255), 
+    unidade VARCHAR(30), 
+    preco DECIMAL(10,2), 
+    estoque INT DEFAULT 0 
+); 
 
--- =========================
--- TABELA: PRODUÇÃO
--- =========================
-CREATE TABLE producao (
-    id_producao INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT NOT NULL,
-    id_produto INT NOT NULL,
-    quantidade DECIMAL(10,2) NOT NULL,
-    data_producao DATE NOT NULL,
+-- ========================= 
+-- TABELA: PRODUÇÃO 
+-- ========================= 
+CREATE TABLE IF NOT EXISTS producao ( 
+    id_producao INT AUTO_INCREMENT PRIMARY KEY, 
+    id_usuario INT NOT NULL, 
+    id_produto INT NOT NULL, 
+    quantidade DECIMAL(10,2) NOT NULL, 
+    data_producao DATE NOT NULL, 
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario), 
+    FOREIGN KEY (id_produto) REFERENCES produtos(id_produto) 
+); 
 
-    FOREIGN KEY (id_usuario)
-        REFERENCES usuarios(id_usuario),
+-- ========================= 
+-- TABELA: VENDAS 
+-- ========================= 
+CREATE TABLE IF NOT EXISTS vendas ( 
+    id_venda INT AUTO_INCREMENT PRIMARY KEY, 
+    id_usuario INT NOT NULL, 
+    id_produto INT NOT NULL, 
+    quantidade DECIMAL(10,2) NOT NULL, 
+    valor_total DECIMAL(10,2) NOT NULL, 
+    data_venda DATE NOT NULL, 
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario), 
+    FOREIGN KEY (id_produto) REFERENCES produtos(id_produto) 
+); 
 
-    FOREIGN KEY (id_produto)
-        REFERENCES produtos(id_produto)
-);
+-- ========================= 
+-- TABELA: GASTOS 
+-- ========================= 
+CREATE TABLE IF NOT EXISTS gastos ( 
+    id_gasto INT AUTO_INCREMENT PRIMARY KEY, 
+    id_usuario INT NOT NULL, 
+    descricao VARCHAR(255) NOT NULL, 
+    valor DECIMAL(10,2) NOT NULL, 
+    data_gasto DATE NOT NULL, 
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) 
+); 
 
--- =========================
--- TABELA: VENDAS
--- =========================
-CREATE TABLE vendas (
-    id_venda INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT NOT NULL,
-    id_produto INT NOT NULL,
-    quantidade DECIMAL(10,2) NOT NULL,
-    valor_total DECIMAL(10,2) NOT NULL,
-    data_venda DATE NOT NULL,
+-- ATENÇÃO: Adicionado o ponto e vírgula obrigatório aqui:
+USE rural_tech; 
 
+<<<<<<< HEAD
+-- ========================= 
+-- SELECT -- RELATORIOS 
+-- ========================= 
+=======
     FOREIGN KEY (id_usuario)
         REFERENCES usuarios(id_usuario),
 
@@ -94,18 +122,26 @@ FROM producao pr
 INNER JOIN produtos p
     ON pr.id_produto = p.id_produto
 ORDER BY pr.data_producao DESC;
+>>>>>>> 3a80222d24b060d077f2ffd853982aa7a5e662c9
 
---VENDAS
-SELECT 
-    p.nome AS produto,
-    v.quantidade,
-    v.valor_total,
-    v.data_venda
-FROM vendas v
-INNER JOIN produtos p
-    ON v.id_produto = p.id_produto
-ORDER BY v.data_venda DESC;
+-- PRODUÇÃO 
+SELECT p.nome AS produto, pr.quantidade, pr.data_producao 
+FROM producao pr 
+INNER JOIN produtos p ON pr.id_produto = p.id_produto 
+ORDER BY pr.data_producao DESC; 
 
+<<<<<<< HEAD
+-- VENDAS 
+SELECT p.nome AS produto, v.quantidade, v.valor_total, v.data_venda 
+FROM vendas v 
+INNER JOIN produtos p ON v.id_produto = p.id_produto 
+ORDER BY v.data_venda DESC; 
+
+-- GASTOS 
+SELECT descricao, valor, data_gasto 
+FROM gastos 
+ORDER BY data_gasto DESC;
+=======
 --GASTOS
 SELECT 
     descricao,
@@ -139,3 +175,4 @@ INSERT INTO gastos (id_usuario, descricao, valor, data_gasto) VALUES
 (1, 'Ração para gado leiteiro - 5 sacos', 450.00, '2026-09-10'),
 (2, 'Embalagens plásticas para queijo', 85.00, '2026-09-12'),
 (1, 'Combustível para o trator', 200.00, '2026-09-14');
+>>>>>>> 3a80222d24b060d077f2ffd853982aa7a5e662c9

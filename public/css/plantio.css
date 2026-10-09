@@ -1,0 +1,305 @@
+/* ==========================================
+   PLANTIO - RURAL TECH
+========================================== */
+
+main {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 18px;
+}
+
+/* ==========================================
+   CABEÇALHO DA PÁGINA
+========================================== */
+
+.header-titulo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.header-titulo span {
+    font-size: 30px;
+}
+
+.header-titulo h1 {
+    color: #315C3A;
+    font-size: 32px;
+    margin: 0;
+}
+
+.subtitle {
+    color: #68736B;
+    font-size: 16px;
+    margin-bottom: 35px;
+}
+
+/* ==========================================
+   SEÇÕES
+========================================== */
+
+.dashboard-section {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+}
+
+.dashboard-section h2 {
+    color: #315C3A;
+    font-size: 21px;
+    margin-bottom: 25px;
+}
+
+/* ==========================================
+   FORMULÁRIO
+========================================== */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    color: #526157;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    height: 48px;
+    padding: 12px 14px;
+
+    border: 1px solid #E5E9E5;
+    border-radius: 10px;
+
+    background: #F8F7F3;
+    color: #2E2E2E;
+
+    font-size: 14px;
+    outline: none;
+
+    transition: 0.2s;
+}
+
+.form-group input::placeholder {
+    color: #9AA39D;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #5E8F66;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(94, 143, 102, 0.12);
+}
+
+/* ==========================================
+   BOTÕES
+========================================== */
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+}
+
+.form-actions button {
+    height: 46px;
+    padding: 0 25px;
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+/* Botão salvar */
+
+.btn-salvar {
+    background: #315C3A;
+    color: white;
+}
+
+.btn-salvar:hover {
+    background: #23442A;
+    transform: translateY(-2px);
+}
+
+/* Botão cancelar */
+
+.btn-cancelar {
+    background: #E8E8E8;
+    color: #526157;
+}
+
+.btn-cancelar:hover {
+    background: #DADADA;
+}
+
+/* ==========================================
+   TABELA
+========================================== */
+
+.tabela-responsiva {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.tabela-acompanhamento {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 14px;
+}
+
+.tabela-acompanhamento th {
+    padding: 14px 16px;
+
+    background: #F8F7F3;
+    color: #315C3A;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    border-bottom: 1px solid #E5E9E5;
+}
+
+.tabela-acompanhamento td {
+    padding: 15px 16px;
+
+    color: #526157;
+
+    border-bottom: 1px solid #E5E9E5;
+}
+
+.tabela-acompanhamento tbody tr:hover td {
+    background: #FAFAF8;
+}
+
+.tabela-acompanhamento td strong {
+    color: #315C3A;
+}
+
+/* ==========================================
+   TABELA VAZIA
+========================================== */
+
+.tabela-vazia {
+    text-align: center;
+    color: #718096 !important;
+    padding: 30px !important;
+}
+
+/* ==========================================
+   STATUS
+========================================== */
+
+.badge-status {
+    display: inline-block;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+/* Germinação */
+
+.status-germinacao {
+    background: #EEF6EF;
+    color: #315C3A;
+}
+
+/* Crescimento */
+
+.status-crescimento {
+    background: #FFF9E6;
+    color: #B27D00;
+}
+
+/* Colheita */
+
+.status-colheita {
+    background: #EBF5FF;
+    color: #0052B4;
+}
+
+/* ==========================================
+   RESPONSIVIDADE
+========================================== */
+
+@media (max-width: 900px) {
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* ==========================================
+   CELULAR
+========================================== */
+
+@media (max-width: 768px) {
+
+    main {
+        padding: 25px 15px;
+    }
+
+    .header-titulo h1 {
+        font-size: 27px;
+    }
+
+    .header-titulo span {
+        font-size: 26px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+        margin-bottom: 25px;
+    }
+
+    .dashboard-section {
+        padding: 20px;
+    }
+
+    .dashboard-section h2 {
+        font-size: 19px;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .form-actions button {
+        width: 100%;
+    }
+
+    .tabela-acompanhamento {
+        min-width: 700px;
+    }
+
+}

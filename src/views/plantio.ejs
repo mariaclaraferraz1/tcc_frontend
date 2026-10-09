@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rural Tech - Plantio</title>
+    
+    <link rel="stylesheet" href="/css/plantio.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <%- include('partials/menu') %>
+
+    <!-- ==============================
+         CABEÇALHO
+    ================================ -->
+    <header>
+        <button class="menu-btn" id="menuBtn">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <img src="/img/logotcc.png" alt="Logo Rural Tech" />
+        <h2>Rural Tech</h2>
+    </header>
+
+    <!-- ==============================
+         CONTEÚDO PRINCIPAL (PLANTIO)
+    ================================ -->
+    <main>
+        <div class="header-titulo">
+            <span>🌱</span>
+            <h1>Plantio</h1>
+        </div>
+        <p class="subtitle">Registre e acompanhe o desenvolvimento de suas plantações.</p>
+
+        <!-- Seção de Cadastro -->
+        <section class="dashboard-section">
+            <h2>Registrar Novo Plantio</h2>
+            <form action="/plantio" method="POST">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="cultura">Cultura / Variedade:</label>
+                        <input type="text" id="cultura" name="cultura" placeholder="Ex: Milho Híbrido, Soja BR" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="area">Área / Talhão:</label>
+                        <input type="text" id="area" name="area" placeholder="Ex: Talhão 04, Área Norte" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dataPlantio">Data do Plantio:</label>
+                        <input type="date" id="dataPlantio" name="dataPlantio" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Status Inicial:</label>
+                        <select id="status" name="status" required>
+                            <option value="germinacao">Germinação</option>
+                            <option value="crescimento">Em Crescimento</option>
+                            <option value="colheita">Pronto para Colheita</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-actions" style="margin-top: 20px;">
+                    <button type="reset" class="btn-cancelar">Cancelar</button>
+                    <button type="submit" class="btn-salvar">Salvar Plantio</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Seção de Listagem / Acompanhamento -->
+        <section class="dashboard-section" style="margin-top: 30px;">
+            <h2>Acompanhamento de Plantações Ativas</h2>
+            <div class="tabela-responsiva">
+                <table class="tabela-acompanhamento">
+                    <thead>
+                        <tr>
+                            <th>Cultura</th>
+                            <th>Localização / Talhão</th>
+                            <th>Data de Plantio</th>
+                            <th>Status Atual</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (plantacoes && plantacoes.length > 0) { %>
+                            <% plantacoes.forEach(plantio => { %>
+                                <tr>
+                                    <td><strong><%= plantio.cultura %></strong></td>
+                                    <td><%= plantio.area %></td>
+                                    <td><%= plantio.dataPlantio %></td>
+                                    <td>
+                                        <span class="badge-status status-<%= plantio.status %>">
+                                            <%= plantio.status === 'germinacao' ? 'Germinação' : 
+                                                plantio.status === 'crescimento' ? 'Em Crescimento' : 'Pronto para Colheita' %>
+                                        </span>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        <% } else { %>
+                            <tr>
+                                <td colspan="4" class="tabela-vazia">Nenhum plantio registrado até o momento.</td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==============================
+         JAVASCRIPT
+    ================================ -->
+    <script src="/js/menu_lateral.js"></script>
+    <script src="/js/plantio.js"></script>
+</body>
+</html>

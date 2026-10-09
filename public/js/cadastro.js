@@ -1,72 +1,74 @@
-// Pega o formulário da página
-const formulario = document.querySelector("form");
 
-// Quando clicar em "Salvar Produto"
-formulario.addEventListener("submit", function(event) {
+const formulario = document.querySelector("#form-produto");
+const campoImagem = document.querySelector("#imagem");
+const preview = document.querySelector("#preview-imagem");
 
-    // Não deixa a página recarregar
-    event.preventDefault();
+let imagemSelecionada = "";
 
-    // Pega todos os inputs do formulário
-    const campos = formulario.querySelectorAll("input");
+// Mostra a imagem assim que escolher o arquivo
+campoImagem.addEventListener("change", function () {
+    const arquivo = this.files[0];
 
-    // Pega os valores dos campos
-    const nome = campos[0].value;
-    const preco = campos[1].value;
-    const categoria = campos[2].value;
-
-    // Pega a imagem selecionada
-    const imagem = campos[3].files[0];
-
-
-    // Verifica se os campos foram preenchidos
-    if (nome === "" || preco === "" || categoria === "") {
-
-        alert("Preencha todos os campos!");
-
+    if (!arquivo) {
+        imagemSelecionada = "";
+        preview.style.display = "none";
+        preview.removeAttribute("src");
         return;
     }
 
+    if (!arquivo.type.startsWith("image/")) {
+        alert("Selecione um arquivo de imagem válido.");
+        this.value = "";
+        imagemSelecionada = "";
+        preview.style.display = "none";
+        return;
+    }
 
-    // Pega os produtos que já estão salvos
-    // Se não existir nenhum, cria uma lista vazia
-    let produtos = JSON.parse(
-        localStorage.getItem("produtos")
-    ) || [];
+    const leitor = new FileReader();
 
-
-    // Cria o novo produto
-    const produto = {
-
-        id: Date.now(),
-
-        nome: nome,
-
-        preco: Number(preco),
-
-        categoria: categoria,
-
-        imagem: imagem ? imagem.name : ""
-
+    leitor.onload = function (evento) {
+        imagemSelecionada = evento.target.result;
+        preview.src = imagemSelecionada;
+        preview.style.display = "block";
     };
 
+    leitor.readAsDataURL(arquivo);
+});
 
-    // Adiciona o novo produto na lista
+// Salva o produto
+formulario.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const nome = document.querySelector("#nome").value.trim();
+    const preco = document.querySelector("#preco").value;
+    const categoria = document.querySelector("#categoria").value.trim();
+
+    if (!nome || !preco || !categoria) {
+        alert("Preencha todos os campos!");
+        return;
+    }
+
+    let produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+
+    const produto = {
+        id: Date.now(),
+        nome: nome,
+        preco: Number(preco),
+        categoria: categoria,
+        imagem: imagemSelecionada
+    };
+
     produtos.push(produto);
 
+    try {
+        localStorage.setItem("produtos", JSON.stringify(produtos));
+    } catch (erro) {
+        produtos.pop();
+        alert("Não foi possível salvar. A imagem pode ser muito grande. Escolha uma imagem menor.");
+        return;
+    }
 
-    // Salva a lista atualizada
-    localStorage.setItem(
-        "produtos",
-        JSON.stringify(produtos)
-    );
-
-
-    // Mostra mensagem de sucesso
     alert("Produto cadastrado com sucesso!");
 
-
-    // Limpa o formulário
-    formulario.reset();
-
+    window.location.href = "/produtos";
 });
