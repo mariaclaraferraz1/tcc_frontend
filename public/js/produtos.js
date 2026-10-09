@@ -1,64 +1,62 @@
-// Pega a área onde os produtos aparecem
+//
 const listaProdutos = document.querySelector(".lista-produtos");
 
-// Pega os produtos salvos no navegador
-const produtos = JSON.parse(
-    localStorage.getItem("produtos")
-) || [];
+if (listaProdutos) {
+    const produtos = JSON.parse(
+        localStorage.getItem("produtos")
+    ) || [];
 
+    // Remove os cards antigos do HTML, mantendo o título
+    listaProdutos.querySelectorAll(".produto-card").forEach(card => {
+        card.remove();
+    });
 
-// Limpa os produtos que estão escritos diretamente no HTML
-// (Milho, Soja e Hortaliças)
-const cards = listaProdutos.querySelectorAll(".produto-card");
+    // Cria um card para cada produto cadastrado
+    produtos.forEach(function (produto) {
+        const card = document.createElement("div");
+        card.classList.add("produto-card");
 
-cards.forEach(function(card) {
-    card.remove();
-});
+        // Área da imagem
+        const imagem = document.createElement("div");
+        imagem.classList.add("produto-imagem");
 
+        if (produto.imagem && produto.imagem.startsWith("data:image/")) {
+            const foto = document.createElement("img");
+            foto.src = produto.imagem;
+            foto.alt = produto.nome;
+            foto.classList.add("foto-produto");
+            imagem.appendChild(foto);
+        } else {
+            imagem.innerHTML = '<i class="fa-solid fa-seedling"></i>';
+        }
 
-// Cria um card para cada produto cadastrado
-produtos.forEach(function(produto) {
+        // Informações do produto
+        const info = document.createElement("div");
+        info.classList.add("produto-info");
 
-    // Cria o card
-    const card = document.createElement("div");
-    card.classList.add("produto-card");
+        const titulo = document.createElement("h3");
+        titulo.textContent = produto.nome;
 
-    // Cria a área da imagem
-    const imagem = document.createElement("div");
-    imagem.classList.add("produto-imagem");
+        const categoria = document.createElement("p");
+        categoria.textContent = produto.categoria;
 
-    imagem.innerHTML = `
-        <i class="fa-solid fa-seedling"></i>
-    `;
+        const preco = document.createElement("span");
+        preco.textContent = "Preço: R$ " +
+            Number(produto.preco || 0).toLocaleString("pt-BR", {
+                minimumFractionDigits: 2
+            });
 
+        info.append(titulo, categoria, preco);
 
-    // Cria as informações do produto
-    const info = document.createElement("div");
-    info.classList.add("produto-info");
+        // Botão de opções
+        const opcoes = document.createElement("button");
+        opcoes.classList.add("btn-opcoes");
+        opcoes.type = "button";
+        opcoes.innerHTML =
+            '<i class="fa-solid fa-ellipsis-vertical"></i>';
 
-    info.innerHTML = `
-        <h3>${produto.nome}</h3>
-        <p>${produto.categoria}</p>
-        <span>Estoque: 0 kg</span>
-    `;
-
-
-    // Cria o botão de opções
-    const opcoes = document.createElement("button");
-    opcoes.classList.add("btn-opcoes");
-
-    opcoes.innerHTML = `
-        <i class="fa-solid fa-ellipsis-vertical"></i>
-    `;
-
-
-    // Junta tudo dentro do card
-    card.appendChild(imagem);
-    card.appendChild(info);
-    card.appendChild(opcoes);
-
-
-    // Coloca o card na lista
-    listaProdutos.appendChild(card);
-
-});
+        // Monta o card
+        card.append(imagem, info, opcoes);
+        listaProdutos.appendChild(card);
+    });
+}

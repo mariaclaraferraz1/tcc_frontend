@@ -26,10 +26,7 @@
     --sombra-hover: 0 10px 28px rgba(45, 55, 43, 0.14);
 }
 
-/* =========================================================
-   RESET & BASE
-========================================================= */
-
+/* RESET & BASE */
 * {
     margin: 0;
     padding: 0;
@@ -46,10 +43,7 @@ body {
     min-height: 100vh;
 }
 
-/* =========================================================
-   CABEÇALHO
-========================================================= */
-
+/* CABEÇALHO */
 header {
     display: flex;
     align-items: center;
@@ -76,10 +70,7 @@ header h2 {
     letter-spacing: 0.3px;
 }
 
-/* =========================================================
-   BOTÃO MENU
-========================================================= */
-
+/* BOTÃO MENU */
 .menu-btn {
     border: none;
     background: none;
@@ -94,10 +85,7 @@ header h2 {
     transform: scale(1.08);
 }
 
-/* =========================================================
-   CONTEÚDO PRINCIPAL
-========================================================= */
-
+/* CONTEÚDO PRINCIPAL */
 main {
     padding: 28px 20px 50px;
     max-width: 920px;
@@ -105,7 +93,6 @@ main {
     position: relative;
 }
 
-/* pequeno detalhe decorativo */
 main::before {
     content: "✦";
     position: absolute;
@@ -116,10 +103,7 @@ main::before {
     pointer-events: none;
 }
 
-/* =========================================================
-   CABEÇALHO DOS PRODUTOS
-========================================================= */
-
+/* CABEÇALHO DOS PRODUTOS */
 .cabecalho-produtos {
     margin-bottom: 26px;
 }
@@ -149,10 +133,7 @@ main::before {
     max-width: 480px;
 }
 
-/* =========================================================
-   BOTÃO CADASTRAR
-========================================================= */
-
+/* BOTÃO CADASTRAR */
 .btn-cadastrar {
     display: flex;
     align-items: center;
@@ -182,10 +163,7 @@ main::before {
     background: linear-gradient(135deg, #465f46 0%, #354b38 100%);
 }
 
-/* =========================================================
-   LISTA DE PRODUTOS
-========================================================= */
-
+/* LISTA DE PRODUTOS */
 .lista-produtos h2 {
     font-size: 18px;
     font-weight: 600;
@@ -204,10 +182,7 @@ main::before {
     background: linear-gradient(180deg, var(--bronze), var(--terra));
 }
 
-/* =========================================================
-   CARD DO PRODUTO
-========================================================= */
-
+/* CARD DO PRODUTO */
 .produto-card {
     background: linear-gradient(145deg, rgba(250, 249, 244, 0.98), rgba(242, 239, 228, 0.92));
     min-height: 92px;
@@ -224,7 +199,6 @@ main::before {
     overflow: hidden;
 }
 
-/* detalhe decorativo sutil */
 .produto-card::after {
     content: "";
     position: absolute;
@@ -244,14 +218,13 @@ main::before {
     border-color: rgba(102, 116, 84, 0.28);
 }
 
-/* =========================================================
-   IMAGEM / ÍCONE DO PRODUTO
-========================================================= */
-
+/* IMAGEM / ÍCONE DO PRODUTO */
 .produto-imagem {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
+    min-width: 80px;
     flex-shrink: 0;
+    overflow: hidden;
     border-radius: 14px;
     background: linear-gradient(145deg, #dfe3d3, #ece8da);
     color: var(--verde);
@@ -263,10 +236,15 @@ main::before {
     box-shadow: 0 3px 10px rgba(45, 55, 43, 0.06);
 }
 
-/* =========================================================
-   INFORMAÇÕES DO PRODUTO
-========================================================= */
+.produto-imagem img.foto-produto {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    border-radius: 14px;
+}
 
+/* INFORMAÇÕES DO PRODUTO */
 .produto-info {
     flex: 1;
     min-width: 0;
@@ -295,10 +273,7 @@ main::before {
     font-weight: 650;
 }
 
-/* =========================================================
-   BOTÃO DE OPÇÕES
-========================================================= */
-
+/* BOTÃO DE OPÇÕES */
 .btn-opcoes {
     border: none;
     background: none;
@@ -320,10 +295,7 @@ main::before {
     color: var(--verde-profundo);
 }
 
-/* =========================================================
-   MENU LATERAL
-========================================================= */
-
+/* MENU LATERAL */
 .menu-lateral {
     position: fixed;
     top: 0;
@@ -342,10 +314,7 @@ main::before {
     left: 0;
 }
 
-/* =========================================================
-   TOPO DO MENU
-========================================================= */
-
+/* TOPO DO MENU */
 .menu-topo {
     display: flex;
     align-items: center;
@@ -366,10 +335,7 @@ main::before {
     color: var(--verde-profundo);
 }
 
-/* =========================================================
-   LISTA DO MENU
-========================================================= */
-
+/* LISTA DO MENU */
 .menu-lateral ul {
     list-style: none;
     padding: 14px 14px 30px;
@@ -419,10 +385,7 @@ main::before {
     color: var(--bronze);
 }
 
-/* =========================================================
-   FUNDO ESCURO (OVERLAY)
-========================================================= */
-
+/* FUNDO ESCURO (OVERLAY) */
 .fundo-menu {
     position: fixed;
     top: 0;
@@ -442,10 +405,7 @@ main::before {
     opacity: 1;
 }
 
-/* =========================================================
-   RESPONSIVIDADE
-========================================================= */
-
+/* RESPONSIVIDADE */
 @media (min-width: 768px) {
     main {
         padding: 36px 28px 60px;
@@ -485,6 +445,7 @@ main::before {
     .produto-imagem {
         width: 54px;
         height: 54px;
+        min-width: 54px;
         font-size: 22px;
     }
 

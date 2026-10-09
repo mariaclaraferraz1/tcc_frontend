@@ -42,21 +42,28 @@
         Cadastro de Produtos
       </h1>
 
-      <form>
-        <label>Nome do Produto</label>
-        <input type="text" />
+      
+<form id="form-produto">
+  <label for="nome">Nome do Produto</label>
+  <input type="text" id="nome" required />
 
-        <label>Preço</label>
-        <input type="number" />
+  <label for="preco">Preço</label>
+  <input type="number" id="preco" min="0" step="0.01" required />
 
-        <label>Categoria</label>
-        <input type="text" />
+  <label for="categoria">Categoria</label>
+  <input type="text" id="categoria" required />
 
-        <label>Imagem</label>
-        <input type="file" />
+  <label for="imagem">Imagem do Produto</label>
+  <input type="file" id="imagem" accept="image/*" />
 
-        <button type="submit">Salvar Produto</button>
-      </form>
+  <img
+    id="preview-imagem"
+    alt="Prévia da imagem escolhida"
+    style="display:none; width:200px; max-width:100%; margin-top:10px; border-radius:8px;"
+  />
+
+  <button type="submit">Salvar Produto</button>
+</form>
     </main>
 
     <!-- Removido o ../ dos scripts JS -->
