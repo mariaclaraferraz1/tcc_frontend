@@ -203,6 +203,12 @@ app.get("/vendas", (req, res) => {
     res.render("vendas");
 });
 
+app.get('/plantio', (req, res) => {
+    res.render('plantio', {
+        plantacoes: []
+    });
+});
+
 // ==========================================
 // ERRO 404
 // ==========================================
