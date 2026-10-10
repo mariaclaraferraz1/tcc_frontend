@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rural Tech - Nova venda</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/vendas.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <%- include('partials/menu') %>
+
+    <header>
+        <button class="menu-btn" id="menuBtn">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <img src="/img/logotcc.png" alt="Logo Rural Tech">
+        <h2>Rural Tech</h2>
+    </header>
+
+    <main>
+        <section class="cabecalho-comercial">
+            <h1>
+                <a href="/vendas" aria-label="Voltar para vendas">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+                Dados da Venda
+            </h1>
+            <p>Informe os dados da venda realizada.</p>
+        </section>
+
+        <section class="card-venda">
+            <div class="titulo-venda">
+                <i class="fa-solid fa-clipboard-list"></i>
+                <h2>Dados da Venda</h2>
+            </div>
+
+            <div class="dica">
+                <i class="fa-solid fa-lightbulb"></i>
+                <div>
+                    <strong>Dica importante</strong>
+                    <p>Manter o registro das vendas ajuda no controle financeiro e no planejamento da produção.</p>
+                </div>
+            </div>
+
+            <form action="/vendas" method="POST" id="vendaForm">
+                <div class="linha">
+                    <div class="campo produto">
+                        <label for="id_produto">Produto</label>
+                        <select name="id_produto" id="id_produto" required>
+                            <option value="">Selecione o produto</option>
+                            <% produtos.forEach(function(produto) { %>
+                                <option value="<%= produto.id_produto %>"
+                                    data-preco="<%= produto.preco || 0 %>"
+                                    data-unidade="<%= produto.unidade || 'Unidade' %>">
+                                    <%= produto.nome %>
+                                </option>
+                            <% }); %>
+                        </select>
+                    </div>
+
+                    <div class="campo cliente">
+                        <label for="cliente">Cliente <span>(opcional)</span></label>
+                        <input type="text" name="cliente" id="cliente" placeholder="Nome do cliente">
+                    </div>
+                </div>
+
+                <div class="linha">
+                    <div class="campo">
+                        <label for="data_venda">Data da venda</label>
+                        <input type="date" name="data_venda" id="data_venda" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="quantidade">Quantidade vendida</label>
+                        <input type="number" name="quantidade" id="quantidade" min="0.01" step="0.01" placeholder="Ex.: 50" required>
+                    </div>
+
+                    <div class="campo unidade">
+                        <label for="unidade">Unidade</label>
+                        <input type="text" name="unidade" id="unidade" placeholder="Ex.: KG, Saca" required>
+                    </div>
+                </div>
+
+                <div class="linha">
+                    <div class="campo">
+                        <label for="valor_unitario">Valor unitário (R$)</label>
+                        <input type="number" name="valor_unitario" id="valor_unitario" min="0" step="0.01" placeholder="Ex.: 5.50" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="valor_total_exibido">Valor total</label>
+                        <input type="text" id="valor_total_exibido" value="R$ 0,00" readonly>
+                        <small class="calculado">● calculado automaticamente</small>
+                    </div>
+                </div>
+
+                <div class="campo pagamento">
+                    <label for="forma_pagamento">Forma de pagamento</label>
+                    <select name="forma_pagamento" id="forma_pagamento" required>
+                        <option value="">Selecione a forma de pagamento</option>
+                        <option value="Pix">Pix</option>
+                        <option value="Dinheiro">Dinheiro</option>
+                        <option value="Cartão">Cartão</option>
+                        <option value="Transferência">Transferência</option>
+                    </select>
+                </div>
+
+                <div class="campo observacoes">
+                    <label for="observacoes">Observações <span>(opcional)</span></label>
+                    <textarea name="observacoes" id="observacoes" placeholder="Informações adicionais sobre a venda"></textarea>
+                </div>
+
+                <div class="botoes">
+                    <a href="/vendas" class="btn-cancelar">
+                        <i class="fa-solid fa-xmark"></i> Cancelar
+                    </a>
+                    <button type="submit" class="btn-salvar">
+                        <i class="fa-solid fa-check"></i> Salvar venda
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script src="/js/menu_lateral.js"></script>
+    <script src="/js/venda_form.js"></script>
+</body>
+</html>

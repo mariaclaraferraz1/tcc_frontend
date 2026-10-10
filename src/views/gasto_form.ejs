@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rural Tech - Registrar Gasto</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/gastos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  </head>
+
+  <body>
+    <%- include('partials/menu') %>
+
+    <header class="topo-interno">
+      <button class="menu-btn" id="menuBtn">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <img src="/img/logotcc.png" alt="Logo Rural Tech" />
+      <h2>Rural Tech</h2>
+    </header>
+
+    <div class="container">
+      <h2>
+        <a href="/gastos" aria-label="Voltar para gastos" class="btn-voltar">
+          <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        Registrar Gasto
+      </h2>
+
+      <div class="tip-box">
+        <strong>Dica importante</strong>
+        <p>
+          Manter o controle dos gastos ajuda a conhecer melhor os custos da
+          produção e aumentar a lucratividade da sua propriedade.
+        </p>
+      </div>
+
+      <form id="gastoForm" action="/gastos" method="POST">
+        <div class="form-group">
+          <label for="descricao">Descrição do Gasto</label>
+          <input
+            type="text"
+            id="descricao"
+            name="descricao"
+            placeholder="Ex: Compra de matéria-prima"
+            required
+          />
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="categoria">Categoria</label>
+            <select id="categoria" name="categoria">
+              <option value="" selected>Selecione...</option>
+              <option>Alimentação</option>
+              <option>Aluguel/Espaço</option>
+              <option>Equipamentos</option>
+              <option>Impostos/Taxas</option>
+              <option>Marketing/Anúncios</option>
+              <option>Serviços Terceirizados</option>
+              <option>Utilidades (Água/Luz/Internet)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="dataGasto">Data do Gasto</label>
+            <input type="date" id="dataGasto" name="data_gasto" required />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="valor">Valor (R$)</label>
+            <input
+              type="number"
+              id="valor"
+              name="valor"
+              step="0.01"
+              min="0.01"
+              placeholder="0,00"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="formaPagamento">Forma de Pagamento</label>
+            <select id="formaPagamento" name="forma_pagamento">
+              <option value="" selected>Selecione...</option>
+              <option>Dinheiro</option>
+              <option>Pix</option>
+              <option>Cartão de Crédito</option>
+              <option>Cartão de Débito</option>
+              <option>Boleto Bancário</option>
+              <option>Transferência (TED/DOC)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="fornecedor">Fornecedor</label>
+          <input
+            type="text"
+            id="fornecedor"
+            name="fornecedor"
+            placeholder="Nome da empresa ou prestador"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Classificação do Gasto (Clique para selecionar)</label>
+          <div class="area-options">
+            <div class="area-btn" data-area="Produção">Produção</div>
+            <div class="area-btn" data-area="Infraestrutura">Infraestrutura</div>
+            <div class="area-btn" data-area="Transporte">Transporte</div>
+            <div class="area-btn" data-area="Outros">Outros</div>
+          </div>
+          <input type="hidden" id="areaSelecionada" name="area" />
+        </div>
+
+        <div class="form-group">
+          <label for="observacao">Observações</label>
+          <textarea
+            id="observacao"
+            name="observacao"
+            placeholder="Informações adicionais importantes..."
+          ></textarea>
+        </div>
+
+        <div class="form-actions">
+          <a href="/gastos" class="btn-cancelar-link">Cancelar</a>
+          <button type="submit" class="btn-submit">Salvar Gasto</button>
+        </div>
+      </form>
+    </div>
+    <script src="/js/menu_lateral.js"></script>
+    <script src="/js/gastos.js"></script>
+  </body>
+</html>

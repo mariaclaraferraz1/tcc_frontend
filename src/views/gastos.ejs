@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rural Tech - Gastos</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/gastos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  </head>
+
+  <body>
+    <%- include('partials/menu') %>
+
+    <header class="topo-interno">
+      <button class="menu-btn" id="menuBtn">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <img src="/img/logotcc.png" alt="Logo Rural Tech" />
+      <h2>Rural Tech</h2>
+    </header>
+
+    <div class="container">
+      <h2>
+        <a href="/comercial" aria-label="Voltar para o Comercial" class="btn-voltar">
+          <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        Gastos cadastrados
+      </h2>
+
+      <% if (typeof mensagem !== 'undefined' && mensagem) { %>
+        <p class="mensagem-sucesso"><i class="fa-solid fa-circle-check"></i> <%= mensagem %></p>
+      <% } %>
+
+      <div class="resumo-total">
+        <span>Total de gastos</span>
+        <strong><%= Number(total || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) %></strong>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Descrição</th>
+              <th>Categoria</th>
+              <th>Data</th>
+              <th>Valor</th>
+              <th>Pagamento</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (!gastos || gastos.length === 0) { %>
+              <tr>
+                <td colspan="5">Nenhum gasto cadastrado.</td>
+              </tr>
+            <% } else { %>
+              <% gastos.forEach(function(gasto) { %>
+                <tr>
+                  <td><%= gasto.descricao %></td>
+                  <td><%= gasto.categoria || "—" %></td>
+                  <td><%= new Date(gasto.data_gasto + "T12:00:00").toLocaleDateString("pt-BR") %></td>
+                  <td><%= Number(gasto.valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) %></td>
+                  <td><%= gasto.forma_pagamento || "—" %></td>
+                </tr>
+              <% }); %>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="form-actions">
+        <a href="/gastos/novo" class="btn-submit btn-link">
+          <i class="fa-solid fa-plus"></i> Registrar novo gasto
+        </a>
+      </div>
+    </div>
+
+    <script src="/js/menu_lateral.js"></script>
+  </body>
+</html>

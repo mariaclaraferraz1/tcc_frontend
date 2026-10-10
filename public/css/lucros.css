@@ -1,0 +1,170 @@
+/* ==============================
+   LUCROS - RURAL TECH
+============================== */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #F8F7F3;
+    color: #2E2E2E;
+    margin: 0;
+}
+
+header {
+    height: 75px;
+    background: white;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-left: 80px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+header img {
+    height: 45px;
+}
+
+header h2 {
+    color: #315C3A;
+    font-size: 24px;
+    margin: 0;
+}
+
+main {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 35px 20px;
+}
+
+.cabecalho-lucros {
+    margin-bottom: 25px;
+}
+
+.cabecalho-lucros h1 {
+    color: #2E2E2E;
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
+.cabecalho-lucros h1 a {
+    color: #5E8F66;
+    font-size: 18px;
+    margin-right: 8px;
+    text-decoration: none;
+}
+
+.cabecalho-lucros p {
+    color: #777;
+    font-size: 14px;
+    margin: 0;
+}
+
+.cards-lucros {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 25px;
+}
+
+.card-lucro {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.card-lucro .icone {
+    width: 55px;
+    height: 55px;
+    min-width: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 24px;
+    background: #EEF6EF;
+    color: #315C3A;
+}
+
+.card-lucro p {
+    margin: 0 0 6px;
+    color: #526157;
+    font-size: 13px;
+}
+
+.card-lucro strong {
+    font-size: 22px;
+    color: #2E2E2E;
+}
+
+.card-lucro.resultado.positivo strong {
+    color: #2e7d32;
+}
+
+.card-lucro.resultado.negativo strong {
+    color: #c62828;
+}
+
+.card-lucro-tabela {
+    background: white;
+    border-radius: 12px;
+    padding: 22px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.card-lucro-tabela h2 {
+    color: #315C3A;
+    font-size: 18px;
+    margin: 0 0 15px;
+}
+
+.card-lucro-tabela table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.card-lucro-tabela th {
+    background: #315C3A;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+.card-lucro-tabela td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    color: #526157;
+}
+
+.card-lucro-tabela .formula {
+    color: #777;
+    font-size: 12px;
+    margin: 15px 0 0;
+}
+
+.mensagem-sucesso {
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+}
+
+.btn-voltar {
+    color: #5E8F66;
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    header {
+        padding-left: 25px;
+    }
+
+    .cards-lucros {
+        grid-template-columns: 1fr;
+    }
+}

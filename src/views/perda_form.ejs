@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Rural Tech - Registrar Perda</title>
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/dados_perda.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <%- include('partials/menu') %>
+
+    <!-- CABEÇALHO -->
+    <header>
+      <button class="menu-btn" id="menuBtn">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <img src="/img/logotcc.png" alt="Logo Rural Tech" />
+
+      <h2>Rural Tech</h2>
+    </header>
+
+    <!-- CONTEÚDO -->
+    <main>
+      <section class="cabecalho-perda">
+        <h1>
+          <a href="/perdas" aria-label="Voltar para perdas" class="btn-voltar">
+            <i class="fa-solid fa-arrow-left"></i>
+          </a>
+          Registrar Perda
+        </h1>
+
+        <p>Informe os dados da perda ocorrida na produção.</p>
+      </section>
+
+      <!-- CARD -->
+      <section class="card-perda">
+        <!-- TÍTULO -->
+        <div class="titulo-perda">
+          <i class="fa-solid fa-clipboard-list"></i>
+
+          <h2>Dados da Perda</h2>
+        </div>
+
+        <!-- DICA -->
+        <div class="dica">
+          <i class="fa-solid fa-lightbulb"></i>
+
+          <div>
+            <strong>Dica importante</strong>
+
+            <p>
+              Registrar as perdas ajuda a identificar problemas na produção e
+              melhora o planejamento da sua propriedade.
+            </p>
+          </div>
+        </div>
+
+        <form id="perdaForm" action="/perdas" method="POST">
+          <!-- PRODUTO / DATA -->
+          <div class="linha">
+            <div class="campo produto">
+              <label for="produto">Produto</label>
+
+              <select id="produto" name="id_produto" required>
+                <option value="">Selecione o produto</option>
+
+                <% produtos.forEach(function(p) { %>
+                  <option value="<%= p.id_produto %>"><%= p.nome %></option>
+                <% }); %>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="data-perda">Data da perda</label>
+
+              <input type="date" id="data-perda" name="data_perda" required />
+            </div>
+          </div>
+
+          <!-- QUANTIDADE / UNIDADE -->
+          <div class="linha">
+            <div class="campo">
+              <label for="quantidade">Quantidade perdida</label>
+
+              <input
+                type="number"
+                id="quantidade"
+                name="quantidade"
+                placeholder="Ex: 50"
+                min="0.01"
+                step="0.01"
+                required
+              />
+            </div>
+
+            <div class="campo unidade">
+              <label for="unidade">Unidade</label>
+
+              <select id="unidade" name="unidade" required>
+                <option value="KG">KG</option>
+                <option value="Sacas">Sacas</option>
+                <option value="Toneladas">Toneladas</option>
+                <option value="Litro">Litro</option>
+                <option value="Unidade">Unidade</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- MOTIVO -->
+          <div class="campo motivo">
+            <label for="motivo">Motivo da perda</label>
+
+            <select id="motivo" name="motivo" required>
+              <option value="">Selecione o motivo da perda</option>
+
+              <option value="Pragas">Pragas</option>
+              <option value="Doenças">Doenças</option>
+              <option value="Condições climáticas">Condições climáticas</option>
+              <option value="Seca">Seca</option>
+              <option value="Excesso de chuva">Excesso de chuva</option>
+              <option value="Geada">Geada</option>
+              <option value="Problemas no armazenamento">Problemas no armazenamento</option>
+              <option value="Problemas no transporte">Problemas no transporte</option>
+              <option value="Outros">Outros</option>
+            </select>
+          </div>
+
+          <!-- LOCAL -->
+          <div class="campo">
+            <label for="local-perda">Local da perda</label>
+
+            <input
+              type="text"
+              id="local-perda"
+              name="local_perda"
+              placeholder="Ex: Talhão 01, galpão, armazenamento..."
+            />
+          </div>
+
+          <!-- VALOR ESTIMADO -->
+          <div class="campo">
+            <label for="valor-perda">Valor estimado da perda (R$)</label>
+
+            <input
+              type="number"
+              id="valor-perda"
+              name="valor_estimado"
+              placeholder="Ex: 500,00"
+              min="0"
+              step="0.01"
+              required
+            />
+          </div>
+
+          <!-- OBSERVAÇÕES -->
+          <div class="campo observacoes">
+            <label for="observacoes"> Observações <span>(opcional)</span> </label>
+
+            <textarea
+              id="observacoes"
+              name="observacoes"
+              placeholder="Ex: Informações adicionais sobre a perda..."
+            ></textarea>
+          </div>
+
+          <!-- BOTÕES -->
+          <div class="botoes">
+            <a href="/perdas" class="btn-cancelar btn-link" id="btnCancelar">
+              <i class="fa-solid fa-xmark"></i>
+              Cancelar
+            </a>
+
+            <button type="submit" class="btn-salvar" id="btnSalvar">
+              <i class="fa-solid fa-check"></i>
+              Salvar perda
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <script src="/js/menu_lateral.js"></script>
+    <script src="/js/perda_form.js"></script>
+  </body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Rural Tech - Lucros</title>
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/lucros.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <%- include('partials/menu') %>
+
+    <header>
+      <button class="menu-btn" id="menuBtn">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <img src="/img/logotcc.png" alt="Logo Rural Tech" />
+
+      <h2>Rural Tech</h2>
+    </header>
+
+    <main>
+      <section class="cabecalho-lucros">
+        <h1>
+          <a href="/comercial" aria-label="Voltar para o Comercial" class="btn-voltar">
+            <i class="fa-solid fa-arrow-left"></i>
+          </a>
+          Lucros
+        </h1>
+
+        <p>Resultado financeiro: vendas menos gastos, com base nos registros.</p>
+      </section>
+
+      <section class="cards-lucros">
+        <div class="card-lucro receitas">
+          <div class="icone"><i class="fa-solid fa-arrow-trend-up"></i></div>
+          <div>
+            <p>Total de vendas</p>
+            <strong><%= Number(totalVendas).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) %></strong>
+          </div>
+        </div>
+
+        <div class="card-lucro despesas">
+          <div class="icone"><i class="fa-solid fa-arrow-trend-down"></i></div>
+          <div>
+            <p>Total de gastos</p>
+            <strong><%= Number(totalGastos).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) %></strong>
+          </div>
+        </div>
+
+        <div class="card-lucro resultado <%= lucro >= 0 ? 'positivo' : 'negativo' %>">
+          <div class="icone"><i class="fa-solid fa-chart-line"></i></div>
+          <div>
+            <p>Lucro (vendas − gastos)</p>
+            <strong><%= Number(lucro).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) %></strong>
+          </div>
+        </div>
+
+        <div class="card-lucro perdas">
+          <div class="icone"><i class="fa-solid fa-triangle-exclamation"></i></div>
+          <div>
+            <p>Perdas estimadas (informativo)</p>
+            <strong><%= Number(totalPerdas).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) %></strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="card-lucro-tabela">
+        <h2>Últimos meses</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Mês</th>
+              <th>Vendas</th>
+              <th>Gastos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% const meses = {}; %>
+            <% vendasPorMes.forEach(function(v) { meses[v.mes] = meses[v.mes] || {}; meses[v.mes].vendas = Number(v.total); }); %>
+            <% gastosPorMes.forEach(function(g) { meses[g.mes] = meses[g.mes] || {}; meses[g.mes].gastos = Number(g.total); }); %>
+            <% const chaves = Object.keys(meses).sort().reverse(); %>
+            <% if (chaves.length === 0) { %>
+              <tr><td colspan="3">Sem movimentações registradas.</td></tr>
+            <% } else { %>
+              <% chaves.forEach(function(mes) { %>
+                <tr>
+                  <td><%= mes.split("-").reverse().join("/") %></td>
+                  <td><%= Number(meses[mes].vendas || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) %></td>
+                  <td><%= Number(meses[mes].gastos || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) %></td>
+                </tr>
+              <% }); %>
+            <% } %>
+          </tbody>
+        </table>
+        <p class="formula">Fórmula: lucro = total de vendas − total de gastos.</p>
+      </section>
+    </main>
+
+    <script src="/js/menu_lateral.js"></script>
+  </body>
+</html>
