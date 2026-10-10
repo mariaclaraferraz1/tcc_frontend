@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Rural Tech - Registrar Perda</title>
+    <title>Rural Tech - Perdas</title>
 
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/dados_perda.css" />
@@ -24,7 +24,6 @@
         <i class="fa-solid fa-bars"></i>
       </button>
 
-      <!-- Removido o ../ da imagem -->
       <img src="/img/logotcc.png" alt="Logo Rural Tech" />
 
       <h2>Rural Tech</h2>
@@ -34,168 +33,70 @@
     <main>
       <section class="cabecalho-perda">
         <h1>
-          <i class="fa-solid fa-arrow-left"></i>
-          Registrar Perda
+          <a href="/comercial" aria-label="Voltar para o Comercial" class="btn-voltar">
+            <i class="fa-solid fa-arrow-left"></i>
+          </a>
+          Perdas
         </h1>
 
-        <p>Informe os dados da perda ocorrida na produção.</p>
+        <p>Perdas cadastradas antes de registrar novas perdas.</p>
       </section>
 
-      <!-- CARD -->
+      <% if (typeof mensagem !== 'undefined' && mensagem) { %>
+        <p class="mensagem-sucesso"><i class="fa-solid fa-circle-check"></i> <%= mensagem %></p>
+      <% } %>
+
       <section class="card-perda">
-        <!-- TÍTULO -->
         <div class="titulo-perda">
-          <i class="fa-solid fa-clipboard-list"></i>
-
-          <h2>Dados da Perda</h2>
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <h2>Perdas cadastradas</h2>
         </div>
 
-        <!-- DICA -->
-        <div class="dica">
-          <i class="fa-solid fa-lightbulb"></i>
-
-          <div>
-            <strong>Dica importante</strong>
-
-            <p>
-              Registrar as perdas ajuda a identificar problemas na produção e
-              melhora o planejamento da sua propriedade.
-            </p>
-          </div>
+        <div class="resumo-total">
+          <span>Valor estimado total das perdas</span>
+          <strong><%= Number(total || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) %></strong>
         </div>
 
-        <!-- PRODUTO / DATA -->
-        <div class="linha">
-          <div class="campo produto">
-            <label>Produto</label>
-
-            <select id="produto">
-              <option value="">Selecione o produto</option>
-
-              <option value="milho">Milho</option>
-
-              <option value="soja">Soja</option>
-
-              <option value="cafe">Café</option>
-
-              <option value="feijao">Feijão</option>
-            </select>
-          </div>
-
-          <div class="campo">
-            <label>Data da perda</label>
-
-            <input type="date" id="data-perda" />
-          </div>
+        <div class="tabela-perdas">
+          <table>
+            <thead>
+              <tr>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Motivo</th>
+                <th>Valor estimado</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (!perdas || perdas.length === 0) { %>
+                <tr>
+                  <td colspan="5">Nenhuma perda cadastrada.</td>
+                </tr>
+              <% } else { %>
+                <% perdas.forEach(function(perda) { %>
+                  <tr>
+                    <td><%= perda.produto %></td>
+                    <td><%= Number(perda.quantidade).toLocaleString("pt-BR") %> <%= perda.unidade %></td>
+                    <td><%= perda.motivo %></td>
+                    <td><%= Number(perda.valor_estimado).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) %></td>
+                    <td><%= new Date(perda.data_perda + "T12:00:00").toLocaleDateString("pt-BR") %></td>
+                  </tr>
+                <% }); %>
+              <% } %>
+            </tbody>
+          </table>
         </div>
 
-        <!-- QUANTIDADE / UNIDADE -->
-        <div class="linha">
-          <div class="campo">
-            <label>Quantidade perdida</label>
-
-            <input
-              type="number"
-              id="quantidade"
-              placeholder="Ex: 50"
-              min="0"
-              step="0.01"
-            />
-          </div>
-
-          <div class="campo unidade">
-            <label>Unidade</label>
-
-            <select id="unidade">
-              <option value="kg">KG</option>
-
-              <option value="sacas">Sacas</option>
-
-              <option value="toneladas">Toneladas</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- MOTIVO -->
-        <div class="campo motivo">
-          <label>Motivo da perda</label>
-
-          <select id="motivo">
-            <option value="">Selecione o motivo da perda</option>
-
-            <option value="pragas">Pragas</option>
-
-            <option value="doencas">Doenças</option>
-
-            <option value="clima">Condições climáticas</option>
-
-            <option value="seca">Seca</option>
-
-            <option value="chuva">Excesso de chuva</option>
-
-            <option value="geada">Geada</option>
-
-            <option value="armazenamento">Problemas no armazenamento</option>
-
-            <option value="transporte">Problemas no transporte</option>
-
-            <option value="outros">Outros</option>
-          </select>
-        </div>
-
-        <!-- LOCAL -->
-        <div class="campo">
-          <label>Local da perda</label>
-
-          <input
-            type="text"
-            id="local-perda"
-            placeholder="Ex: Talhão 01, galpão, armazenamento..."
-          />
-        </div>
-
-        <!-- VALOR ESTIMADO -->
-        <div class="campo">
-          <label>Valor estimado da perda (R$)</label>
-
-          <input
-            type="number"
-            id="valor-perda"
-            placeholder="Ex: 500,00"
-            min="0"
-            step="0.01"
-          />
-        </div>
-
-        <!-- OBSERVAÇÕES -->
-        <div class="campo observacoes">
-          <label> Observações <span>(opcional)</span> </label>
-
-          <textarea
-            id="observacoes"
-            placeholder="Ex: Informações adicionais sobre a perda..."
-          ></textarea>
-        </div>
-
-        <!-- BOTÕES -->
         <div class="botoes">
-          <button type="button" class="btn-cancelar" id="btnCancelar">
-            <i class="fa-solid fa-xmark"></i>
-
-            Cancelar
-          </button>
-
-          <button type="button" class="btn-salvar" id="btnSalvar">
-            <i class="fa-solid fa-check"></i>
-
-            Salvar perda
-          </button>
+          <a href="/perdas/nova" class="btn-salvar btn-link">
+            <i class="fa-solid fa-plus"></i>
+            Registrar perda
+          </a>
         </div>
       </section>
     </main>
 
     <script src="/js/menu_lateral.js"></script>
-
-    <script src="/js/dados_perda.js"></script>
   </body>
 </html>

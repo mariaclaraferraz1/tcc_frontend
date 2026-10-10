@@ -199,6 +199,74 @@ td {
 }
 
 
+/* Voltar / mensagens / resumo / links-botão */
+
+.btn-voltar {
+    color: #5E8F66;
+    text-decoration: none;
+    margin-right: 8px;
+}
+
+.topo-interno {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 20px;
+}
+
+.topo-interno img {
+    height: 40px;
+}
+
+.mensagem-sucesso {
+    background: #fff;
+    border: 1px solid #5E8F66;
+    color: #315C3A;
+    padding: 12px 14px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+}
+
+.resumo-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+}
+
+.resumo-total span {
+    color: #3F5947;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.resumo-total strong {
+    color: #315C3A;
+    font-size: 20px;
+}
+
+.btn-submit.btn-link {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.btn-cancelar-link {
+    display: inline-block;
+    background: white;
+    color: #5E8F66;
+    border: 1px solid #5E8F66;
+    border-radius: 7px;
+    padding: 11px 18px;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+
 /* CELULAR */
 
 @media (max-width: 600px) {

@@ -1,131 +1,32 @@
+// Compat: arquivo antigo referenciado por páginas legadas.
+// Mantém o cálculo do total sem impedir o envio do formulário (POST /vendas).
 document.addEventListener("DOMContentLoaded", function () {
-
-    // ==============================
-    // ELEMENTOS
-    // ==============================
-
-    const quantidade = document.querySelector(
-        'input[type="number"][placeholder="Ex: 50"]'
-    );
-
-    const valorUnitario = document.querySelector(
-        'input[type="number"][placeholder="Ex: 5,50"]'
-    );
-
-    const valorTotal = document.querySelector('input[readonly]');
-
-    const btnSalvar = document.querySelector(".btn-salvar");
-
-    const btnCancelar = document.querySelector(".btn-cancelar");
-
-    const btnNovoCliente = document.querySelector(".btn-novo-cliente");
-
-
-    // ==============================
-    // CALCULAR VALOR TOTAL
-    // ==============================
+    const form = document.getElementById("vendaForm");
+    const quantidade = document.getElementById("quantidade");
+    const valorUnitario = document.getElementById("valor_unitario");
+    const valorTotalExibido = document.getElementById("valor_total_exibido");
 
     function calcularTotal() {
-
+        if (!quantidade || !valorUnitario || !valorTotalExibido) return;
         const qtd = parseFloat(quantidade.value) || 0;
-
         const valor = parseFloat(valorUnitario.value) || 0;
-
-        const total = qtd * valor;
-
-        valorTotal.value = total.toLocaleString("pt-BR", {
+        valorTotalExibido.value = (qtd * valor).toLocaleString("pt-BR", {
             style: "currency",
             currency: "BRL"
         });
-
     }
 
-
-    // Atualiza o valor total enquanto digita
-    quantidade.addEventListener("input", calcularTotal);
-
-    valorUnitario.addEventListener("input", calcularTotal);
-
-
-    // ==============================
-    // SALVAR VENDA
-    // ==============================
-
-    btnSalvar.addEventListener("click", function () {
-
-        if (quantidade.value === "" || valorUnitario.value === "") {
-
-            alert("Preencha a quantidade e o valor unitário.");
-
-            return;
-
-        }
-
-
-        calcularTotal();
-
-
-        // Redireciona para a tela Comercial
-        window.location.href = "comercial.html";
-
-    });
-
-
-    // ==============================
-    // CANCELAR
-    // ==============================
-
-    btnCancelar.addEventListener("click", function () {
-
-        const confirmar = confirm(
-            "Deseja cancelar o registro da venda?"
-        );
-
-
-        if (confirmar) {
-
-            window.location.href = "comercial.html";
-
-        }
-
-    });
-
-
-    // ==============================
-    // NOVO CLIENTE
-    // ==============================
-
-    btnNovoCliente.addEventListener("click", function () {
-
-        const nome = prompt(
-            "Digite o nome do novo cliente:"
-        );
-
-
-        if (nome && nome.trim() !== "") {
-
-            const selectCliente =
-                document.querySelector(".cliente select");
-
-
-            const novaOpcao =
-                document.createElement("option");
-
-
-            novaOpcao.textContent = nome.trim();
-
-            novaOpcao.value = nome.trim();
-
-
-            selectCliente.appendChild(novaOpcao);
-
-            selectCliente.value = nome.trim();
-
-
-            alert("Cliente adicionado com sucesso! ✅");
-
-        }
-
-    });
-
+    if (quantidade) quantidade.addEventListener("input", calcularTotal);
+    if (valorUnitario) valorUnitario.addEventListener("input", calcularTotal);
+    if (form) {
+        form.addEventListener("submit", function (event) {
+            const qtd = parseFloat(quantidade.value);
+            const valor = parseFloat(valorUnitario.value);
+            if (!quantidade.value || !(qtd > 0) || valorUnitario.value === "" || !(valor >= 0)) {
+                alert("Preencha a quantidade e o valor unitário.");
+                event.preventDefault();
+            }
+        });
+    }
+    calcularTotal();
 });

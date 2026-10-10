@@ -240,6 +240,51 @@ main {
 }
 
 /* ==============================
+VOLTAR / MENSAGENS / RESUMO
+============================== */
+
+.btn-voltar {
+color: #5E8F66;
+text-decoration: none;
+margin-right: 8px;
+}
+
+.mensagem-sucesso {
+background: #e8f5e9;
+color: #2e7d32;
+padding: 12px 16px;
+border-radius: 8px;
+margin-bottom: 18px;
+}
+
+.resumo-total {
+display: flex;
+justify-content: space-between;
+align-items: center;
+background: white;
+border-radius: 8px;
+padding: 14px 16px;
+margin-bottom: 18px;
+}
+
+.resumo-total span {
+color: #526157;
+font-size: 14px;
+}
+
+.resumo-total strong {
+color: #315C3A;
+font-size: 20px;
+}
+
+.btn-submit.btn-link,
+.btn-salvar.btn-link {
+display: inline-block;
+text-decoration: none;
+text-align: center;
+}
+
+/* ==============================
 CELULAR
 ============================== */
 

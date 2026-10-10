@@ -49,7 +49,7 @@
 
             <div>
               <p>Produção</p>
-              <strong>0 kg</strong>
+              <strong><%= Number(totalProducao || 0).toLocaleString("pt-BR") %> kg</strong>
             </div>
           </div>
 
@@ -60,7 +60,7 @@
 
             <div>
               <p>Produtos</p>
-              <strong>0</strong>
+              <strong><%= Number(totalProdutos || 0) %></strong>
             </div>
           </div>
 
@@ -71,7 +71,7 @@
 
             <div>
               <p>Vendas</p>
-              <strong>R$ 0,00</strong>
+              <strong><%= Number(totalVendas || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) %></strong>
             </div>
           </div>
 
@@ -82,7 +82,7 @@
 
             <div>
               <p>Gastos</p>
-              <strong>R$ 0,00</strong>
+              <strong><%= Number(totalGastos || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) %></strong>
             </div>
           </div>
         </div>
@@ -94,17 +94,17 @@
         <div class="financeiro">
           <div class="financeiro-item">
             <span>Vendas</span>
-            <strong>R$ 0,00</strong>
+            <strong><%= Number(totalVendas || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) %></strong>
           </div>
 
           <div class="financeiro-item">
             <span>Gastos</span>
-            <strong>R$ 0,00</strong>
+            <strong><%= Number(totalGastos || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) %></strong>
           </div>
 
           <div class="financeiro-item">
             <span>Lucro</span>
-            <strong>R$ 0,00</strong>
+            <strong><%= Number(lucro || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) %></strong>
           </div>
         </div>
       </section>
@@ -128,7 +128,7 @@
             <span>Vendas</span>
           </a>
 
-          <a href="#">
+          <a href="/gastos">
             <i class="fa-solid fa-receipt"></i>
             <span>Gastos</span>
           </a>

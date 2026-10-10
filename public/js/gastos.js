@@ -1,43 +1,43 @@
-function selectArea(element, val) {
-    document.querySelectorAll('.area-btn').forEach(btn => {
-        btn.classList.remove('active');
+// Form de gasto: seleção da classificação + validação leve.
+// O submit é nativo (POST /gastos) — salva no banco e
+// redireciona para a lista. Nada de mensagem temporária.
+function selectArea(element) {
+    document.querySelectorAll(".area-btn").forEach(function (btn) {
+        btn.classList.remove("active");
     });
-
-    element.classList.add('active');
-    document.getElementById('areaSelecionada').value = val;
+    element.classList.add("active");
+    document.getElementById("areaSelecionada").value = element.dataset.area || element.textContent.trim();
 }
 
-document.getElementById('gastoForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const descricao = document.getElementById('descricao').value;
-    const categoria = document.getElementById('categoria').value;
-    const data = document.getElementById('dataGasto').value;
-    const valor = parseFloat(document.getElementById('valor').value);
-    const pagamento = document.getElementById('formaPagamento').value;
-
-    const dataFormatada = data.split('-').reverse().join('/');
-    const valorFormatado = valor.toLocaleString('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".area-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+            selectArea(btn);
+        });
     });
 
-    const linha = document.createElement('tr');
+    const form = document.getElementById("gastoForm");
+    if (!form) return;
 
-    linha.innerHTML =
-        '<td>' + descricao + '</td>' +
-        '<td>' + categoria + '</td>' +
-        '<td>' + dataFormatada + '</td>' +
-        '<td>' + valorFormatado + '</td>' +
-        '<td>' + pagamento + '</td>';
+    form.addEventListener("submit", function (event) {
+        const descricao = document.getElementById("descricao").value.trim();
+        const data = document.getElementById("dataGasto").value;
+        const valor = parseFloat(document.getElementById("valor").value);
 
-    document.querySelector('.table-container tbody').prepend(linha);
-
-    this.reset();
-
-    document.querySelectorAll('.area-btn').forEach(btn => {
-        btn.classList.remove('active');
+        if (!descricao) {
+            alert("Informe a descrição do gasto.");
+            event.preventDefault();
+            return;
+        }
+        if (!data) {
+            alert("Informe a data do gasto.");
+            event.preventDefault();
+            return;
+        }
+        if (!Number.isFinite(valor) || valor <= 0) {
+            alert("Informe um valor válido maior que zero.");
+            event.preventDefault();
+        }
+        // deixa enviar -> POST /gastos
     });
-
-    document.getElementById('areaSelecionada').value = '';
 });

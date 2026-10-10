@@ -12,6 +12,11 @@
     margin-bottom: 8px;
 }
 
+.cabecalho-comercial h1 a {
+    color: #5E8F66;
+    text-decoration: none;
+}
+
 .cabecalho-comercial h1 i {
     color: #5E8F66;
     font-size: 18px;
@@ -219,7 +224,8 @@
     border-top: 1px solid #C4D5C8;
 }
 
-.botoes button {
+.botoes button,
+.botoes .btn-cancelar {
     border: none;
 
     border-radius: 7px;
@@ -231,6 +237,9 @@
     font-size: 13px;
 
     font-weight: bold;
+
+    text-decoration: none;
+    display: inline-block;
 }
 
 

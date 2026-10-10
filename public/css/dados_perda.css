@@ -214,6 +214,76 @@ color: white;
 
 }
 
+/* VOLTAR / MENSAGENS / RESUMO / TABELA DA LISTA */
+
+.btn-voltar {
+color: #5E8F66;
+text-decoration: none;
+}
+
+.mensagem-sucesso {
+background: #e8f5e9;
+color: #2e7d32;
+padding: 12px 16px;
+border-radius: 8px;
+margin-bottom: 18px;
+}
+
+.resumo-total {
+display: flex;
+justify-content: space-between;
+align-items: center;
+background: white;
+border-radius: 8px;
+padding: 14px 16px;
+margin-bottom: 18px;
+}
+
+.resumo-total span {
+color: #3F5947;
+font-size: 13px;
+font-weight: bold;
+}
+
+.resumo-total strong {
+color: #315C3A;
+font-size: 20px;
+}
+
+.tabela-perdas {
+background: white;
+border-radius: 8px;
+overflow-x: auto;
+margin-bottom: 20px;
+}
+
+.tabela-perdas table {
+width: 100%;
+border-collapse: collapse;
+font-size: 13px;
+}
+
+.tabela-perdas th {
+background: #DDE8D8;
+color: #3F5947;
+padding: 11px;
+text-align: left;
+}
+
+.tabela-perdas td {
+padding: 11px;
+border-bottom: 1px solid #E1E8E2;
+color: #555;
+}
+
+.btn-salvar.btn-link,
+.btn-cancelar.btn-link {
+display: inline-block;
+text-decoration: none;
+text-align: center;
+line-height: normal;
+}
+
 /* CELULAR */
 
 @media (max-width: 600px) {
