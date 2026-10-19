@@ -1,374 +1,178 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
-
-<title>Rural Tech - Produtos</title>
-
-<link
-    rel="stylesheet"
-    href="/css/style.css"
->
-
-<link
-    rel="stylesheet"
-    href="/css/produtos.css"
->
-
-<link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
->
-```
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rural Tech - Produtos</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Quebra de cache calibrada para forçar o novo design compacto -->
+    <link rel="stylesheet" href="/css/produtos.css?v=refresh_horizontal">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
-
 <body>
 
-```
 <%- include('partials/menu') %>
-
 
 <!-- HEADER -->
 <header class="topo">
-
-    <button
-        class="menu-btn"
-        id="menuBtn"
-        aria-label="Abrir menu"
-    >
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menu">
         <i class="fa-solid fa-bars"></i>
     </button>
-
-
-    <img
-        src="/img/logotcc.png"
-        alt="Logo Rural Tech"
-    >
-
-
+    <img src="/img/logotcc.png" alt="Logo Rural Tech">
     <div class="header-info">
         <h2>Rural Tech</h2>
-        <span>Gestão rural inteligente</span>
+       
     </div>
-
 </header>
-
-
 
 <!-- CONTEÚDO -->
 <main class="produtos-main">
 
-
     <!-- TÍTULO -->
     <section class="hero-produtos">
-
         <div class="hero-texto">
-
             <span class="eyebrow">
                 <i class="fa-solid fa-leaf"></i>
                 ESTOQUE E PRODUÇÃO
             </span>
-
-            <h1>
-                Seus produtos
-            </h1>
-
-            <p>
-                Organize os produtos da propriedade e acompanhe
-                o estoque de forma simples.
-            </p>
-
+            <h1>Seus produtos</h1>
+            <p>Organize os produtos da propriedade e acompanhe o estoque de forma simples.</p>
         </div>
-
-
-        <a
-            href="/cadastro-produto"
-            class="btn-cadastrar"
-        >
+        <a href="/cadastro-produto" class="btn-cadastrar">
             <i class="fa-solid fa-plus"></i>
             <span>Novo produto</span>
         </a>
-
     </section>
-
-
 
     <!-- RESUMO -->
     <section class="resumo-produtos">
-
-
         <div class="resumo-card">
-
             <div class="resumo-icone">
                 <i class="fa-solid fa-boxes-stacked"></i>
             </div>
-
             <div class="resumo-info">
                 <span>Produtos</span>
                 <strong>3</strong>
             </div>
-
             <i class="fa-solid fa-arrow-trend-up resumo-detalhe"></i>
-
         </div>
 
-
-
         <div class="resumo-card">
-
             <div class="resumo-icone">
                 <i class="fa-solid fa-layer-group"></i>
             </div>
-
             <div class="resumo-info">
                 <span>Categorias</span>
                 <strong>2</strong>
             </div>
-
             <i class="fa-solid fa-leaf resumo-detalhe"></i>
-
         </div>
 
-
-
         <div class="resumo-card">
-
             <div class="resumo-icone">
                 <i class="fa-solid fa-weight-hanging"></i>
             </div>
-
             <div class="resumo-info">
                 <span>Estoque total</span>
                 <strong>0 kg</strong>
             </div>
-
             <i class="fa-solid fa-wheat-awn resumo-detalhe"></i>
-
         </div>
-
-
     </section>
-
-
 
     <!-- PRODUTOS -->
     <section class="produtos-section">
-
-
         <div class="section-topo">
-
             <div>
-
                 <span class="section-label">
                     <i class="fa-solid fa-seedling"></i>
                     SEU ESTOQUE
                 </span>
-
-                <h2>
-                    Produtos cadastrados
-                </h2>
-
+                <h2>Produtos cadastrados</h2>
             </div>
-
-
-            <span class="contador">
-                3 produtos
-            </span>
-
+            <span class="contador">3 produtos</span>
         </div>
 
-
-
         <div class="lista-produtos">
-
-
             <!-- MILHO -->
             <article class="produto-card milho">
-
                 <div class="produto-visual">
-
                     <div class="produto-imagem">
                         <i class="fa-solid fa-wheat-awn"></i>
                     </div>
-
-                    <span class="produto-status">
-                        Ativo
-                    </span>
-
+                    <span class="produto-status">Ativo</span>
                 </div>
-
-
                 <div class="produto-info">
-
-                    <span class="categoria">
-                        GRÃOS
-                    </span>
-
-                    <h3>
-                        Milho
-                    </h3>
-
-                    <p>
-                        Produto agrícola
-                    </p>
-
-
+                    <span class="categoria">GRÃOS</span>
+                    <h3>Milho</h3>
+                    <p>Produto agrícola</p>
                     <div class="estoque">
-
                         <i class="fa-solid fa-box"></i>
-
                         <div>
                             <span>Disponível</span>
                             <strong>0 kg</strong>
                         </div>
-
                     </div>
-
                 </div>
-
-
-                <button
-                    class="btn-opcoes"
-                    aria-label="Opções do milho"
-                >
+                <button class="btn-opcoes" aria-label="Opções do milho">
                     <i class="fa-solid fa-ellipsis-vertical"></i>
                 </button>
-
             </article>
-
-
 
             <!-- SOJA -->
             <article class="produto-card soja">
-
                 <div class="produto-visual">
-
                     <div class="produto-imagem">
                         <i class="fa-solid fa-seedling"></i>
                     </div>
-
-                    <span class="produto-status">
-                        Ativo
-                    </span>
-
+                    <span class="produto-status">Ativo</span>
                 </div>
-
-
                 <div class="produto-info">
-
-                    <span class="categoria">
-                        GRÃOS
-                    </span>
-
-                    <h3>
-                        Soja
-                    </h3>
-
-                    <p>
-                        Produto agrícola
-                    </p>
-
-
+                    <span class="categoria">GRÃOS</span>
+                    <h3>Soja</h3>
+                    <p>Produto agrícola</p>
                     <div class="estoque">
-
                         <i class="fa-solid fa-box"></i>
-
                         <div>
                             <span>Disponível</span>
                             <strong>0 kg</strong>
                         </div>
-
                     </div>
-
                 </div>
-
-
-                <button
-                    class="btn-opcoes"
-                    aria-label="Opções da soja"
-                >
+                <button class="btn-opcoes" aria-label="Opções da soja">
                     <i class="fa-solid fa-ellipsis-vertical"></i>
                 </button>
-
             </article>
-
-
 
             <!-- HORTALIÇAS -->
             <article class="produto-card hortalicas">
-
                 <div class="produto-visual">
-
                     <div class="produto-imagem">
                         <i class="fa-solid fa-carrot"></i>
                     </div>
-
-                    <span class="produto-status">
-                        Ativo
-                    </span>
-
+                    <span class="produto-status">Ativo</span>
                 </div>
-
-
                 <div class="produto-info">
-
-                    <span class="categoria">
-                        VEGETAIS
-                    </span>
-
-                    <h3>
-                        Hortaliças
-                    </h3>
-
-                    <p>
-                        Produto agrícola
-                    </p>
-
-
+                    <span class="categoria">VEGETAIS</span>
+                    <h3>Hortaliças</h3>
+                    <p>Produto agrícola</p>
                     <div class="estoque">
-
                         <i class="fa-solid fa-box"></i>
-
                         <div>
                             <span>Disponível</span>
                             <strong>0 kg</strong>
                         </div>
-
                     </div>
-
                 </div>
-
-
-                <button
-                    class="btn-opcoes"
-                    aria-label="Opções das hortaliças"
-                >
+                <button class="btn-opcoes" aria-label="Opções das hortaliças">
                     <i class="fa-solid fa-ellipsis-vertical"></i>
                 </button>
-
             </article>
-
-
         </div>
-
     </section>
-
-
 </main>
-
 
 <script src="/js/menu_lateral.js"></script>
 <script src="/js/produtos.js"></script>
-
-
 </body>
-
 </html>
