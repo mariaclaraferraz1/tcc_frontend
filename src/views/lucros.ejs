@@ -1,0 +1,228 @@
+<%- include('partials/head', { titulo: titulo, css: [] }) %>
+<%- include('partials/menu') %>
+<%- include('partials/header') %>
+
+<%
+    const lucroPositivo = Number(resumo.lucroLiquido || 0) >= 0;
+%>
+
+<main class="painel-main">
+    <%- include('partials/mensagens') %>
+
+    <section class="painel-hero">
+        <div>
+            <span class="eyebrow">
+                <i class="fa-solid fa-chart-line"></i>
+                Comercial
+            </span>
+            <h1>Lucros</h1>
+            <p>Resultado consolidado: vendas menos gastos e perdas. Use o período para comparar meses.</p>
+        </div>
+
+        <div class="painel-hero-acoes">
+            <a href="/relatorios?tipo=lucros" class="painel-btn-secundario">
+                <i class="fa-solid fa-file-lines"></i>
+                Relatório de lucros
+            </a>
+            <a href="/comercial" class="painel-btn-secundario">
+                <i class="fa-solid fa-arrow-left"></i>
+                Comercial
+            </a>
+        </div>
+    </section>
+
+    <form action="/lucros" method="GET" class="painel-filtros">
+        <div class="painel-filtros-titulo">
+            <i class="fa-solid fa-calendar-days"></i>
+            Período
+        </div>
+
+        <div class="painel-filtros-grade">
+            <div class="form-grupo">
+                <label for="filtro-inicio">De</label>
+                <input type="date" id="filtro-inicio" name="inicio" value="<%= filtros.inicio || '' %>">
+            </div>
+
+            <div class="form-grupo">
+                <label for="filtro-fim">Até</label>
+                <input type="date" id="filtro-fim" name="fim" value="<%= filtros.fim || '' %>">
+            </div>
+        </div>
+
+        <div class="painel-filtros-acoes">
+            <button type="submit" class="painel-btn">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                Aplicar período
+            </button>
+            <a href="/lucros" class="link-limpar">
+                <i class="fa-solid fa-xmark"></i>
+                Limpar período
+            </a>
+        </div>
+    </form>
+
+    <section class="painel-resumo">
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-arrow-trend-up"></i></div>
+            <div class="painel-card-info">
+                <span>Vendas</span>
+                <strong><%= formatarMoeda(resumo.totalVendas || 0) %></strong>
+                <small><%= formatarNumero(resumo.quantidadeVendas || 0, 0) %> venda(s)</small>
+            </div>
+        </div>
+
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-receipt"></i></div>
+            <div class="painel-card-info">
+                <span>Gastos</span>
+                <strong><%= formatarMoeda(resumo.totalGastos || 0) %></strong>
+                <small><%= formatarNumero(resumo.quantidadeGastos || 0, 0) %> gasto(s)</small>
+            </div>
+        </div>
+
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div class="painel-card-info">
+                <span>Perdas</span>
+                <strong><%= formatarMoeda(resumo.totalPerdas || 0) %></strong>
+                <small><%= formatarNumero(resumo.quantidadePerdas || 0, 0) %> perda(s)</small>
+            </div>
+        </div>
+
+        <div class="painel-card <%= lucroPositivo ? 'destaque' : '' %>">
+            <div class="painel-card-icone"><i class="fa-solid fa-wallet"></i></div>
+            <div class="painel-card-info">
+                <span>Lucro líquido</span>
+                <strong><%= formatarMoeda(resumo.lucroLiquido || 0) %></strong>
+                <small>Margem de <%= formatarNumero(resumo.margem || 0, 1) %>%</small>
+            </div>
+        </div>
+    </section>
+
+    <section class="painel-secao">
+        <div class="painel-secao-topo">
+            <div>
+                <span class="painel-secao-label">
+                    <i class="fa-solid fa-calendar"></i>
+                    Evolução
+                </span>
+                <h2>Resultado mensal</h2>
+            </div>
+            <span class="painel-contador">
+                <%= mensal.length %> mês(es)
+            </span>
+        </div>
+
+        <% if (mensal.length === 0) { %>
+            <div class="painel-vazio">
+                <i class="fa-solid fa-chart-simple"></i>
+                <h3>Sem movimentações no período</h3>
+                <p>Registre vendas, gastos ou perdas para visualizar o resultado mensal.</p>
+            </div>
+        <% } else { %>
+            <div class="painel-tabela-wrapper">
+                <table class="painel-tabela">
+                    <thead>
+                        <tr>
+                            <th>Mês</th>
+                            <th>Vendas</th>
+                            <th>Gastos</th>
+                            <th>Perdas</th>
+                            <th>Lucro líquido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% mensal.forEach(function (linha) { %>
+                            <tr>
+                                <td><%= formatarMes(linha.mes) %></td>
+                                <td class="numero"><%= formatarMoeda(linha.totalVendas) %></td>
+                                <td class="numero"><%= formatarMoeda(linha.totalGastos) %></td>
+                                <td class="numero"><%= formatarMoeda(linha.totalPerdas) %></td>
+                                <td class="numero">
+                                    <strong style="color: <%= Number(linha.lucroLiquido) >= 0 ? 'var(--verde-escuro)' : 'var(--vermelho)' %>;">
+                                        <%= formatarMoeda(linha.lucroLiquido) %>
+                                    </strong>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        <% } %>
+    </section>
+
+    <section class="painel-secao">
+        <div class="painel-secao-topo">
+            <div>
+                <span class="painel-secao-label">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    Movimentações recentes
+                </span>
+                <h2>Últimos registros</h2>
+            </div>
+        </div>
+
+        <div class="painel-grid-tres">
+            <div class="painel-lista">
+                <h3><i class="fa-solid fa-cart-shopping"></i> Últimas vendas</h3>
+                <% if (ultimasVendas.length === 0) { %>
+                    <p class="form-ajuda">Nenhuma venda registrada.</p>
+                <% } else { %>
+                    <ul>
+                        <% ultimasVendas.forEach(function (venda) { %>
+                            <li>
+                                <span>
+                                    <strong><%= venda.produto %></strong><br>
+                                    <%= formatarData(venda.data_venda) %>
+                                </span>
+                                <span class="valor"><%= formatarMoeda(venda.valor_total) %></span>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } %>
+            </div>
+
+            <div class="painel-lista">
+                <h3><i class="fa-solid fa-receipt"></i> Últimos gastos</h3>
+                <% if (ultimosGastos.length === 0) { %>
+                    <p class="form-ajuda">Nenhum gasto registrado.</p>
+                <% } else { %>
+                    <ul>
+                        <% ultimosGastos.forEach(function (gasto) { %>
+                            <li>
+                                <span>
+                                    <strong><%= gasto.descricao %></strong><br>
+                                    <%= formatarData(gasto.data_gasto) %>
+                                </span>
+                                <span class="valor"><%= formatarMoeda(gasto.valor) %></span>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } %>
+            </div>
+
+            <div class="painel-lista">
+                <h3><i class="fa-solid fa-triangle-exclamation"></i> Últimas perdas</h3>
+                <% if (ultimasPerdas.length === 0) { %>
+                    <p class="form-ajuda">Nenhuma perda registrada.</p>
+                <% } else { %>
+                    <ul>
+                        <% ultimasPerdas.forEach(function (perda) { %>
+                            <li>
+                                <span>
+                                    <strong><%= perda.produto %></strong><br>
+                                    <%= formatarData(perda.data_perda) %>
+                                </span>
+                                <span class="valor"><%= formatarMoeda(perda.valor_estimado) %></span>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } %>
+            </div>
+        </div>
+    </section>
+</main>
+
+<%- include('partials/scripts', { scripts: [] }) %>
+</body>
+</html>

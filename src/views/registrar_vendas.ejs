@@ -1,99 +1,159 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<%- include('partials/head', { titulo: titulo, css: [] }) %>
+<%- include('partials/menu') %>
+<%- include('partials/header') %>
 
-    <title>Rural Tech - Registrar Venda</title>
+<%
+    const dadosForm = dados || {};
+    const produtoSelecionado = String(dadosForm.idProduto || '');
+    const clienteSelecionado = String(dadosForm.idCliente || '');
+%>
 
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/registrar_vendas.css" />
+<main class="painel-main">
+    <%- include('partials/mensagens') %>
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-  </head>
-
-  <body>
-    <!-- MENU LATERAL -->
-    <%- include('partials/menu') %>
-
-    <!-- CABEÇALHO -->
-    <header>
-      <button class="menu-btn" id="menuBtn">
-        <i class="fa-solid fa-bars"></i>
-      </button>
-
-      <img src="/img/logotcc.png" alt="Logo Rural Tech" />
-
-      <h2>Rural Tech</h2>
-    </header>
-
-    <!-- CONTEÚDO -->
-    <main>
-      <div class="topo-vendas">
+    <section class="painel-hero">
         <div>
-          <h1>Registro de Vendas</h1>
-
-          <h2>Vendas realizadas</h2>
+            <span class="eyebrow">
+                <i class="fa-solid fa-cart-plus"></i>
+                Comercial
+            </span>
+            <h1>Registrar venda</h1>
+            <p>Selecione o produto, informe a quantidade e confirme os dados da venda.</p>
         </div>
-      </div>
 
-      <!-- TABELA DE VENDAS -->
-      <section class="tabela-vendas">
-        <table>
-          <thead>
-            <tr>
-              <th>Cliente</th>
+        <div class="painel-hero-acoes">
+            <a href="/vendas" class="painel-btn-secundario">
+                <i class="fa-solid fa-list"></i>
+                Ver vendas
+            </a>
+            <a href="/comercial" class="painel-btn-secundario">
+                <i class="fa-solid fa-arrow-left"></i>
+                Comercial
+            </a>
+        </div>
+    </section>
 
-              <th>Produto</th>
+    <% if (produtos.length === 0) { %>
+        <div class="painel-vazio">
+            <i class="fa-solid fa-box-open"></i>
+            <h3>Nenhum produto ativo disponível</h3>
+            <p>Cadastre um produto com preço e estoque antes de registrar uma venda.</p>
+            <div style="margin-top: 18px;">
+                <a href="/cadastro-produto" class="painel-btn">
+                    <i class="fa-solid fa-plus"></i>
+                    Cadastrar produto
+                </a>
+            </div>
+        </div>
+    <% } else { %>
+        <form action="/vendas" method="POST" class="painel-form" id="form-venda">
+            <div class="painel-form-titulo">
+                <i class="fa-solid fa-clipboard-list"></i>
+                <div>
+                    <h2>Dados da venda</h2>
+                    <p>O preço unitário e a unidade vêm do cadastro do produto.</p>
+                </div>
+            </div>
 
-              <th>Quantidade</th>
+            <div class="painel-dica">
+                <i class="fa-solid fa-lightbulb"></i>
+                <div>
+                    <strong>Estoque e valor calculados pelo sistema</strong>
+                    <p>O total é calculado com o preço cadastrado no produto. Ao salvar, o estoque disponível é reduzido automaticamente.</p>
+                </div>
+            </div>
 
-              <th>Valor</th>
+            <div class="form-grade">
+                <div class="form-grupo largo">
+                    <label for="idProduto">Produto *</label>
+                    <select id="idProduto" name="idProduto" required data-calcular-venda>
+                        <option value="">Selecione o produto</option>
+                        <% produtos.forEach(function (produto) { %>
+                            <option
+                                value="<%= produto.id_produto %>"
+                                data-preco="<%= Number(produto.preco || 0) %>"
+                                data-unidade="<%= produto.unidade || 'kg' %>"
+                                data-estoque="<%= Number(produto.estoque || 0) %>"
+                                <%= produtoSelecionado === String(produto.id_produto) ? 'selected' : '' %>
+                            >
+                                <%= produto.nome %> — <%= formatarMoeda(produto.preco) %> / <%= produto.unidade || 'kg' %> (estoque: <%= formatarQuantidade(produto.estoque) %>)
+                            </option>
+                        <% }); %>
+                    </select>
+                </div>
 
-              <th>Data</th>
-            </tr>
-          </thead>
+                <div class="form-grupo">
+                    <label for="idCliente">Cliente cadastrado <span class="opcional">(opcional)</span></label>
+                    <select id="idCliente" name="idCliente">
+                        <option value="">Sem cliente cadastrado</option>
+                        <% clientes.forEach(function (cliente) { %>
+                            <option value="<%= cliente.id_cliente %>" <%= clienteSelecionado === String(cliente.id_cliente) ? 'selected' : '' %>><%= cliente.nome %></option>
+                        <% }); %>
+                    </select>
+                </div>
 
-          <tbody>
-            <tr>
-              <td>Mariana</td>
+                <div class="form-grupo">
+                    <label for="clienteNome">Novo cliente <span class="opcional">(opcional)</span></label>
+                    <input type="text" id="clienteNome" name="clienteNome" maxlength="150" value="<%= dadosForm.clienteNome || '' %>" placeholder="Nome do novo cliente">
+                    <small>Se preenchido, o cliente será criado ou reutilizado automaticamente.</small>
+                </div>
 
-              <td>Milho</td>
+                <div class="form-grupo">
+                    <label for="dataVenda">Data da venda *</label>
+                    <input type="date" id="dataVenda" name="dataVenda" required value="<%= dadosForm.dataVenda || hoje %>">
+                </div>
 
-              <td>10</td>
+                <div class="form-grupo">
+                    <label for="quantidade">Quantidade vendida *</label>
+                    <input type="number" id="quantidade" name="quantidade" min="0.01" step="0.01" required value="<%= dadosForm.quantidade || '' %>" placeholder="Ex: 50" data-calcular-venda>
+                </div>
 
-              <td>R$ 500,00</td>
+                <div class="form-grupo">
+                    <label for="unidade-venda">Unidade</label>
+                    <input type="text" id="unidade-venda" readonly class="painel-campo-calculado" value="">
+                </div>
 
-              <td>31/08/2026</td>
-            </tr>
+                <div class="form-grupo">
+                    <label for="preco-venda">Preço unitário (R$)</label>
+                    <input type="text" id="preco-venda" readonly class="painel-campo-calculado" value="">
+                </div>
 
-            <tr>
-              <td>João</td>
+                <div class="form-grupo">
+                    <label for="valor-total">Valor total</label>
+                    <input type="text" id="valor-total" readonly class="painel-campo-calculado" value="R$ 0,00">
+                    <small>Calculado automaticamente e validado no servidor.</small>
+                </div>
 
-              <td>Soja</td>
+                <div class="form-grupo">
+                    <label for="formaPagamento">Forma de pagamento</label>
+                    <select id="formaPagamento" name="formaPagamento">
+                        <option value="">Selecione</option>
+                        <% (formasPagamento || []).forEach(function (forma) { %>
+                            <option value="<%= forma %>" <%= dadosForm.formaPagamento === forma ? 'selected' : '' %>><%= forma %></option>
+                        <% }); %>
+                    </select>
+                </div>
 
-              <td>5</td>
+                <div class="form-grupo largo">
+                    <label for="observacoes">Observações <span class="opcional">(opcional)</span></label>
+                    <textarea id="observacoes" name="observacoes" maxlength="1000" placeholder="Informações adicionais sobre a venda..."><%= dadosForm.observacoes || '' %></textarea>
+                </div>
+            </div>
 
-              <td>R$ 350,00</td>
+            <div class="form-acoes">
+                <a href="/vendas" class="painel-btn-secundario">
+                    <i class="fa-solid fa-xmark"></i>
+                    Cancelar
+                </a>
+                <button type="submit" class="painel-btn btn-salvar">
+                    <i class="fa-solid fa-check"></i>
+                    Salvar venda
+                </button>
+            </div>
+        </form>
+    <% } %>
+</main>
 
-              <td>30/08/2026</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-    </main>
-
-    <!-- BOTÃO PARA REGISTRAR NOVA VENDA -->
-    <!-- Alterado de vendas.html para a rota /vendas -->
-    <a href="/vendas" class="btn-nova-venda">
-      <i class="fa-solid fa-plus"></i>
-
-      Nova venda
-    </a>
-
-    <script src="/js/menu_lateral.js"></script>
-  </body>
+<%- include('partials/scripts', { scripts: ['/js/registrar_vendas.js'] }) %>
+</body>
 </html>

@@ -1,0 +1,45 @@
+# Dependências
+node_modules/
+
+# Configuração local (credenciais)
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Backups e exportações do banco
+*.sql.bak
+backup_*.sql
+*.dump
+
+# Uploads enviados pelos usuários (imagens e comprovantes)
+public/uploads/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build / cache
+dist/
+build/
+coverage/
+.cache/
+.vite/
+
+# Temporários
+tmp/
+temp/
+*.tmp

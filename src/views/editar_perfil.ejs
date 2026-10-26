@@ -1,215 +1,67 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<%- include('partials/head', { titulo: titulo, css: [] }) %>
+<%- include('partials/menu') %>
+<%- include('partials/header') %>
 
-<head>
+<main class="painel-main">
+    <%- include('partials/mensagens') %>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Rural Tech - Editar Perfil</title>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/editar_perfil.css">
-
-</head>
-
-<body>
-
-    <!-- MENU LATERAL -->
-
-    <%- include('partials/menu') %>
-
-        <div class="menu-topo">
-
-            <!-- Removido o ../ da imagem -->
-            <img src="/img/logotcc.png" alt="Logo Rural Tech">
-
-            <span>Rural Tech</span>
-
+    <section class="painel-hero">
+        <div>
+            <span class="eyebrow">
+                <i class="fa-solid fa-user-pen"></i>
+                Conta
+            </span>
+            <h1>Editar perfil</h1>
+            <p>Atualize os dados cadastrais da sua conta.</p>
         </div>
 
-        <ul>
+        <div class="painel-hero-acoes">
+            <a href="/configuracoes" class="painel-btn-secundario">
+                <i class="fa-solid fa-arrow-left"></i>
+                Voltar para configurações
+            </a>
+        </div>
+    </section>
 
-            <li>
-                <a href="/inicio">
-                    <i class="fa-solid fa-house"></i>
-                    <span>Início</span>
-                </a>
-            </li>
+    <form action="/editar-perfil" method="POST" class="painel-form">
+        <div class="painel-form-titulo">
+            <i class="fa-solid fa-address-card"></i>
+            <div>
+                <h2>Dados pessoais</h2>
+                <p>O e-mail é usado para entrar no sistema e deve ser único.</p>
+            </div>
+        </div>
 
-            <li>
-                <a href="/produtos">
-                    <i class="fa-solid fa-box"></i>
-                    <span>Produtos</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="/producao">
-                    <i class="fa-solid fa-seedling"></i>
-                    <span>Produção</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="/comercial">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span>Comercial</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="/relatorios">
-                    <i class="fa-solid fa-chart-column"></i>
-                    <span>Relatórios</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="/consulta">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <span>Consulta</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="/configuracoes" class="ativo">
-                    <i class="fa-solid fa-gear"></i>
-                    <span>Configurações</span>
-                </a>
-            </li>
-
-        </ul>
-
-    </nav>
-
-    <div class="fundo-menu"></div>
-
-
-    <!-- CABEÇALHO -->
-
-    <header>
-
-        <button class="menu-btn" id="menuBtn">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-
-        <img src="/img/logotcc.png" alt="Logo Rural Tech">
-
-        <h2>Rural Tech</h2>
-
-    </header>
-
-
-    <!-- CONTEÚDO -->
-
-    <main>
-
-        <section class="cabecalho-pagina">
-
-            <span class="subtitulo">CONFIGURAÇÕES</span>
-
-            <h1>Editar perfil</h1>
-
-            <p>
-                Atualize suas informações pessoais.
-            </p>
-
-        </section>
-
-
-        <section class="perfil-card">
-
-            <div class="titulo-card">
-
-                <div class="icone-perfil">
-                    <i class="fa-solid fa-user"></i>
-                </div>
-
-                <div>
-                    <h2>Informações do perfil</h2>
-
-                    <p>
-                        Altere os dados da sua conta.
-                    </p>
-                </div>
-
+        <div class="form-grade">
+            <div class="form-grupo largo">
+                <label for="nome">Nome completo *</label>
+                <input type="text" id="nome" name="nome" maxlength="100" required value="<%= dados.nome || '' %>" placeholder="Seu nome completo">
             </div>
 
+            <div class="form-grupo">
+                <label for="email">E-mail *</label>
+                <input type="email" id="email" name="email" maxlength="150" required value="<%= dados.email || '' %>" placeholder="voce@exemplo.com">
+            </div>
 
-            <form id="formPerfil">
+            <div class="form-grupo">
+                <label for="telefone">Telefone <span class="opcional">(opcional)</span></label>
+                <input type="tel" id="telefone" name="telefone" maxlength="30" value="<%= dados.telefone || '' %>" placeholder="(00) 00000-0000">
+            </div>
+        </div>
 
-                <div class="campo">
+        <div class="form-acoes">
+            <a href="/configuracoes" class="painel-btn-secundario">
+                <i class="fa-solid fa-xmark"></i>
+                Cancelar
+            </a>
+            <button type="submit" class="painel-btn">
+                <i class="fa-solid fa-check"></i>
+                Salvar perfil
+            </button>
+        </div>
+    </form>
+</main>
 
-                    <label for="nome">Nome</label>
-
-                    <input
-                        type="text"
-                        id="nome"
-                        name="nome"
-                        placeholder="Digite seu nome"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="campo">
-
-                    <label for="email">E-mail</label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="Digite seu e-mail"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="campo">
-
-                    <label for="telefone">Telefone</label>
-
-                    <input
-                        type="tel"
-                        id="telefone"
-                        name="telefone"
-                        placeholder="Digite seu telefone"
-                    >
-
-                </div>
-
-
-                <div class="botoes">
-
-                    <!-- Mudado para a rota /configuracoes -->
-                    <a href="/configuracoes" class="btn-cancelar">
-                        Cancelar
-                    </a>
-
-                    <button type="submit" class="btn-salvar">
-
-                        <i class="fa-solid fa-check"></i>
-
-                        Salvar alterações
-
-                    </button>
-
-                </div>
-
-            </form>
-
-        </section>
-
-    </main>
-
-    <script src="/js/menu_lateral.js"></script>
-    <script src="/js/editar_perfil.js"></script>
-
+<%- include('partials/scripts', { scripts: [] }) %>
 </body>
-
 </html>

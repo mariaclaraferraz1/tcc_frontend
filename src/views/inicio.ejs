@@ -1,141 +1,232 @@
-<!DOCTYPE html>
+<%- include('partials/head', { titulo: titulo, css: [] }) %>
+<%- include('partials/menu') %>
+<%- include('partials/header') %>
 
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<%
+    const financeiro = indicadores.financeiro || {};
+    const produtosInfo = indicadores.produtos || {};
+    const plantioInfo = indicadores.plantio || {};
+%>
 
-    <title>Rural Tech - Início</title>
+<main class="painel-main">
+    <%- include('partials/mensagens') %>
 
-    <link rel="stylesheet" href="/css/inicio.css" />
-    <link rel="stylesheet" href="/css/style.css" />
-
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-  </head>
-
-  <body>
-    <%- include('partials/menu') %>
-
-    <header>
-      <button class="menu-btn" id="menuBtn">
-        <i class="fa-solid fa-bars"></i>
-      </button>
-
-      <img src="/img/logotcc.png" alt="Logo Rural Tech" />
-
-      <h2>Rural Tech</h2>
-    </header>
-
-    <main>
-      <section class="boas-vindas">
-        <span>Olá! 👋</span>
-
-        <h1>Bem-vindo ao Rural Tech</h1>
-
-        <p>Acompanhe sua produção de forma simples e organizada.</p>
-      </section>
-
-      <section>
-        <h2 class="titulo-secao">Resumo</h2>
-
-        <div class="cards">
-          <div class="card">
-            <div class="icone">
-              <i class="fa-solid fa-seedling"></i>
-            </div>
-
-            <div>
-              <p>Produção</p>
-              <strong>0 kg</strong>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="icone">
-              <i class="fa-solid fa-box"></i>
-            </div>
-
-            <div>
-              <p>Produtos</p>
-              <strong>0</strong>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="icone">
-              <i class="fa-solid fa-money-bill-trend-up"></i>
-            </div>
-
-            <div>
-              <p>Vendas</p>
-              <strong>R$ 0,00</strong>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="icone">
-              <i class="fa-solid fa-receipt"></i>
-            </div>
-
-            <div>
-              <p>Gastos</p>
-              <strong>R$ 0,00</strong>
-            </div>
-          </div>
+    <section class="painel-hero">
+        <div>
+            <span class="eyebrow">
+                <i class="fa-solid fa-leaf"></i>
+                Visão geral
+            </span>
+            <h1>Olá, <%= usuario.nome.split(" ")[0] %>!</h1>
+            <p>Acompanhe o desempenho da propriedade, o estoque e os resultados financeiros em um só lugar.</p>
         </div>
-      </section>
 
-      <section class="secao">
-        <h2 class="titulo-secao">Resumo financeiro</h2>
-
-        <div class="financeiro">
-          <div class="financeiro-item">
-            <span>Vendas</span>
-            <strong>R$ 0,00</strong>
-          </div>
-
-          <div class="financeiro-item">
-            <span>Gastos</span>
-            <strong>R$ 0,00</strong>
-          </div>
-
-          <div class="financeiro-item">
-            <span>Lucro</span>
-            <strong>R$ 0,00</strong>
-          </div>
+        <div class="painel-hero-acoes">
+            <a href="/registrar-vendas" class="painel-btn">
+                <i class="fa-solid fa-plus"></i>
+                Nova venda
+            </a>
+            <a href="/relatorios" class="painel-btn-secundario">
+                <i class="fa-solid fa-file-lines"></i>
+                Relatórios
+            </a>
         </div>
-      </section>
+    </section>
 
-      <section class="secao">
-        <h2 class="titulo-secao">Acesso rápido</h2>
-
-        <div class="atalhos">
-          <a href="/produtos">
-            <i class="fa-solid fa-box"></i>
-            <span>Produtos</span>
-          </a>
-
-          <a href="/producao">
-            <i class="fa-solid fa-seedling"></i>
-            <span>Produção</span>
-          </a>
-
-          <a href="/vendas">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span>Vendas</span>
-          </a>
-
-          <a href="#">
-            <i class="fa-solid fa-receipt"></i>
-            <span>Gastos</span>
-          </a>
+    <section class="painel-resumo">
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-seedling"></i></div>
+            <div class="painel-card-info">
+                <span>Quantidade colhida</span>
+                <strong><%= formatarQuantidade(indicadores.producao) %></strong>
+                <small>Total registrado na produção</small>
+            </div>
         </div>
-      </section>
-    </main>
 
-    <script src="/js/menu_lateral.js"></script>
-  </body>
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-box"></i></div>
+            <div class="painel-card-info">
+                <span>Produtos ativos</span>
+                <strong><%= formatarNumero(produtosInfo.total_produtos || 0, 0) %></strong>
+                <small><%= formatarMoeda(produtosInfo.valor_estoque || 0) %> em estoque</small>
+            </div>
+        </div>
+
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-cart-shopping"></i></div>
+            <div class="painel-card-info">
+                <span>Vendas</span>
+                <strong><%= formatarMoeda(financeiro.totalVendas || 0) %></strong>
+                <small><%= formatarNumero(financeiro.quantidadeVendas || 0, 0) %> registro(s)</small>
+            </div>
+        </div>
+
+        <div class="painel-card <%= (financeiro.lucroLiquido || 0) >= 0 ? 'destaque' : '' %>">
+            <div class="painel-card-icone"><i class="fa-solid fa-money-bill-trend-up"></i></div>
+            <div class="painel-card-info">
+                <span>Lucro líquido</span>
+                <strong><%= formatarMoeda(financeiro.lucroLiquido || 0) %></strong>
+                <small>Margem de <%= formatarNumero(financeiro.margem || 0, 1) %>%</small>
+            </div>
+        </div>
+    </section>
+
+    <section class="painel-secao">
+        <div class="painel-secao-topo">
+            <div>
+                <span class="painel-secao-label">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    Financeiro
+                </span>
+                <h2>Resumo financeiro</h2>
+            </div>
+            <a href="/lucros" class="link-limpar">
+                Ver lucros
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="painel-resumo">
+            <div class="painel-card">
+                <div class="painel-card-icone"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                <div class="painel-card-info">
+                    <span>Vendas</span>
+                    <strong><%= formatarMoeda(financeiro.totalVendas || 0) %></strong>
+                </div>
+            </div>
+
+            <div class="painel-card">
+                <div class="painel-card-icone"><i class="fa-solid fa-receipt"></i></div>
+                <div class="painel-card-info">
+                    <span>Gastos</span>
+                    <strong><%= formatarMoeda(financeiro.totalGastos || 0) %></strong>
+                </div>
+            </div>
+
+            <div class="painel-card">
+                <div class="painel-card-icone"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <div class="painel-card-info">
+                    <span>Perdas</span>
+                    <strong><%= formatarMoeda(financeiro.totalPerdas || 0) %></strong>
+                </div>
+            </div>
+
+            <div class="painel-card">
+                <div class="painel-card-icone"><i class="fa-solid fa-wallet"></i></div>
+                <div class="painel-card-info">
+                    <span>Ticket médio</span>
+                    <strong><%= formatarMoeda(financeiro.ticketMedio || 0) %></strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="painel-secao">
+        <div class="painel-secao-topo">
+            <div>
+                <span class="painel-secao-label">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    Movimentações recentes
+                </span>
+                <h2>Últimos registros</h2>
+            </div>
+        </div>
+
+        <div class="painel-grid-tres">
+            <div class="painel-lista">
+                <h3><i class="fa-solid fa-cart-shopping"></i> Últimas vendas</h3>
+                <% if (ultimasVendas.length === 0) { %>
+                    <p class="form-ajuda">Nenhuma venda registrada.</p>
+                <% } else { %>
+                    <ul>
+                        <% ultimasVendas.forEach(function (venda) { %>
+                            <li>
+                                <span>
+                                    <strong><%= venda.produto %></strong><br>
+                                    <%= formatarData(venda.data_venda) %>
+                                </span>
+                                <span class="valor"><%= formatarMoeda(venda.valor_total) %></span>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } %>
+            </div>
+
+            <div class="painel-lista">
+                <h3><i class="fa-solid fa-receipt"></i> Últimos gastos</h3>
+                <% if (ultimosGastos.length === 0) { %>
+                    <p class="form-ajuda">Nenhum gasto registrado.</p>
+                <% } else { %>
+                    <ul>
+                        <% ultimosGastos.forEach(function (gasto) { %>
+                            <li>
+                                <span>
+                                    <strong><%= gasto.descricao %></strong><br>
+                                    <%= formatarData(gasto.data_gasto) %>
+                                </span>
+                                <span class="valor"><%= formatarMoeda(gasto.valor) %></span>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } %>
+            </div>
+
+            <div class="painel-lista">
+                <h3><i class="fa-solid fa-triangle-exclamation"></i> Últimas perdas</h3>
+                <% if (ultimasPerdas.length === 0) { %>
+                    <p class="form-ajuda">Nenhuma perda registrada.</p>
+                <% } else { %>
+                    <ul>
+                        <% ultimasPerdas.forEach(function (perda) { %>
+                            <li>
+                                <span>
+                                    <strong><%= perda.produto %></strong><br>
+                                    <%= formatarData(perda.data_perda) %>
+                                </span>
+                                <span class="valor"><%= formatarMoeda(perda.valor_estimado) %></span>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } %>
+            </div>
+        </div>
+    </section>
+
+    <section class="painel-secao">
+        <div class="painel-secao-topo">
+            <div>
+                <span class="painel-secao-label">
+                    <i class="fa-solid fa-grip"></i>
+                    Acesso rápido
+                </span>
+                <h2>Ir para</h2>
+            </div>
+            <span class="painel-contador">
+                <%= formatarNumero(plantioInfo.total_registros || 0, 0) %> plantio(s)
+            </span>
+        </div>
+
+        <div class="painel-atalhos">
+            <a href="/produtos" class="painel-atalho">
+                <div class="painel-atalho-icone"><i class="fa-solid fa-box"></i></div>
+                <div><strong>Produtos</strong><span>Cadastro e estoque</span></div>
+            </a>
+            <a href="/producao" class="painel-atalho">
+                <div class="painel-atalho-icone"><i class="fa-solid fa-seedling"></i></div>
+                <div><strong>Produção</strong><span>Colheitas e plantios</span></div>
+            </a>
+            <a href="/comercial" class="painel-atalho">
+                <div class="painel-atalho-icone"><i class="fa-solid fa-cart-shopping"></i></div>
+                <div><strong>Comercial</strong><span>Vendas, gastos e perdas</span></div>
+            </a>
+            <a href="/consulta" class="painel-atalho">
+                <div class="painel-atalho-icone"><i class="fa-solid fa-magnifying-glass"></i></div>
+                <div><strong>Consulta</strong><span>Busca em todos os registros</span></div>
+            </a>
+        </div>
+    </section>
+</main>
+
+<%- include('partials/scripts', { scripts: [] }) %>
+</body>
 </html>

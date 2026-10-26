@@ -1,34 +1,16 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rural Tech - Produtos</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <!-- Quebra de cache calibrada para forçar o novo design compacto -->
-    <link rel="stylesheet" href="/css/produtos.css?v=refresh_horizontal">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-</head>
-<body>
-
+<%- include('partials/head', { titulo: titulo, css: ['/css/produtos.css'] }) %>
 <%- include('partials/menu') %>
+<%- include('partials/header') %>
 
-<!-- HEADER -->
-<header class="topo">
-    <button class="menu-btn" id="menuBtn" aria-label="Abrir menu">
-        <i class="fa-solid fa-bars"></i>
-    </button>
-    <img src="/img/logotcc.png" alt="Logo Rural Tech">
-    <div class="header-info">
-        <h2>Rural Tech</h2>
-       
-    </div>
-</header>
+<%
+    const info = estatisticas || {};
+    const totalProdutos = Number(info.total_produtos || produtos.length || 0);
+    const totalCategorias = Number(info.total_categorias || 0);
+%>
 
-<!-- CONTEÚDO -->
 <main class="produtos-main">
+    <%- include('partials/mensagens') %>
 
-    <!-- TÍTULO -->
     <section class="hero-produtos">
         <div class="hero-texto">
             <span class="eyebrow">
@@ -38,13 +20,13 @@
             <h1>Seus produtos</h1>
             <p>Organize os produtos da propriedade e acompanhe o estoque de forma simples.</p>
         </div>
+
         <a href="/cadastro-produto" class="btn-cadastrar">
             <i class="fa-solid fa-plus"></i>
             <span>Novo produto</span>
         </a>
     </section>
 
-    <!-- RESUMO -->
     <section class="resumo-produtos">
         <div class="resumo-card">
             <div class="resumo-icone">
@@ -52,7 +34,7 @@
             </div>
             <div class="resumo-info">
                 <span>Produtos</span>
-                <strong>3</strong>
+                <strong><%= formatarNumero(totalProdutos, 0) %></strong>
             </div>
             <i class="fa-solid fa-arrow-trend-up resumo-detalhe"></i>
         </div>
@@ -63,7 +45,7 @@
             </div>
             <div class="resumo-info">
                 <span>Categorias</span>
-                <strong>2</strong>
+                <strong><%= formatarNumero(totalCategorias, 0) %></strong>
             </div>
             <i class="fa-solid fa-leaf resumo-detalhe"></i>
         </div>
@@ -74,13 +56,12 @@
             </div>
             <div class="resumo-info">
                 <span>Estoque total</span>
-                <strong>0 kg</strong>
+                <strong><%= formatarQuantidade(info.total_estoque || 0) %></strong>
             </div>
             <i class="fa-solid fa-wheat-awn resumo-detalhe"></i>
         </div>
     </section>
 
-    <!-- PRODUTOS -->
     <section class="produtos-section">
         <div class="section-topo">
             <div>
@@ -90,89 +71,118 @@
                 </span>
                 <h2>Produtos cadastrados</h2>
             </div>
-            <span class="contador">3 produtos</span>
+            <span class="contador"><%= formatarNumero(produtos.length, 0) %> produto(s)</span>
         </div>
 
-        <div class="lista-produtos">
-            <!-- MILHO -->
-            <article class="produto-card milho">
-                <div class="produto-visual">
-                    <div class="produto-imagem">
-                        <i class="fa-solid fa-wheat-awn"></i>
-                    </div>
-                    <span class="produto-status">Ativo</span>
-                </div>
-                <div class="produto-info">
-                    <span class="categoria">GRÃOS</span>
-                    <h3>Milho</h3>
-                    <p>Produto agrícola</p>
-                    <div class="estoque">
-                        <i class="fa-solid fa-box"></i>
-                        <div>
-                            <span>Disponível</span>
-                            <strong>0 kg</strong>
-                        </div>
-                    </div>
-                </div>
-                <button class="btn-opcoes" aria-label="Opções do milho">
-                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                </button>
-            </article>
+        <form action="/produtos" method="GET" class="painel-filtros">
+            <div class="painel-filtros-titulo">
+                <i class="fa-solid fa-filter"></i>
+                Filtrar produtos
+            </div>
 
-            <!-- SOJA -->
-            <article class="produto-card soja">
-                <div class="produto-visual">
-                    <div class="produto-imagem">
-                        <i class="fa-solid fa-seedling"></i>
-                    </div>
-                    <span class="produto-status">Ativo</span>
+            <div class="painel-filtros-grade">
+                <div class="form-grupo">
+                    <label for="filtro-q">Buscar</label>
+                    <input type="search" id="filtro-q" name="q" value="<%= filtros.q || '' %>" placeholder="Nome, descrição ou categoria">
                 </div>
-                <div class="produto-info">
-                    <span class="categoria">GRÃOS</span>
-                    <h3>Soja</h3>
-                    <p>Produto agrícola</p>
-                    <div class="estoque">
-                        <i class="fa-solid fa-box"></i>
-                        <div>
-                            <span>Disponível</span>
-                            <strong>0 kg</strong>
-                        </div>
-                    </div>
-                </div>
-                <button class="btn-opcoes" aria-label="Opções da soja">
-                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                </button>
-            </article>
 
-            <!-- HORTALIÇAS -->
-            <article class="produto-card hortalicas">
-                <div class="produto-visual">
-                    <div class="produto-imagem">
-                        <i class="fa-solid fa-carrot"></i>
-                    </div>
-                    <span class="produto-status">Ativo</span>
+                <div class="form-grupo">
+                    <label for="filtro-categoria">Categoria</label>
+                    <select id="filtro-categoria" name="categoria">
+                        <option value="">Todas as categorias</option>
+                        <% categorias.forEach(function (categoria) { %>
+                            <option value="<%= categoria %>" <%= filtros.categoria === categoria ? 'selected' : '' %>><%= categoria %></option>
+                        <% }); %>
+                    </select>
                 </div>
-                <div class="produto-info">
-                    <span class="categoria">VEGETAIS</span>
-                    <h3>Hortaliças</h3>
-                    <p>Produto agrícola</p>
-                    <div class="estoque">
-                        <i class="fa-solid fa-box"></i>
-                        <div>
-                            <span>Disponível</span>
-                            <strong>0 kg</strong>
-                        </div>
-                    </div>
-                </div>
-                <button class="btn-opcoes" aria-label="Opções das hortaliças">
-                    <i class="fa-solid fa-ellipsis-vertical"></i>
+            </div>
+
+            <div class="painel-filtros-acoes">
+                <button type="submit" class="painel-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Filtrar
                 </button>
-            </article>
-        </div>
+                <a href="/produtos" class="link-limpar">
+                    <i class="fa-solid fa-xmark"></i>
+                    Limpar filtros
+                </a>
+            </div>
+        </form>
+
+        <% if (produtos.length === 0) { %>
+            <div class="painel-vazio">
+                <i class="fa-solid fa-box-open"></i>
+                <h3>Nenhum produto encontrado</h3>
+                <p>
+                    <% if (filtros.q || filtros.categoria) { %>
+                        Não encontramos produtos com os filtros informados. Limpe os filtros ou cadastre um novo produto.
+                    <% } else { %>
+                        Cadastre o primeiro produto para acompanhar o estoque e usá-lo nas vendas e relatórios.
+                    <% } %>
+                </p>
+                <div style="margin-top: 18px;">
+                    <a href="/cadastro-produto" class="btn-cadastrar">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Cadastrar produto</span>
+                    </a>
+                </div>
+            </div>
+        <% } else { %>
+            <div class="lista-produtos">
+                <% produtos.forEach(function (produto) { %>
+                    <article class="produto-card">
+                        <div class="produto-visual">
+                            <% if (produto.imagem) { %>
+                                <img src="<%= produto.imagem %>" alt="Imagem de <%= produto.nome %>" loading="lazy">
+                            <% } else { %>
+                                <div class="produto-imagem">
+                                    <i class="fa-solid fa-seedling"></i>
+                                </div>
+                            <% } %>
+                        </div>
+
+                        <div class="produto-info">
+                            <span class="categoria"><%= (produto.categoria || 'OUTROS').toUpperCase() %></span>
+                            <h3><%= produto.nome %></h3>
+                            <p>
+                                <%= formatarMoeda(produto.preco) %> / <%= produto.unidade || 'kg' %>
+                                <% if (produto.descricao) { %>
+                                    · <%= produto.descricao %>
+                                <% } %>
+                            </p>
+                            <div class="estoque">
+                                <i class="fa-solid fa-box"></i>
+                                <div>
+                                    <span>Disponível</span>
+                                    <strong><%= formatarQuantidade(produto.estoque) %> <%= produto.unidade || 'kg' %></strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <details class="produto-acoes">
+                            <summary class="produto-menu-btn" aria-label="Opções de <%= produto.nome %>">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </summary>
+                            <div class="produto-acoes-menu">
+                                <a href="/cadastro-produto?id=<%= produto.id_produto %>">
+                                    <i class="fa-solid fa-pen"></i>
+                                    Editar
+                                </a>
+                                <form action="/produtos/<%= produto.id_produto %>/excluir" method="POST" data-confirmar="Remover o produto &quot;<%= produto.nome %>&quot; do catálogo? As movimentações já registradas serão preservadas.">
+                                    <button type="submit">
+                                        <i class="fa-solid fa-trash"></i>
+                                        Excluir
+                                    </button>
+                                </form>
+                            </div>
+                        </details>
+                    </article>
+                <% }); %>
+            </div>
+        <% } %>
     </section>
 </main>
 
-<script src="/js/menu_lateral.js"></script>
-<script src="/js/produtos.js"></script>
+<%- include('partials/scripts', { scripts: [] }) %>
 </body>
 </html>

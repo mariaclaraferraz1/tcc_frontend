@@ -1,0 +1,13 @@
+<% if (typeof mensagem !== "undefined" && mensagem) { %>
+    <div class="painel-alerta <%= mensagem.tipo === 'sucesso' ? 'sucesso' : 'erro' %>" role="status">
+        <i class="fa-solid <%= mensagem.tipo === 'sucesso' ? 'fa-circle-check' : 'fa-circle-exclamation' %>"></i>
+        <span><%= mensagem.texto %></span>
+    </div>
+<% } %>
+
+<% if (typeof erro !== "undefined" && erro) { %>
+    <div class="painel-alerta erro" role="alert">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span><%= erro %></span>
+    </div>
+<% } %>

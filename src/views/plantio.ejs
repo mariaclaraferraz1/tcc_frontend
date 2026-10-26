@@ -1,119 +1,234 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rural Tech - Plantio</title>
-    
-    <link rel="stylesheet" href="/css/plantio.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-</head>
-<body>
+<%- include('partials/head', { titulo: titulo, css: [] }) %>
+<%- include('partials/menu') %>
+<%- include('partials/header') %>
 
-    <%- include('partials/menu') %>
+<%
+    const dadosForm = dados || {};
+%>
 
-    <!-- ==============================
-         CABEÇALHO
-    ================================ -->
-    <header>
-        <button class="menu-btn" id="menuBtn">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-        <img src="/img/logotcc.png" alt="Logo Rural Tech" />
-        <h2>Rural Tech</h2>
-    </header>
+<main class="painel-main">
+    <%- include('partials/mensagens') %>
 
-    <!-- ==============================
-         CONTEÚDO PRINCIPAL (PLANTIO)
-    ================================ -->
-    <main>
-        <div class="header-titulo">
-            <span>🌱</span>
+    <section class="painel-hero">
+        <div>
+            <span class="eyebrow">
+                <i class="fa-solid fa-wheat-awn"></i>
+                Produção
+            </span>
             <h1>Plantio</h1>
+            <p>Acompanhe as culturas plantadas, a área utilizada e o status de desenvolvimento.</p>
         </div>
-        <p class="subtitle">Registre e acompanhe o desenvolvimento de suas plantações.</p>
 
-        <!-- Seção de Cadastro -->
-        <section class="dashboard-section">
-            <h2>Registrar Novo Plantio</h2>
-            <form action="/plantio" method="POST">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="cultura">Cultura / Variedade:</label>
-                        <input type="text" id="cultura" name="cultura" placeholder="Ex: Milho Híbrido, Soja BR" required>
-                    </div>
+        <div class="painel-hero-acoes">
+            <a href="/producao" class="painel-btn-secundario">
+                <i class="fa-solid fa-arrow-left"></i>
+                Voltar para produção
+            </a>
+        </div>
+    </section>
 
-                    <div class="form-group">
-                        <label for="area">Área / Talhão:</label>
-                        <input type="text" id="area" name="area" placeholder="Ex: Talhão 04, Área Norte" required>
-                    </div>
+    <section class="painel-resumo">
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-wheat-awn"></i></div>
+            <div class="painel-card-info">
+                <span>Plantios</span>
+                <strong><%= formatarNumero(resumo.total_registros || 0, 0) %></strong>
+                <small>Total cadastrado</small>
+            </div>
+        </div>
 
-                    <div class="form-group">
-                        <label for="dataPlantio">Data do Plantio:</label>
-                        <input type="date" id="dataPlantio" name="dataPlantio" required>
-                    </div>
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-seedling"></i></div>
+            <div class="painel-card-info">
+                <span>Germinação</span>
+                <strong><%= formatarNumero(resumo.germinacao || 0, 0) %></strong>
+                <small>Em fase inicial</small>
+            </div>
+        </div>
 
-                    <div class="form-group">
-                        <label for="status">Status Inicial:</label>
-                        <select id="status" name="status" required>
-                            <option value="germinacao">Germinação</option>
-                            <option value="crescimento">Em Crescimento</option>
-                            <option value="colheita">Pronto para Colheita</option>
-                        </select>
-                    </div>
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-arrow-trend-up"></i></div>
+            <div class="painel-card-info">
+                <span>Em crescimento</span>
+                <strong><%= formatarNumero(resumo.crescimento || 0, 0) %></strong>
+                <small>Em desenvolvimento</small>
+            </div>
+        </div>
+
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-check"></i></div>
+            <div class="painel-card-info">
+                <span>Prontos para colheita</span>
+                <strong><%= formatarNumero(resumo.colheita || 0, 0) %></strong>
+                <small>Podem ser colhidos</small>
+            </div>
+        </div>
+    </section>
+
+    <form action="/plantio" method="POST" class="painel-form">
+        <div class="painel-form-titulo">
+            <i class="fa-solid fa-plus"></i>
+            <div>
+                <h2>Registrar plantio</h2>
+                <p>Informe a cultura, a área e a data do plantio.</p>
+            </div>
+        </div>
+
+        <div class="form-grade">
+            <div class="form-grupo">
+                <label for="cultura">Cultura / variedade *</label>
+                <input type="text" id="cultura" name="cultura" maxlength="150" required value="<%= dadosForm.cultura || '' %>" placeholder="Ex: Milho safrinha">
+            </div>
+
+            <div class="form-grupo">
+                <label for="area">Área / talhão *</label>
+                <input type="text" id="area" name="area" maxlength="150" required value="<%= dadosForm.area || '' %>" placeholder="Ex: Talhão 02 — 3 hectares">
+            </div>
+
+            <div class="form-grupo">
+                <label for="dataPlantio">Data do plantio *</label>
+                <input type="date" id="dataPlantio" name="dataPlantio" required value="<%= dadosForm.dataPlantio || hoje %>">
+            </div>
+
+            <div class="form-grupo">
+                <label for="status">Status *</label>
+                <select id="status" name="status" required>
+                    <% statusOpcoes.forEach(function (opcao) { %>
+                        <option value="<%= opcao.valor %>" <%= (dadosForm.status || 'germinacao') === opcao.valor ? 'selected' : '' %>><%= opcao.rotulo %></option>
+                    <% }); %>
+                </select>
+            </div>
+
+            <div class="form-grupo largo">
+                <label for="observacoes">Observações <span class="opcional">(opcional)</span></label>
+                <textarea id="observacoes" name="observacoes" maxlength="1000" placeholder="Informações sobre o plantio..."><%= dadosForm.observacoes || '' %></textarea>
+            </div>
+        </div>
+
+        <div class="form-acoes">
+            <button type="reset" class="painel-btn-secundario">
+                <i class="fa-solid fa-eraser"></i>
+                Limpar campos
+            </button>
+            <button type="submit" class="painel-btn">
+                <i class="fa-solid fa-check"></i>
+                Salvar plantio
+            </button>
+        </div>
+    </form>
+
+    <section class="painel-secao">
+        <div class="painel-secao-topo">
+            <div>
+                <span class="painel-secao-label">
+                    <i class="fa-solid fa-filter"></i>
+                    Histórico
+                </span>
+                <h2>Plantios registrados</h2>
+            </div>
+        </div>
+
+        <form action="/plantio" method="GET" class="painel-filtros">
+            <div class="painel-filtros-titulo">
+                <i class="fa-solid fa-filter"></i>
+                Filtrar plantios
+            </div>
+
+            <div class="painel-filtros-grade">
+                <div class="form-grupo">
+                    <label for="filtro-q">Buscar</label>
+                    <input type="search" id="filtro-q" name="q" value="<%= filtros.q || '' %>" placeholder="Cultura, área ou observação...">
                 </div>
 
-                <div class="form-actions" style="margin-top: 20px;">
-                    <button type="reset" class="btn-cancelar">Cancelar</button>
-                    <button type="submit" class="btn-salvar">Salvar Plantio</button>
+                <div class="form-grupo">
+                    <label for="filtro-status">Status</label>
+                    <select id="filtro-status" name="status">
+                        <option value="">Todos os status</option>
+                        <% statusOpcoes.forEach(function (opcao) { %>
+                            <option value="<%= opcao.valor %>" <%= filtros.status === opcao.valor ? 'selected' : '' %>><%= opcao.rotulo %></option>
+                        <% }); %>
+                    </select>
                 </div>
-            </form>
-        </section>
 
-        <!-- Seção de Listagem / Acompanhamento -->
-        <section class="dashboard-section" style="margin-top: 30px;">
-            <h2>Acompanhamento de Plantações Ativas</h2>
-            <div class="tabela-responsiva">
-                <table class="tabela-acompanhamento">
+                <div class="form-grupo">
+                    <label for="filtro-inicio">De</label>
+                    <input type="date" id="filtro-inicio" name="inicio" value="<%= filtros.inicio || '' %>">
+                </div>
+
+                <div class="form-grupo">
+                    <label for="filtro-fim">Até</label>
+                    <input type="date" id="filtro-fim" name="fim" value="<%= filtros.fim || '' %>">
+                </div>
+            </div>
+
+            <div class="painel-filtros-acoes">
+                <button type="submit" class="painel-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Filtrar
+                </button>
+                <a href="/plantio" class="link-limpar">
+                    <i class="fa-solid fa-xmark"></i>
+                    Limpar filtros
+                </a>
+            </div>
+        </form>
+
+        <% if (plantios.length === 0) { %>
+            <div class="painel-vazio">
+                <i class="fa-solid fa-wheat-awn"></i>
+                <h3>Nenhum plantio encontrado</h3>
+                <p>
+                    <% if (filtros.q || filtros.inicio || filtros.fim || filtros.status) { %>
+                        Não há plantios para os filtros informados. Ajuste os critérios ou limpe os filtros.
+                    <% } else { %>
+                        Registre o primeiro plantio no formulário acima.
+                    <% } %>
+                </p>
+            </div>
+        <% } else { %>
+            <div class="painel-tabela-wrapper">
+                <table class="painel-tabela">
                     <thead>
                         <tr>
                             <th>Cultura</th>
-                            <th>Localização / Talhão</th>
-                            <th>Data de Plantio</th>
-                            <th>Status Atual</th>
+                            <th>Área / Talhão</th>
+                            <th>Data do plantio</th>
+                            <th>Status</th>
+                            <th>Observações</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <% if (plantacoes && plantacoes.length > 0) { %>
-                            <% plantacoes.forEach(plantio => { %>
-                                <tr>
-                                    <td><strong><%= plantio.cultura %></strong></td>
-                                    <td><%= plantio.area %></td>
-                                    <td><%= plantio.dataPlantio %></td>
-                                    <td>
-                                        <span class="badge-status status-<%= plantio.status %>">
-                                            <%= plantio.status === 'germinacao' ? 'Germinação' : 
-                                                plantio.status === 'crescimento' ? 'Em Crescimento' : 'Pronto para Colheita' %>
-                                        </span>
-                                    </td>
-                                </tr>
-                            <% }) %>
-                        <% } else { %>
+                        <% plantios.forEach(function (plantio) { %>
                             <tr>
-                                <td colspan="4" class="tabela-vazia">Nenhum plantio registrado até o momento.</td>
+                                <td><%= plantio.cultura %></td>
+                                <td><%= plantio.area %></td>
+                                <td><%= formatarData(plantio.data_plantio) %></td>
+                                <td>
+                                    <span class="badge <%= plantio.status === 'colheita' ? 'badge-sucesso' : (plantio.status === 'crescimento' ? 'badge-alerta' : 'badge-neutro') %>">
+                                        <%= rotuloStatusPlantio(plantio.status) %>
+                                    </span>
+                                </td>
+                                <td class="observacao"><%= plantio.observacoes || '-' %></td>
+                                <td>
+                                    <div class="acoes">
+                                        <form action="/plantio/<%= plantio.id_plantio %>/excluir" method="POST" data-confirmar="Excluir este plantio?">
+                                            <button type="submit" class="painel-btn-perigo painel-btn-mini">
+                                                <i class="fa-solid fa-trash"></i>
+                                                Excluir
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
                             </tr>
-                        <% } %>
+                        <% }); %>
                     </tbody>
                 </table>
             </div>
-        </section>
-    </main>
+        <% } %>
+    </section>
+</main>
 
-    <!-- ==============================
-         JAVASCRIPT
-    ================================ -->
-    <script src="/js/menu_lateral.js"></script>
-    <script src="/js/plantio.js"></script>
+<%- include('partials/scripts', { scripts: [] }) %>
 </body>
 </html>

@@ -1,144 +1,100 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const formulario = document.getElementById("form-perda");
 
-```
-const produto = document.getElementById("produto");
-const dataPerda = document.getElementById("data-perda");
-const quantidade = document.getElementById("quantidade");
-const unidade = document.getElementById("unidade");
-const motivo = document.getElementById("motivo");
-const localPerda = document.getElementById("local-perda");
-const valorPerda = document.getElementById("valor-perda");
-const observacoes = document.getElementById("observacoes");
-
-const btnSalvar = document.getElementById("btnSalvar");
-const btnCancelar = document.getElementById("btnCancelar");
-
-
-// SALVAR PERDA
-btnSalvar.addEventListener("click", function () {
-
-    // Verifica os campos obrigatórios
-    if (produto.value === "") {
-        alert("Selecione o produto.");
-        produto.focus();
+    if (!formulario) {
         return;
     }
 
-    if (dataPerda.value === "") {
-        alert("Informe a data da perda.");
-        dataPerda.focus();
+    const selectProduto = document.getElementById("idProduto");
+    const quantidade = document.getElementById("quantidade");
+    const unidade = document.getElementById("unidade");
+    const valorUnitario = document.getElementById("valorUnitario");
+    const valorTotal = document.getElementById("valor-total-perda");
+
+    if (!selectProduto || !quantidade || !unidade || !valorUnitario || !valorTotal) {
         return;
     }
 
-    if (quantidade.value === "" || Number(quantidade.value) <= 0) {
-        alert("Informe uma quantidade válida.");
-        quantidade.focus();
-        return;
+    function numero(valor) {
+        const convertido = Number(valor);
+
+        return Number.isFinite(convertido) ? convertido : 0;
     }
 
-    if (motivo.value === "") {
-        alert("Selecione o motivo da perda.");
-        motivo.focus();
-        return;
+    function moeda(valor) {
+        return numero(valor).toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+        });
     }
 
-    if (localPerda.value.trim() === "") {
-        alert("Informe o local da perda.");
-        localPerda.focus();
-        return;
+    function calcularTotal() {
+        const total = numero(quantidade.value) * numero(valorUnitario.value);
+
+        valorTotal.value = moeda(total);
     }
 
-    if (valorPerda.value === "" || Number(valorPerda.value) < 0) {
-        alert("Informe um valor estimado válido.");
-        valorPerda.focus();
-        return;
-    }
+    selectProduto.addEventListener("change", function () {
+        const opcao = selectProduto.options[selectProduto.selectedIndex];
 
+        if (!opcao || !opcao.value) {
+            return;
+        }
 
-    // Cria o objeto com os dados da perda
-    const novaPerda = {
-        id: Date.now(),
-        produto: produto.value,
-        data: dataPerda.value,
-        quantidade: Number(quantidade.value),
-        unidade: unidade.value,
-        motivo: motivo.value,
-        local: localPerda.value.trim(),
-        valor: Number(valorPerda.value),
-        observacoes: observacoes.value.trim()
-    };
+        const preco = opcao.getAttribute("data-preco");
+        const unidadeProduto = opcao.getAttribute("data-unidade");
 
+        if (preco !== null) {
+            valorUnitario.value = Number(preco).toFixed(2);
+        }
 
-    // Busca as perdas já salvas
-    let perdas = JSON.parse(localStorage.getItem("perdas")) || [];
+        if (unidadeProduto) {
+            const existe = Array.from(unidade.options).some(function (item) {
+                return item.value === unidadeProduto;
+            });
 
+            if (existe) {
+                unidade.value = unidadeProduto;
+            }
+        }
 
-    // Adiciona a nova perda
-    perdas.push(novaPerda);
+        calcularTotal();
+    });
 
+    quantidade.addEventListener("input", calcularTotal);
+    valorUnitario.addEventListener("input", calcularTotal);
 
-    // Salva novamente no navegador
-    localStorage.setItem("perdas", JSON.stringify(perdas));
+    formulario.addEventListener("reset", function () {
+        window.setTimeout(function () {
+            unidade.value = "kg";
+            calcularTotal();
+        }, 0);
+    });
 
+    formulario.addEventListener("submit", function (evento) {
+        if (!selectProduto.value) {
+            evento.preventDefault();
+            window.alert("Selecione o produto da perda.");
+            selectProduto.focus();
+            return;
+        }
 
-    // Mensagem de sucesso
-    alert("Perda registrada com sucesso!");
+        if (!quantidade.value || numero(quantidade.value) <= 0) {
+            evento.preventDefault();
+            window.alert("Informe uma quantidade maior que zero.");
+            quantidade.focus();
+            return;
+        }
 
+        if (valorUnitario.value === "" || numero(valorUnitario.value) < 0) {
+            evento.preventDefault();
+            window.alert("Informe um valor unitário válido.");
+            valorUnitario.focus();
+            return;
+        }
 
-    // Limpa o formulário
-    limparFormulario();
+        calcularTotal();
+    });
 
-});
-
-
-// BOTÃO CANCELAR
-btnCancelar.addEventListener("click", function () {
-
-    const confirmar = confirm(
-        "Deseja realmente cancelar? Os dados preenchidos serão apagados."
-    );
-
-    if (confirmar) {
-        limparFormulario();
-    }
-
-});
-
-
-// FUNÇÃO PARA LIMPAR O FORMULÁRIO
-function limparFormulario() {
-
-    produto.value = "";
-    dataPerda.value = "";
-    quantidade.value = "";
-    unidade.value = "kg";
-    motivo.value = "";
-    localPerda.value = "";
-    valorPerda.value = "";
-    observacoes.value = "";
-
-    produto.focus();
-
-}
-
-
-// IMPEDE VALORES NEGATIVOS
-quantidade.addEventListener("input", function () {
-
-    if (Number(this.value) < 0) {
-        this.value = "";
-    }
-
-});
-
-
-valorPerda.addEventListener("input", function () {
-
-    if (Number(this.value) < 0) {
-        this.value = "";
-    }
-
-});
-```
-
+    calcularTotal();
 });

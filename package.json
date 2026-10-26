@@ -1,9 +1,15 @@
 {
   "name": "tcc_frontend",
   "version": "1.0.0",
-  "main": "menu_lateral.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "dev": "node --watch app.js",
+    "criar-usuario": "node scripts/criar-usuario.js",
+    "migrar-senhas": "node scripts/migrar-senhas.js",
+    "testar-conexao": "node scripts/testar-conexao.js",
+    "validar": "node scripts/validar.js",
+    "test": "node scripts/validar.js"
   },
   "repository": {
     "type": "git",

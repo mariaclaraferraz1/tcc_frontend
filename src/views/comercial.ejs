@@ -1,113 +1,165 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<%- include('partials/head', { titulo: titulo, css: [] }) %>
+<%- include('partials/menu') %>
+<%- include('partials/header') %>
 
-    <title>Rural Tech - Comercial</title>
+<%
+    const financeiro = resumo || {};
+    const produtosInfo = resumoProdutos || {};
+    const producaoInfo = resumoProducao || {};
+%>
 
-    <!-- Removido o ../ dos arquivos CSS -->
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/comercial.css" />
+<main class="painel-main">
+    <%- include('partials/mensagens') %>
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-  </head>
-
-  <body>
-    <!-- MENU LATERAL -->
-    <%- include('partials/menu') %>
-
-    <!-- CABEÇALHO -->
-    <header>
-      <button class="menu-btn" id="menuBtn">
-        <i class="fa-solid fa-bars"></i>
-      </button>
-
-      <!-- Removido o ../ da imagem -->
-      <img src="/img/logotcc.png" alt="Logo Rural Tech" />
-
-      <h2>Rural Tech</h2>
-    </header>
-
-    <!-- CONTEÚDO -->
-    <main>
-      <section class="cabecalho-comercial">
-        <span class="subtitulo"> COMERCIAL </span>
-
-        <h1>
-          <i class="fa-solid fa-cart-shopping"></i>
-          Comercial
-        </h1>
-
-        <p>Gerencie as vendas, gastos e resultados do seu negócio.</p>
-      </section>
-
-      <section class="opcoes-comercial">
-        <h2>Gerenciamento comercial</h2>
-
-        <div class="cards-comercial">
-          <!-- REGISTRAR VENDA -->
-          <a href="/registrar-vendas" class="card-comercial">
-            <div class="icone">
-              <i class="fa-solid fa-receipt"></i>
-            </div>
-            <div>
-              <h3>Registrar Venda</h3>
-              <p>Registre uma nova venda realizada.</p>
-            </div>
-          </a>
-
-          <!-- VENDAS -->
-          <a href="/vendas" class="card-comercial">
-            <div class="icone">
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
-            <div>
-              <h3>Vendas</h3>
-              <p>Consulte e acompanhe as vendas realizadas.</p>
-            </div>
-          </a>
-
-          <!-- GASTOS -->
-          <a href="/controle-de-gastos" class="card-comercial">
-            <div class="icone">
-              <i class="fa-solid fa-money-bill-wave"></i>
-            </div>
-            <div>
-              <h3>Gastos</h3>
-              <p>Registre e acompanhe os gastos do negócio.</p>
-            </div>
-          </a>
-
-          <!-- LUCROS -->
-          <a href="#" class="card-comercial">
-            <div class="icone">
-              <i class="fa-solid fa-chart-line"></i>
-            </div>
-            <div>
-              <h3>Lucros</h3>
-              <p>Acompanhe os resultados e os lucros.</p>
-            </div>
-          </a>
-
-          <!-- PERDAS -->
-          <a href="/perdas" class="card-comercial">
-            <div class="icone">
-              <i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
-            <div>
-              <h3>Perdas</h3>
-              <p>Registre e acompanhe as perdas da produção.</p>
-            </div>
-          </a>
+    <section class="painel-hero">
+        <div>
+            <span class="eyebrow">
+                <i class="fa-solid fa-cart-shopping"></i>
+                Comercial
+            </span>
+            <h1>Gerenciamento comercial</h1>
+            <p>Registre vendas, acompanhe gastos, perdas e o lucro líquido da propriedade.</p>
         </div>
-      </section>
-    </main>
 
-    <!-- JAVASCRIPT -->
-    <script src="/js/menu_lateral.js"></script>
-  </body>
+        <div class="painel-hero-acoes">
+            <a href="/registrar-vendas" class="painel-btn">
+                <i class="fa-solid fa-plus"></i>
+                Registrar venda
+            </a>
+            <a href="/relatorios" class="painel-btn-secundario">
+                <i class="fa-solid fa-file-lines"></i>
+                Relatórios
+            </a>
+        </div>
+    </section>
+
+    <section class="painel-resumo">
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-arrow-trend-up"></i></div>
+            <div class="painel-card-info">
+                <span>Vendas</span>
+                <strong><%= formatarMoeda(financeiro.totalVendas || 0) %></strong>
+                <small><%= formatarNumero(financeiro.quantidadeVendas || 0, 0) %> registro(s)</small>
+            </div>
+        </div>
+
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-receipt"></i></div>
+            <div class="painel-card-info">
+                <span>Gastos</span>
+                <strong><%= formatarMoeda(financeiro.totalGastos || 0) %></strong>
+                <small><%= formatarNumero(financeiro.quantidadeGastos || 0, 0) %> registro(s)</small>
+            </div>
+        </div>
+
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div class="painel-card-info">
+                <span>Perdas</span>
+                <strong><%= formatarMoeda(financeiro.totalPerdas || 0) %></strong>
+                <small><%= formatarNumero(financeiro.quantidadePerdas || 0, 0) %> registro(s)</small>
+            </div>
+        </div>
+
+        <div class="painel-card <%= (financeiro.lucroLiquido || 0) >= 0 ? 'destaque' : '' %>">
+            <div class="painel-card-icone"><i class="fa-solid fa-money-bill-trend-up"></i></div>
+            <div class="painel-card-info">
+                <span>Lucro líquido</span>
+                <strong><%= formatarMoeda(financeiro.lucroLiquido || 0) %></strong>
+                <small>Margem de <%= formatarNumero(financeiro.margem || 0, 1) %>%</small>
+            </div>
+        </div>
+    </section>
+
+    <section class="painel-secao">
+        <div class="painel-secao-topo">
+            <div>
+                <span class="painel-secao-label">
+                    <i class="fa-solid fa-grip"></i>
+                    Acesso rápido
+                </span>
+                <h2>Áreas do comercial</h2>
+            </div>
+            <span class="painel-contador">
+                Ticket médio: <%= formatarMoeda(financeiro.ticketMedio || 0) %>
+            </span>
+        </div>
+
+        <div class="painel-atalhos">
+            <a href="/registrar-vendas" class="painel-atalho">
+                <div class="painel-atalho-icone"><i class="fa-solid fa-plus"></i></div>
+                <div><strong>Registrar venda</strong><span>Selecione produto, quantidade e cliente</span></div>
+            </a>
+
+            <a href="/vendas" class="painel-atalho">
+                <div class="painel-atalho-icone"><i class="fa-solid fa-cart-shopping"></i></div>
+                <div><strong>Vendas</strong><span>Consulte, filtre e exclua vendas</span></div>
+            </a>
+
+            <a href="/controle-de-gastos" class="painel-atalho">
+                <div class="painel-atalho-icone"><i class="fa-solid fa-money-bill-wave"></i></div>
+                <div><strong>Gastos</strong><span>Despesas por categoria e período</span></div>
+            </a>
+
+            <a href="/perdas" class="painel-atalho">
+                <div class="painel-atalho-icone"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <div><strong>Perdas</strong><span>Quantidade, motivo e valor perdido</span></div>
+            </a>
+
+            <a href="/lucros" class="painel-atalho">
+                <div class="painel-atalho-icone"><i class="fa-solid fa-chart-line"></i></div>
+                <div><strong>Lucros</strong><span>Vendas menos gastos e perdas</span></div>
+            </a>
+
+            <a href="/relatorios" class="painel-atalho">
+                <div class="painel-atalho-icone"><i class="fa-solid fa-file-lines"></i></div>
+                <div><strong>Relatórios</strong><span>Resumos por período e tipo</span></div>
+            </a>
+        </div>
+    </section>
+
+    <section class="painel-secao">
+        <div class="painel-secao-topo">
+            <div>
+                <span class="painel-secao-label">
+                    <i class="fa-solid fa-box"></i>
+                    Estoque e produção
+                </span>
+                <h2>Visão operacional</h2>
+            </div>
+        </div>
+
+        <div class="painel-resumo">
+            <div class="painel-card">
+                <div class="painel-card-icone"><i class="fa-solid fa-box"></i></div>
+                <div class="painel-card-info">
+                    <span>Produtos ativos</span>
+                    <strong><%= formatarNumero(produtosInfo.total_produtos || 0, 0) %></strong>
+                    <small><%= formatarMoeda(produtosInfo.valor_estoque || 0) %> em estoque</small>
+                </div>
+            </div>
+
+            <div class="painel-card">
+                <div class="painel-card-icone"><i class="fa-solid fa-seedling"></i></div>
+                <div class="painel-card-info">
+                    <span>Colheitas</span>
+                    <strong><%= formatarNumero(producaoInfo.total_registros || 0, 0) %></strong>
+                    <small><%= formatarQuantidade(producaoInfo.total_quantidade || 0) %> colhidos</small>
+                </div>
+            </div>
+
+            <div class="painel-card">
+                <div class="painel-card-icone"><i class="fa-solid fa-weight-hanging"></i></div>
+                <div class="painel-card-info">
+                    <span>Peso total colhido</span>
+                    <strong><%= formatarQuantidade(producaoInfo.total_peso || 0) %> kg</strong>
+                    <small>Somente registros de colheita</small>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<%- include('partials/scripts', { scripts: [] }) %>
+</body>
 </html>

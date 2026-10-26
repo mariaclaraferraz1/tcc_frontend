@@ -1,60 +1,78 @@
-<nav class="menu-lateral">
-  <div class="menu-topo">
-    <img src="/img/logotcc.png" alt="Logo Rural Tech" />
+<nav class="menu-lateral" aria-label="Menu principal">
+    <div class="menu-topo">
+        <img src="/img/logotcc.png" alt="Logo Rural Tech">
+        <span>Rural Tech</span>
+    </div>
 
-    <span>Rural Tech</span>
-  </div>
+    <% if (typeof usuario !== "undefined" && usuario) { %>
+        <div class="menu-usuario">
+            <i class="fa-solid fa-user"></i>
+            <div>
+                <strong><%= usuario.nome %></strong>
+                <span><%= usuario.email %></span>
+            </div>
+        </div>
+    <% } %>
 
-  <ul>
-    <li>
-      <a href="/inicio">
-        <i class="fa-solid fa-house"></i>
-        <span>Inicio</span>
-      </a>
-    </li>
+    <ul>
+        <li>
+            <a href="/inicio" class="<%= menuAtivo === '/inicio' ? 'ativo' : '' %>">
+                <i class="fa-solid fa-house"></i>
+                <span>Início</span>
+            </a>
+        </li>
 
-    <li>
-      <a href="/produtos">
-        <i class="fa-solid fa-box"></i>
-        <span>Produtos</span>
-      </a>
-    </li>
+        <li>
+            <a href="/produtos" class="<%= menuAtivo === '/produtos' ? 'ativo' : '' %>">
+                <i class="fa-solid fa-box"></i>
+                <span>Produtos</span>
+            </a>
+        </li>
 
-    <li>
-      <a href="/producao">
-        <i class="fa-solid fa-seedling"></i>
-        <span>Produção</span>
-      </a>
-    </li>
+        <li>
+            <a href="/producao" class="<%= menuAtivo === '/producao' ? 'ativo' : '' %>">
+                <i class="fa-solid fa-seedling"></i>
+                <span>Produção</span>
+            </a>
+        </li>
 
-    <li>
-      <a href="/comercial">
-        <i class="fa-solid fa-cart-shopping"></i>
-        <span>Comercial</span>
-      </a>
-    </li>
+        <li>
+            <a href="/comercial" class="<%= menuAtivo === '/comercial' ? 'ativo' : '' %>">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span>Comercial</span>
+            </a>
+        </li>
 
-    <li>
-      <a href="/relatorios">
-        <i class="fa-solid fa-chart-column"></i>
-        <span>Relatorios</span>
-      </a>
-    </li>
+        <li>
+            <a href="/relatorios" class="<%= menuAtivo === '/relatorios' ? 'ativo' : '' %>">
+                <i class="fa-solid fa-chart-column"></i>
+                <span>Relatórios</span>
+            </a>
+        </li>
 
-    <li>
-      <a href="/consulta">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <span>Consulta</span>
-      </a>
-    </li>
+        <li>
+            <a href="/consulta" class="<%= menuAtivo === '/consulta' ? 'ativo' : '' %>">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <span>Consulta</span>
+            </a>
+        </li>
 
-    <li>
-      <a href="/configuracoes">
-        <i class="fa-solid fa-gear"></i>
-        <span>Configuracoes</span>
-      </a>
-    </li>
-  </ul>
+        <li>
+            <a href="/configuracoes" class="<%= menuAtivo === '/configuracoes' ? 'ativo' : '' %>">
+                <i class="fa-solid fa-gear"></i>
+                <span>Configurações</span>
+            </a>
+        </li>
+    </ul>
+
+    <% if (typeof usuario !== "undefined" && usuario) { %>
+        <form action="/logout" method="POST" class="menu-logout">
+            <button type="submit">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Sair</span>
+            </button>
+        </form>
+    <% } %>
 </nav>
 
 <div class="fundo-menu"></div>

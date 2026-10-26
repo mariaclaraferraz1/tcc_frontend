@@ -1,138 +1,71 @@
-const tipoRelatorio = document.getElementById('tipoRelatorio');
-const dataInicial = document.getElementById('dataInicial');
-const dataFinal = document.getElementById('dataFinal');
-const btnGerar = document.getElementById('btnGerar');
-const areaRelatorio = document.getElementById('areaRelatorio');
+document.addEventListener("DOMContentLoaded", function () {
+    const botoes = document.querySelectorAll("[data-exportar]");
 
-btnGerar.addEventListener('click', async () => {
-
-    const tipo = tipoRelatorio.value;
-    const inicio = dataInicial.value;
-    const fim = dataFinal.value;
-
-    if (tipo === '') {
-        alert('Selecione um tipo de relatório.');
+    if (!botoes.length) {
         return;
     }
 
-    if ((inicio && !fim) || (!inicio && fim)) {
-        alert('Preencha as duas datas.');
-        return;
+    function limparTexto(valor) {
+        return String(valor || "")
+            .replace(/\s+/g, " ")
+            .trim();
     }
 
-    if (inicio && fim && inicio > fim) {
-        alert('A data inicial não pode ser maior que a data final.');
-        return;
+    function celulaCsv(valor) {
+        const texto = limparTexto(valor).replace(/"/g, '""');
+
+        return '"' + texto + '"';
     }
 
-    let url = '';
-
-    if (tipo === 'producao') {
-        url = 'http://localhost:3000/relatorio/producao';
-    }
-
-    if (tipo === 'vendas') {
-        url = 'http://localhost:3000/relatorio/vendas';
-    }
-
-    if (tipo === 'gastos') {
-        url = 'http://localhost:3000/relatorio/gastos';
-    }
-
-    if (tipo === 'produtos') {
-        alert('Relatório de produtos ainda não disponível.');
-        return;
-    }
-
-    if (inicio && fim) {
-        url += `?dataInicial=${inicio}&dataFinal=${fim}`;
-    }
-
-    try {
-
-        const resposta = await fetch(url);
-        const dados = await resposta.json();
-
-        if (dados.length === 0) {
-            areaRelatorio.innerHTML = `
-                <div class="icone-relatorio">
-                    <i class="fa-solid fa-file-circle-xmark"></i>
-                </div>
-
-                <h2>Nenhum dado encontrado</h2>
-
-                <p>
-                    Não existem dados nesse período.
-                </p>
-            `;
-
+    function exportar(tabela) {
+        if (!tabela) {
+            window.alert("Gere o relatório antes de exportar.");
             return;
         }
 
-        let conteudo = '';
+        const linhas = [];
+        const titulo = tabela.getAttribute("data-titulo") || "Relatório";
 
-        if (tipo === 'producao') {
+        const cabecalhos = Array.from(tabela.querySelectorAll("thead th"))
+            .map(function (th) { return celulaCsv(th.textContent); });
 
-            conteudo = `
-                <h2>Relatório de Produção</h2>
-
-                ${dados.map(item => `
-                    <div class="resultado">
-                        <strong>${item.produto}</strong>
-                        <span>Quantidade: ${item.quantidade}</span>
-                        <span>Data: ${item.data_producao}</span>
-                    </div>
-                `).join('')}
-            `;
+        if (cabecalhos.length) {
+            linhas.push(cabecalhos.join(";"));
         }
 
-        if (tipo === 'vendas') {
+        tabela.querySelectorAll("tbody tr").forEach(function (linha) {
+            const colunas = Array.from(linha.querySelectorAll("td"))
+                .map(function (td) { return celulaCsv(td.textContent); });
 
-            conteudo = `
-                <h2>Relatório de Vendas</h2>
+            if (colunas.length) {
+                linhas.push(colunas.join(";"));
+            }
+        });
 
-                ${dados.map(item => `
-                    <div class="resultado">
-                        <strong>${item.produto}</strong>
-                        <span>Quantidade: ${item.quantidade}</span>
-                        <span>Valor: R$ ${item.valor_total}</span>
-                        <span>Data: ${item.data_venda}</span>
-                    </div>
-                `).join('')}
-            `;
-        }
+        const conteudo = "\uFEFF" + linhas.join("\r\n");
+        const blob = new Blob([conteudo], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        const data = new Date().toISOString().slice(0, 10);
+        const nome = titulo
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-+|-+$/g, "");
 
-        if (tipo === 'gastos') {
-
-            conteudo = `
-                <h2>Relatório de Gastos</h2>
-
-                ${dados.map(item => `
-                    <div class="resultado">
-                        <strong>${item.descricao}</strong>
-                        <span>Valor: R$ ${item.valor}</span>
-                        <span>Data: ${item.data_gasto}</span>
-                    </div>
-                `).join('')}
-            `;
-        }
-
-        areaRelatorio.innerHTML = conteudo;
-
-    } catch (erro) {
-
-        console.log(erro);
-
-        areaRelatorio.innerHTML = `
-            <div class="icone-relatorio">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
-
-            <h2>Erro ao gerar relatório</h2>
-
-            <p>
-                Não foi possível conectar ao servidor.
-            </p>
-        `;
+        link.href = url;
+        link.download = (nome || "relatorio") + "-" + data + ".csv";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
     }
+
+    botoes.forEach(function (botao) {
+        botao.addEventListener("click", function () {
+            const id = botao.getAttribute("data-exportar");
+            exportar(document.getElementById(id));
+        });
+    });
 });

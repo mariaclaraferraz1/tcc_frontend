@@ -1,0 +1,50 @@
+<%- include('partials/head', { titulo: titulo, css: [] }) %>
+
+<% if (typeof usuario !== "undefined" && usuario) { %>
+    <%- include('partials/menu') %>
+    <%- include('partials/header') %>
+<% } %>
+
+<main class="painel-main">
+    <section class="painel-hero">
+        <div>
+            <span class="eyebrow">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                Erro <%= codigo %>
+            </span>
+            <h1><%= mensagem %></h1>
+            <p>
+                <% if (codigo === 404) { %>
+                    Verifique o endereço digitado ou volte para uma das áreas do sistema.
+                <% } else { %>
+                    Tente novamente em alguns instantes. Se o problema continuar, avise o responsável pelo sistema.
+                <% } %>
+            </p>
+        </div>
+    </section>
+
+    <% if (typeof detalhes !== "undefined" && detalhes) { %>
+        <div class="painel-alerta aviso">
+            <i class="fa-solid fa-circle-info"></i>
+            <span><%= detalhes %></span>
+        </div>
+    <% } %>
+
+    <div class="painel-acoes-rapidas">
+        <% if (usuario) { %>
+            <a href="/inicio" class="painel-btn">
+                <i class="fa-solid fa-house"></i>
+                Ir para o início
+            </a>
+        <% } else { %>
+            <a href="/login" class="painel-btn">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                Entrar
+            </a>
+        <% } %>
+    </div>
+</main>
+
+<%- include('partials/scripts', { scripts: [] }) %>
+</body>
+</html>

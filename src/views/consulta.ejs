@@ -1,126 +1,179 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<%- include('partials/head', { titulo: titulo, css: [] }) %>
+<%- include('partials/menu') %>
+<%- include('partials/header') %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<%
+    function formatarCelula(valor, formato) {
+        if (valor === null || valor === undefined || valor === '') {
+            return '-';
+        }
 
-    <title>Rural Tech - Consulta</title>
+        if (formato === 'moeda') {
+            return formatarMoeda(valor);
+        }
 
-    <!-- Removido o ../ dos estilos -->
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/consulta.css">
+        if (formato === 'data') {
+            return formatarData(valor);
+        }
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-</head>
+        if (formato === 'quantidade') {
+            return formatarQuantidade(valor);
+        }
 
-<body>
+        if (formato === 'numero') {
+            return formatarNumero(valor, 0);
+        }
 
-    <!-- MENU LATERAL -->
-    <%- include('partials/menu') %>
-    
-    <!-- CABEÇALHO -->
-    <header>
+        if (formato === 'mes') {
+            return formatarMes(valor);
+        }
 
-        <button class="menu-btn" id="menuBtn">
-            <i class="fa-solid fa-bars"></i>
-        </button>
+        if (formato === 'statusPlantio') {
+            return rotuloStatusPlantio(valor);
+        }
 
-        <!-- Removido o ../ da imagem -->
-        <img src="/img/logotcc.png" alt="Logo Rural Tech">
+        return String(valor);
+    }
+%>
 
-        <h2>Rural Tech</h2>
+<main class="painel-main">
+    <%- include('partials/mensagens') %>
 
-    </header>
-
-    <main>
-        <section class="cabecalho-pagina">
-            <span>CONSULTA</span>
-            <h1>Consulta de informações</h1>
-            <p>
-                Consulte rapidamente as informações cadastradas no sistema.
-            </p>
-        </section>
-
-        <section class="filtros">
-            <h2>
-                <i class="fa-solid fa-filter"></i>
-                Filtros de pesquisa
-            </h2>
-            <div class="campo">
-
-                <label for="categoria">Categoria</label>
-
-                <select id="categoria">
-                    <option value="">Selecione uma categoria</option>
-                    <option value="produtos">Produtos</option>
-                    <option value="producao">Produção</option>
-                    <option value="vendas">Vendas</option>
-                    <option value="gastos">Gastos</option>
-                </select>
-
-            </div>
-
-            <div class="campo">
-
-                <label for="tipoInformacao">Tipo de informação</label>
-
-                <select id="tipoInformacao">
-                    <option value="">Selecione o tipo</option>
-                    <option value="nome">Nome</option>
-                    <option value="data">Data</option>
-                    <option value="quantidade">Quantidade</option>
-                    <option value="valor">Valor</option>
-                </select>
-
-            </div>
-
-            <div class="campo">
-
-                <label for="busca">Buscar</label>
-
-                <div class="campo-busca">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="busca" placeholder="Digite para buscar">
-                </div>
-
-            </div>
-
-            <button type="button" class="btn-pesquisar" id="btnPesquisar">
+    <section class="painel-hero">
+        <div>
+            <span class="eyebrow">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                Pesquisar
+                Análise
+            </span>
+            <h1>Consulta</h1>
+            <p>Pesquise em produtos, vendas, gastos, perdas, produção, plantio e clientes em um só lugar.</p>
+        </div>
+
+        <div class="painel-hero-acoes">
+            <a href="/relatorios" class="painel-btn-secundario">
+                <i class="fa-solid fa-file-lines"></i>
+                Relatórios
+            </a>
+        </div>
+    </section>
+
+    <form action="/consulta" method="GET" class="painel-filtros">
+        <div class="painel-filtros-titulo">
+            <i class="fa-solid fa-filter"></i>
+            Critérios da consulta
+        </div>
+
+        <div class="painel-filtros-grade">
+            <div class="form-grupo">
+                <label for="categoria">Categoria</label>
+                <select id="categoria" name="categoria">
+                    <option value="">Todas as categorias</option>
+                    <% categorias.forEach(function (categoria) { %>
+                        <option value="<%= categoria.valor %>" <%= filtros.categoria === categoria.valor ? 'selected' : '' %>><%= categoria.rotulo %></option>
+                    <% }); %>
+                </select>
+            </div>
+
+            <div class="form-grupo">
+                <label for="tipo">Tipo de busca</label>
+                <select id="tipo" name="tipo">
+                    <option value="" <%= !filtros.tipo ? 'selected' : '' %>>Texto</option>
+                    <option value="nome" <%= filtros.tipo === 'nome' ? 'selected' : '' %>>Nome / descrição</option>
+                    <option value="data" <%= filtros.tipo === 'data' ? 'selected' : '' %>>Data (use o período)</option>
+                    <option value="quantidade" <%= filtros.tipo === 'quantidade' ? 'selected' : '' %>>Quantidade mínima</option>
+                    <option value="valor" <%= filtros.tipo === 'valor' ? 'selected' : '' %>>Valor mínimo</option>
+                </select>
+            </div>
+
+            <div class="form-grupo">
+                <label for="q">Buscar</label>
+                <input type="search" id="q" name="q" value="<%= filtros.q || '' %>" placeholder="Ex: milho, Pix, João...">
+            </div>
+
+            <div class="form-grupo">
+                <label for="inicio">De</label>
+                <input type="date" id="inicio" name="inicio" value="<%= filtros.inicio || '' %>">
+            </div>
+
+            <div class="form-grupo">
+                <label for="fim">Até</label>
+                <input type="date" id="fim" name="fim" value="<%= filtros.fim || '' %>">
+            </div>
+        </div>
+
+        <div class="painel-filtros-acoes">
+            <button type="submit" class="painel-btn">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                Consultar
             </button>
+            <a href="/consulta" class="link-limpar">
+                <i class="fa-solid fa-xmark"></i>
+                Limpar filtros
+            </a>
+        </div>
+    </form>
 
-        </section>
-
-        <section class="resultados">
-
-            <div class="titulo-resultados">
-                <h2>
-                    <i class="fa-solid fa-chart-column"></i>
-                    Resultados
-                </h2>
+    <% if (!resultado.filtrou) { %>
+        <div class="painel-vazio">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <h3>Informe os critérios</h3>
+            <p><%= resultado.aviso || 'Informe uma categoria, um termo de busca ou um período para consultar.' %></p>
+        </div>
+    <% } else if (!resultado.grupos || resultado.grupos.length === 0) { %>
+        <div class="painel-vazio">
+            <i class="fa-solid fa-inbox"></i>
+            <h3>Nenhum registro encontrado</h3>
+            <p><%= resultado.aviso || 'Nenhum registro encontrado para os filtros informados.' %></p>
+        </div>
+    <% } else { %>
+        <% if (resultado.aviso) { %>
+            <div class="painel-alerta aviso" role="status">
+                <i class="fa-solid fa-circle-info"></i>
+                <span><%= resultado.aviso %></span>
             </div>
+        <% } %>
 
-            <div class="area-resultados" id="areaResultados">
-                <div class="icone-resultado">
-                    <i class="fa-solid fa-file-lines"></i>
+        <% resultado.grupos.forEach(function (grupo) { %>
+            <section class="consulta-grupo">
+                <div class="consulta-grupo-topo">
+                    <i class="fa-solid <%= grupo.icone || 'fa-table' %>"></i>
+                    <h2><%= grupo.titulo %></h2>
+                    <span class="painel-contador"><%= formatarNumero(grupo.total || grupo.registros.length, 0) %> registro(s)</span>
                 </div>
-                <h3>Nenhum resultado encontrado</h3>
-                <p>
-                    Utilize os filtros acima para encontrar as informações desejadas.
-                </p>
-            </div>
 
-        </section>
+                <% if (grupo.registros.length === 0) { %>
+                    <div class="painel-vazio">
+                        <i class="fa-solid fa-inbox"></i>
+                        <h3>Nenhum registro</h3>
+                        <p>Não há registros nesta categoria para os filtros informados.</p>
+                    </div>
+                <% } else { %>
+                    <div class="painel-tabela-wrapper">
+                        <table class="painel-tabela">
+                            <thead>
+                                <tr>
+                                    <% grupo.colunas.forEach(function (coluna) { %>
+                                        <th><%= coluna.rotulo %></th>
+                                    <% }); %>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% grupo.registros.forEach(function (registro) { %>
+                                    <tr>
+                                        <% grupo.colunas.forEach(function (coluna) { %>
+                                            <td><%= formatarCelula(registro[coluna.chave], coluna.tipo) %></td>
+                                        <% }); %>
+                                    </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } %>
+            </section>
+        <% }); %>
+    <% } %>
+</main>
 
-    </main>
-
-    <!-- Removido o ../ dos scripts -->
-    <script src="/js/menu_lateral.js"></script>
-    <script src="/js/consulta.js"></script>
-
+<%- include('partials/scripts', { scripts: [] }) %>
 </body>
-
 </html>

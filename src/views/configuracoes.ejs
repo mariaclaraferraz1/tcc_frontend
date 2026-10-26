@@ -1,197 +1,175 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
+<%- include('partials/head', { titulo: titulo, css: [] }) %>
+<%- include('partials/menu') %>
+<%- include('partials/header') %>
 
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/configuracoes.css" />
+<main class="painel-main">
+    <%- include('partials/mensagens') %>
 
-    <title>RuralTech</title>
-  </head>
-  <body>
-    <%- include('partials/menu') %>
+    <section class="painel-hero">
+        <div>
+            <span class="eyebrow">
+                <i class="fa-solid fa-gear"></i>
+                Conta
+            </span>
+            <h1>Configurações</h1>
+            <p>Gerencie o perfil, a senha e as preferências de notificação da sua conta.</p>
+        </div>
 
-    <header>
-      <button class="menu-btn" id="menuBtn">
-        <i class="fa-solid fa-bars"></i>
-      </button>
+        <div class="painel-hero-acoes">
+            <a href="/inicio" class="painel-btn-secundario">
+                <i class="fa-solid fa-house"></i>
+                Início
+            </a>
+        </div>
+    </section>
 
-      <img src="/img/logotcc.png" alt="Logo Rural Tech" />
-
-      <h2>Rural Tech</h2>
-    </header>
-
-    <!-- CONTEÚDO -->
-
-    <main>
-      <!-- TÍTULO -->
-
-      <section class="cabecalho-pagina">
-        <h1>Configurações</h1>
-
-        <p>Personalize as opções da sua conta e do sistema.</p>
-      </section>
-
-      <!-- PERFIL -->
-
-      <section class="config-card">
-        <div class="card-titulo">
-          <div class="titulo-icone">
-            <div class="icone">
-              <i class="fa-solid fa-user"></i>
-            </div>
-
+    <section class="painel-secao">
+        <div class="painel-secao-topo">
             <div>
-              <h2>Perfil</h2>
-
-              <p>Informações da sua conta</p>
+                <span class="painel-secao-label">
+                    <i class="fa-solid fa-user"></i>
+                    Perfil
+                </span>
+                <h2>Dados da conta</h2>
             </div>
-          </div>
         </div>
 
-        <div class="perfil-conteudo">
-          <div class="avatar">
-            <i class="fa-solid fa-user"></i>
-          </div>
-
-          <div class="dados-perfil">
-            <strong>Usuário Rural Tech</strong>
-
-            <span> Gerencie seus dados pessoais e informações da conta. </span>
-          </div>
-
-          <!-- Mudado de editar_perfil.html para a rota /editar-perfil -->
-          <a href="/editar-perfil" class="btn-secundario">
-            <i class="fa-solid fa-pen"></i>
-            Editar perfil
-          </a>
-        </div>
-      </section>
-
-      <!-- NOTIFICAÇÕES -->
-
-      <section class="config-card">
-        <div class="card-titulo">
-          <div class="titulo-icone">
-            <div class="icone">
-              <i class="fa-solid fa-bell"></i>
+        <div class="painel-resumo">
+            <div class="painel-card">
+                <div class="painel-card-icone"><i class="fa-solid fa-user"></i></div>
+                <div class="painel-card-info">
+                    <span>Nome</span>
+                    <strong><%= usuario.nome %></strong>
+                    <small>Nome exibido no painel</small>
+                </div>
             </div>
 
+            <div class="painel-card">
+                <div class="painel-card-icone"><i class="fa-solid fa-envelope"></i></div>
+                <div class="painel-card-info">
+                    <span>E-mail</span>
+                    <strong style="font-size: 16px;"><%= usuario.email %></strong>
+                    <small>Usado para entrar no sistema</small>
+                </div>
+            </div>
+
+            <div class="painel-card">
+                <div class="painel-card-icone"><i class="fa-solid fa-phone"></i></div>
+                <div class="painel-card-info">
+                    <span>Telefone</span>
+                    <strong style="font-size: 18px;"><%= usuario.telefone || 'Não informado' %></strong>
+                    <small>Contato da propriedade</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="config-lista">
+            <div class="config-item">
+                <div>
+                    <strong>Editar perfil</strong>
+                    <span>Altere nome, e-mail e telefone da conta.</span>
+                </div>
+                <div class="acoes">
+                    <a href="/editar-perfil" class="painel-btn painel-btn-mini">
+                        <i class="fa-solid fa-pen"></i>
+                        Editar perfil
+                    </a>
+                </div>
+            </div>
+
+            <div class="config-item">
+                <div>
+                    <strong>Alterar senha</strong>
+                    <span>Informe a senha atual, a nova senha e a confirmação.</span>
+                </div>
+                <div class="acoes">
+                    <a href="/alterar-senha" class="painel-btn-secundario painel-btn-mini">
+                        <i class="fa-solid fa-key"></i>
+                        Alterar senha
+                    </a>
+                </div>
+            </div>
+
+            <div class="config-item">
+                <div>
+                    <strong>Conta criada em</strong>
+                    <span><%= formatarData(usuario.criado_em) %></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="painel-secao">
+        <div class="painel-secao-topo">
             <div>
-              <h2>Notificações</h2>
-
-              <p>Escolha quais avisos deseja receber</p>
+                <span class="painel-secao-label">
+                    <i class="fa-solid fa-bell"></i>
+                    Preferências
+                </span>
+                <h2>Notificações</h2>
             </div>
-          </div>
         </div>
 
-        <div class="opcoes">
-          <div class="opcao">
+        <form action="/configuracoes/notificacoes" method="POST">
+            <div class="config-lista">
+                <div class="config-item">
+                    <div>
+                        <strong>Notificações do sistema</strong>
+                        <span>Receber avisos importantes sobre estoque, vendas e perdas.</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" name="notificacoesSistema" value="1" <%= Number(usuario.notificacoes_sistema || 0) ? 'checked' : '' %>>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="config-item">
+                    <div>
+                        <strong>Lembretes</strong>
+                        <span>Receber lembretes de plantio, colheita e registros pendentes.</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" name="lembretes" value="1" <%= Number(usuario.lembretes || 0) ? 'checked' : '' %>>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-acoes">
+                <button type="submit" class="painel-btn">
+                    <i class="fa-solid fa-check"></i>
+                    Salvar preferências
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <section class="painel-secao">
+        <div class="painel-secao-topo">
             <div>
-              <strong>Notificações do sistema</strong>
-
-              <span>
-                Receba avisos sobre atualizações e atividades importantes.
-              </span>
+                <span class="painel-secao-label">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Sessão
+                </span>
+                <h2>Encerrar acesso</h2>
             </div>
+        </div>
 
-            <label class="switch">
-              <input type="checkbox" checked />
-
-              <span class="slider"></span>
-            </label>
-          </div>
-
-          <div class="opcao">
+        <div class="config-item">
             <div>
-              <strong>Lembretes</strong>
-
-              <span>
-                Receba lembretes para manter suas informações atualizadas.
-              </span>
+                <strong>Sair da conta</strong>
+                <span>Encerra a sessão atual neste navegador.</span>
             </div>
-
-            <label class="switch">
-              <input type="checkbox" checked />
-
-              <span class="slider"></span>
-            </label>
-          </div>
+            <form action="/logout" method="POST" class="acoes">
+                <button type="submit" class="painel-btn-perigo">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Sair
+                </button>
+            </form>
         </div>
-      </section>
+    </section>
+</main>
 
-      <!-- SEGURANÇA -->
-
-      <section class="config-card">
-        <div class="card-titulo">
-          <div class="titulo-icone">
-            <div class="icone">
-              <i class="fa-solid fa-lock"></i>
-            </div>
-
-            <div>
-              <h2>Segurança</h2>
-
-              <p>Proteja o acesso à sua conta</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="opcoes">
-          <div class="opcao">
-            <div>
-              <strong>Senha</strong>
-
-              <span> Altere sua senha para manter sua conta protegida. </span>
-            </div>
-
-            <!-- Mudado de alterar_senha.html para a rota /alterar-senha -->
-            <a href="/alterar-senha" class="btn-secundario"> Alterar senha </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- SISTEMA -->
-
-      <section class="config-card">
-        <div class="card-titulo">
-          <div class="titulo-icone">
-            <div class="icone">
-              <i class="fa-solid fa-circle-info"></i>
-            </div>
-
-            <div>
-              <h2>Sistema</h2>
-
-              <p>Informações sobre o Rural Tech</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="info-sistema">
-          <div>
-            <span>Versão</span>
-
-            <strong>1.0.0</strong>
-          </div>
-
-          <div>
-            <span>Sistema</span>
-
-            <strong>Rural Tech</strong>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- JAVASCRIPT -->
-
-    <!-- Ajustado caminho do JS -->
-    <script src="/js/menu_lateral.js"></script>
-  </body>
+<%- include('partials/scripts', { scripts: [] }) %>
+</body>
 </html>

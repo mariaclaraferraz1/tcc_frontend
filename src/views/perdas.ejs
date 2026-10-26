@@ -1,201 +1,288 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<%- include('partials/head', { titulo: titulo, css: [] }) %>
+<%- include('partials/menu') %>
+<%- include('partials/header') %>
 
-    <title>Rural Tech - Registrar Perda</title>
+<%
+    const dadosForm = dados || {};
+    const produtoSelecionado = String(dadosForm.idProduto || '');
+%>
 
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/dados_perda.css" />
+<main class="painel-main">
+    <%- include('partials/mensagens') %>
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-  </head>
-
-  <body>
-    <%- include('partials/menu') %>
-
-    <!-- CABEÇALHO -->
-    <header>
-      <button class="menu-btn" id="menuBtn">
-        <i class="fa-solid fa-bars"></i>
-      </button>
-
-      <!-- Removido o ../ da imagem -->
-      <img src="/img/logotcc.png" alt="Logo Rural Tech" />
-
-      <h2>Rural Tech</h2>
-    </header>
-
-    <!-- CONTEÚDO -->
-    <main>
-      <section class="cabecalho-perda">
-        <h1>
-          <i class="fa-solid fa-arrow-left"></i>
-          Registrar Perda
-        </h1>
-
-        <p>Informe os dados da perda ocorrida na produção.</p>
-      </section>
-
-      <!-- CARD -->
-      <section class="card-perda">
-        <!-- TÍTULO -->
-        <div class="titulo-perda">
-          <i class="fa-solid fa-clipboard-list"></i>
-
-          <h2>Dados da Perda</h2>
+    <section class="painel-hero">
+        <div>
+            <span class="eyebrow">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                Comercial
+            </span>
+            <h1>Perdas</h1>
+            <p>Registre perdas de produção e acompanhe o impacto financeiro no resultado da propriedade.</p>
         </div>
 
-        <!-- DICA -->
-        <div class="dica">
-          <i class="fa-solid fa-lightbulb"></i>
+        <div class="painel-hero-acoes">
+            <a href="/lucros" class="painel-btn-secundario">
+                <i class="fa-solid fa-chart-line"></i>
+                Ver lucros
+            </a>
+            <a href="/comercial" class="painel-btn-secundario">
+                <i class="fa-solid fa-arrow-left"></i>
+                Comercial
+            </a>
+        </div>
+    </section>
 
-          <div>
-            <strong>Dica importante</strong>
-
-            <p>
-              Registrar as perdas ajuda a identificar problemas na produção e
-              melhora o planejamento da sua propriedade.
-            </p>
-          </div>
+    <section class="painel-resumo">
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div class="painel-card-info">
+                <span>Valor perdido</span>
+                <strong><%= formatarMoeda(resumo.total_valor || 0) %></strong>
+                <small>Nos filtros atuais</small>
+            </div>
         </div>
 
-        <!-- PRODUTO / DATA -->
-        <div class="linha">
-          <div class="campo produto">
-            <label>Produto</label>
-
-            <select id="produto">
-              <option value="">Selecione o produto</option>
-
-              <option value="milho">Milho</option>
-
-              <option value="soja">Soja</option>
-
-              <option value="cafe">Café</option>
-
-              <option value="feijao">Feijão</option>
-            </select>
-          </div>
-
-          <div class="campo">
-            <label>Data da perda</label>
-
-            <input type="date" id="data-perda" />
-          </div>
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-clipboard-list"></i></div>
+            <div class="painel-card-info">
+                <span>Registros</span>
+                <strong><%= formatarNumero(resumo.total_registros || 0, 0) %></strong>
+                <small>Perdas cadastradas</small>
+            </div>
         </div>
 
-        <!-- QUANTIDADE / UNIDADE -->
-        <div class="linha">
-          <div class="campo">
-            <label>Quantidade perdida</label>
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-weight-hanging"></i></div>
+            <div class="painel-card-info">
+                <span>Quantidade perdida</span>
+                <strong><%= formatarQuantidade(resumo.total_quantidade || 0) %></strong>
+                <small>Somatório das unidades</small>
+            </div>
+        </div>
+    </section>
 
-            <input
-              type="number"
-              id="quantidade"
-              placeholder="Ex: 50"
-              min="0"
-              step="0.01"
-            />
-          </div>
-
-          <div class="campo unidade">
-            <label>Unidade</label>
-
-            <select id="unidade">
-              <option value="kg">KG</option>
-
-              <option value="sacas">Sacas</option>
-
-              <option value="toneladas">Toneladas</option>
-            </select>
-          </div>
+    <form action="/perdas" method="POST" class="painel-form" id="form-perda">
+        <div class="painel-form-titulo">
+            <i class="fa-solid fa-plus"></i>
+            <div>
+                <h2>Registrar perda</h2>
+                <p>O valor total é calculado pela quantidade multiplicada pelo valor unitário.</p>
+            </div>
         </div>
 
-        <!-- MOTIVO -->
-        <div class="campo motivo">
-          <label>Motivo da perda</label>
-
-          <select id="motivo">
-            <option value="">Selecione o motivo da perda</option>
-
-            <option value="pragas">Pragas</option>
-
-            <option value="doencas">Doenças</option>
-
-            <option value="clima">Condições climáticas</option>
-
-            <option value="seca">Seca</option>
-
-            <option value="chuva">Excesso de chuva</option>
-
-            <option value="geada">Geada</option>
-
-            <option value="armazenamento">Problemas no armazenamento</option>
-
-            <option value="transporte">Problemas no transporte</option>
-
-            <option value="outros">Outros</option>
-          </select>
+        <div class="painel-dica">
+            <i class="fa-solid fa-lightbulb"></i>
+            <div>
+                <strong>Valor unitário do produto</strong>
+                <p>Ao selecionar um produto, o valor unitário é preenchido com o preço cadastrado. Você pode ajustá-lo antes de salvar.</p>
+            </div>
         </div>
 
-        <!-- LOCAL -->
-        <div class="campo">
-          <label>Local da perda</label>
+        <div class="form-grade">
+            <div class="form-grupo largo">
+                <label for="idProduto">Produto *</label>
+                <select id="idProduto" name="idProduto" required data-calcular-perda>
+                    <option value="">Selecione o produto</option>
+                    <% produtos.forEach(function (produto) { %>
+                        <option
+                            value="<%= produto.id_produto %>"
+                            data-preco="<%= Number(produto.preco || 0) %>"
+                            data-unidade="<%= produto.unidade || 'kg' %>"
+                            <%= produtoSelecionado === String(produto.id_produto) ? 'selected' : '' %>
+                        >
+                            <%= produto.nome %> — <%= formatarMoeda(produto.preco) %> / <%= produto.unidade || 'kg' %>
+                        </option>
+                    <% }); %>
+                </select>
+            </div>
 
-          <input
-            type="text"
-            id="local-perda"
-            placeholder="Ex: Talhão 01, galpão, armazenamento..."
-          />
+            <div class="form-grupo">
+                <label for="dataPerda">Data da perda *</label>
+                <input type="date" id="dataPerda" name="dataPerda" required value="<%= dadosForm.dataPerda || hoje %>">
+            </div>
+
+            <div class="form-grupo">
+                <label for="quantidade">Quantidade perdida *</label>
+                <input type="number" id="quantidade" name="quantidade" min="0.01" step="0.01" required value="<%= dadosForm.quantidade || '' %>" placeholder="Ex: 50" data-calcular-perda>
+            </div>
+
+            <div class="form-grupo">
+                <label for="unidade">Unidade</label>
+                <select id="unidade" name="unidade">
+                    <% unidades.forEach(function (unidade) { %>
+                        <option value="<%= unidade %>" <%= (dadosForm.unidade || 'kg') === unidade ? 'selected' : '' %>><%= unidade %></option>
+                    <% }); %>
+                </select>
+            </div>
+
+            <div class="form-grupo">
+                <label for="valorUnitario">Valor unitário (R$)</label>
+                <input type="number" id="valorUnitario" name="valorUnitario" min="0" step="0.01" value="<%= dadosForm.valorUnitario || '' %>" placeholder="0,00" data-calcular-perda>
+            </div>
+
+            <div class="form-grupo">
+                <label for="valor-total-perda">Valor total da perda</label>
+                <input type="text" id="valor-total-perda" readonly class="painel-campo-calculado" value="R$ 0,00">
+                <small>Quantidade × valor unitário, validado no servidor.</small>
+            </div>
+
+            <div class="form-grupo">
+                <label for="motivo">Motivo da perda *</label>
+                <input type="text" id="motivo" name="motivo" maxlength="100" list="motivos-perda" required value="<%= dadosForm.motivo || '' %>" placeholder="Ex: Pragas">
+                <datalist id="motivos-perda">
+                    <% motivos.forEach(function (motivo) { %>
+                        <option value="<%= motivo %>"></option>
+                    <% }); %>
+                </datalist>
+            </div>
+
+            <div class="form-grupo">
+                <label for="localPerda">Local da perda <span class="opcional">(opcional)</span></label>
+                <input type="text" id="localPerda" name="localPerda" maxlength="150" value="<%= dadosForm.localPerda || '' %>" placeholder="Ex: Talhão 01, galpão...">
+            </div>
+
+            <div class="form-grupo largo">
+                <label for="observacoes">Observações <span class="opcional">(opcional)</span></label>
+                <textarea id="observacoes" name="observacoes" maxlength="1000" placeholder="Informações adicionais sobre a perda..."><%= dadosForm.observacoes || '' %></textarea>
+            </div>
         </div>
 
-        <!-- VALOR ESTIMADO -->
-        <div class="campo">
-          <label>Valor estimado da perda (R$)</label>
+        <div class="form-acoes">
+            <button type="reset" class="painel-btn-secundario">
+                <i class="fa-solid fa-eraser"></i>
+                Limpar campos
+            </button>
+            <button type="submit" class="painel-btn btn-salvar">
+                <i class="fa-solid fa-check"></i>
+                Salvar perda
+            </button>
+        </div>
+    </form>
 
-          <input
-            type="number"
-            id="valor-perda"
-            placeholder="Ex: 500,00"
-            min="0"
-            step="0.01"
-          />
+    <section class="painel-secao">
+        <div class="painel-secao-topo">
+            <div>
+                <span class="painel-secao-label">
+                    <i class="fa-solid fa-filter"></i>
+                    Histórico
+                </span>
+                <h2>Perdas registradas</h2>
+            </div>
         </div>
 
-        <!-- OBSERVAÇÕES -->
-        <div class="campo observacoes">
-          <label> Observações <span>(opcional)</span> </label>
+        <form action="/perdas" method="GET" class="painel-filtros">
+            <div class="painel-filtros-titulo">
+                <i class="fa-solid fa-filter"></i>
+                Filtrar perdas
+            </div>
 
-          <textarea
-            id="observacoes"
-            placeholder="Ex: Informações adicionais sobre a perda..."
-          ></textarea>
-        </div>
+            <div class="painel-filtros-grade">
+                <div class="form-grupo">
+                    <label for="filtro-q">Buscar</label>
+                    <input type="search" id="filtro-q" name="q" value="<%= filtros.q || '' %>" placeholder="Produto, motivo, local...">
+                </div>
 
-        <!-- BOTÕES -->
-        <div class="botoes">
-          <button type="button" class="btn-cancelar" id="btnCancelar">
-            <i class="fa-solid fa-xmark"></i>
+                <div class="form-grupo">
+                    <label for="filtro-produto">Produto</label>
+                    <select id="filtro-produto" name="idProduto">
+                        <option value="">Todos os produtos</option>
+                        <% produtos.forEach(function (produto) { %>
+                            <option value="<%= produto.id_produto %>" <%= String(filtros.idProduto || '') === String(produto.id_produto) ? 'selected' : '' %>><%= produto.nome %></option>
+                        <% }); %>
+                    </select>
+                </div>
 
-            Cancelar
-          </button>
+                <div class="form-grupo">
+                    <label for="filtro-motivo">Motivo</label>
+                    <select id="filtro-motivo" name="motivo">
+                        <option value="">Todos os motivos</option>
+                        <% motivos.forEach(function (motivo) { %>
+                            <option value="<%= motivo %>" <%= filtros.motivo === motivo ? 'selected' : '' %>><%= motivo %></option>
+                        <% }); %>
+                    </select>
+                </div>
 
-          <button type="button" class="btn-salvar" id="btnSalvar">
-            <i class="fa-solid fa-check"></i>
+                <div class="form-grupo">
+                    <label for="filtro-inicio">De</label>
+                    <input type="date" id="filtro-inicio" name="inicio" value="<%= filtros.inicio || '' %>">
+                </div>
 
-            Salvar perda
-          </button>
-        </div>
-      </section>
-    </main>
+                <div class="form-grupo">
+                    <label for="filtro-fim">Até</label>
+                    <input type="date" id="filtro-fim" name="fim" value="<%= filtros.fim || '' %>">
+                </div>
+            </div>
 
-    <script src="/js/menu_lateral.js"></script>
+            <div class="painel-filtros-acoes">
+                <button type="submit" class="painel-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Filtrar
+                </button>
+                <a href="/perdas" class="link-limpar">
+                    <i class="fa-solid fa-xmark"></i>
+                    Limpar filtros
+                </a>
+            </div>
+        </form>
 
-    <script src="/js/dados_perda.js"></script>
-  </body>
+        <% if (perdas.length === 0) { %>
+            <div class="painel-vazio">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <h3>Nenhuma perda encontrada</h3>
+                <p>
+                    <% if (filtros.q || filtros.inicio || filtros.fim || filtros.idProduto || filtros.motivo) { %>
+                        Não há perdas para os filtros informados. Ajuste os critérios ou limpe os filtros.
+                    <% } else { %>
+                        Registre a primeira perda no formulário acima para acompanhar as ocorrências da produção.
+                    <% } %>
+                </p>
+            </div>
+        <% } else { %>
+            <div class="painel-tabela-wrapper">
+                <table class="painel-tabela">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Produto</th>
+                            <th>Qtd.</th>
+                            <th>Motivo</th>
+                            <th>Local</th>
+                            <th>Valor unit.</th>
+                            <th>Valor total</th>
+                            <th>Observações</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% perdas.forEach(function (perda) { %>
+                            <tr>
+                                <td><%= formatarData(perda.data_perda) %></td>
+                                <td><%= perda.produto %></td>
+                                <td class="numero"><%= formatarQuantidade(perda.quantidade) %> <%= perda.unidade || '' %></td>
+                                <td><%= perda.motivo %></td>
+                                <td><%= perda.local_perda || '-' %></td>
+                                <td class="numero"><%= formatarMoeda(perda.valor_unitario) %></td>
+                                <td class="numero"><strong><%= formatarMoeda(perda.valor_estimado) %></strong></td>
+                                <td class="observacao"><%= perda.observacoes || '-' %></td>
+                                <td>
+                                    <div class="acoes">
+                                        <form action="/perdas/<%= perda.id_perda %>/excluir" method="POST" data-confirmar="Excluir esta perda?">
+                                            <button type="submit" class="painel-btn-perigo painel-btn-mini">
+                                                <i class="fa-solid fa-trash"></i>
+                                                Excluir
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        <% } %>
+    </section>
+</main>
+
+<%- include('partials/scripts', { scripts: ['/js/dados_perda.js'] }) %>
+</body>
 </html>

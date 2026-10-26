@@ -1,30 +1,44 @@
-const formSenha = document.getElementById("formSenha");
+document.addEventListener("DOMContentLoaded", function () {
+    const formulario = document.getElementById("form-senha");
 
-formSenha.addEventListener("submit", function(event) {
-
-    event.preventDefault();
-
-    const senhaAtual = document.getElementById("senhaAtual").value;
-    const novaSenha = document.getElementById("novaSenha").value;
-    const confirmarSenha = document.getElementById("confirmarSenha").value;
-
-    if (senhaAtual === "") {
-        alert("Digite sua senha atual.");
+    if (!formulario) {
         return;
     }
 
-    if (novaSenha === "") {
-        alert("Digite uma nova senha.");
+    const senhaAtual = document.getElementById("senhaAtual");
+    const novaSenha = document.getElementById("novaSenha");
+    const confirmarSenha = document.getElementById("confirmarSenha");
+
+    if (!senhaAtual || !novaSenha || !confirmarSenha) {
         return;
     }
 
-    if (novaSenha !== confirmarSenha) {
-        alert("As novas senhas não são iguais.");
-        return;
-    }
+    formulario.addEventListener("submit", function (evento) {
+        if (novaSenha.value.length < 8) {
+            evento.preventDefault();
+            window.alert("A nova senha deve ter pelo menos 8 caracteres.");
+            novaSenha.focus();
+            return;
+        }
 
-    alert("Senha alterada com sucesso!");
+        if (!/[A-Za-z]/.test(novaSenha.value) || !/\d/.test(novaSenha.value)) {
+            evento.preventDefault();
+            window.alert("A nova senha deve conter letras e números.");
+            novaSenha.focus();
+            return;
+        }
 
-    formSenha.reset();
+        if (novaSenha.value === senhaAtual.value) {
+            evento.preventDefault();
+            window.alert("A nova senha deve ser diferente da senha atual.");
+            novaSenha.focus();
+            return;
+        }
 
+        if (novaSenha.value !== confirmarSenha.value) {
+            evento.preventDefault();
+            window.alert("A nova senha e a confirmação não são iguais.");
+            confirmarSenha.focus();
+        }
+    });
 });

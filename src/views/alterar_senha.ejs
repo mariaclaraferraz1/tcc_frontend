@@ -1,109 +1,76 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<%- include('partials/head', { titulo: titulo, css: [] }) %>
+<%- include('partials/menu') %>
+<%- include('partials/header') %>
 
-    <title>Rural Tech - Alterar Senha</title>
+<main class="painel-main">
+    <%- include('partials/mensagens') %>
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/alterar_senha.css" />
-  </head>
-
-  <body>
-    <!-- MENU LATERAL -->
-
-    <%- include('partials/menu') %>
-
-    <!-- CABEÇALHO -->
-
-    <header>
-      <button class="menu-btn" id="menuBtn">
-        <i class="fa-solid fa-bars"></i>
-      </button>
-
-      <img src="/img/logotcc.png" alt="Logo Rural Tech" />
-
-      <h2>Rural Tech</h2>
-    </header>
-
-    <!-- CONTEÚDO -->
-
-    <main>
-      <section class="cabecalho-pagina">
-        <span class="subtitulo">CONFIGURAÇÕES</span>
-
-        <h1>Alterar senha</h1>
-
-        <p>Atualize a senha para manter sua conta protegida.</p>
-      </section>
-
-      <section class="senha-card">
-        <div class="titulo-card">
-          <div class="icone-senha">
-            <i class="fa-solid fa-lock"></i>
-          </div>
-
-          <div>
-            <h2>Segurança da conta</h2>
-
-            <p>Informe sua senha atual e escolha uma nova senha.</p>
-          </div>
+    <section class="painel-hero">
+        <div>
+            <span class="eyebrow">
+                <i class="fa-solid fa-key"></i>
+                Segurança
+            </span>
+            <h1>Alterar senha</h1>
+            <p>Confirme a senha atual e cadastre uma nova senha com pelo menos 8 caracteres, letras e números.</p>
         </div>
 
-        <form id="formSenha">
-          <div class="campo">
-            <label for="senhaAtual"> Senha atual </label>
+        <div class="painel-hero-acoes">
+            <a href="/configuracoes" class="painel-btn-secundario">
+                <i class="fa-solid fa-arrow-left"></i>
+                Voltar para configurações
+            </a>
+        </div>
+    </section>
 
-            <input
-              type="password"
-              id="senhaAtual"
-              placeholder="Digite sua senha atual"
-              required
-            />
-          </div>
+    <form action="/alterar-senha" method="POST" class="painel-form" id="form-senha">
+        <div class="painel-form-titulo">
+            <i class="fa-solid fa-lock"></i>
+            <div>
+                <h2>Nova senha</h2>
+                <p>Após a alteração, as outras sessões abertas serão encerradas.</p>
+            </div>
+        </div>
 
-          <div class="campo">
-            <label for="novaSenha"> Nova senha </label>
+        <div class="painel-dica">
+            <i class="fa-solid fa-shield-halved"></i>
+            <div>
+                <strong>Dicas de segurança</strong>
+                <p>Use uma senha diferente das usadas em outros sites. Evite dados pessoais fáceis de descobrir.</p>
+            </div>
+        </div>
 
-            <input
-              type="password"
-              id="novaSenha"
-              placeholder="Digite sua nova senha"
-              required
-            />
-          </div>
+        <div class="form-grade">
+            <div class="form-grupo largo">
+                <label for="senhaAtual">Senha atual *</label>
+                <input type="password" id="senhaAtual" name="senhaAtual" maxlength="200" required autocomplete="current-password" placeholder="Digite a senha atual">
+            </div>
 
-          <div class="campo">
-            <label for="confirmarSenha"> Confirmar nova senha </label>
+            <div class="form-grupo">
+                <label for="novaSenha">Nova senha *</label>
+                <input type="password" id="novaSenha" name="novaSenha" minlength="8" maxlength="200" required autocomplete="new-password" placeholder="Mínimo de 8 caracteres">
+                <small>Deve conter letras e números.</small>
+            </div>
 
-            <input
-              type="password"
-              id="confirmarSenha"
-              placeholder="Digite novamente a nova senha"
-              required
-            />
-          </div>
+            <div class="form-grupo">
+                <label for="confirmarSenha">Confirmar nova senha *</label>
+                <input type="password" id="confirmarSenha" name="confirmarSenha" minlength="8" maxlength="200" required autocomplete="new-password" placeholder="Repita a nova senha">
+            </div>
+        </div>
 
-          <div class="botoes">
-            <a href="/configuracoes" class="btn-cancelar"> Cancelar </a>
-
-            <button type="submit" class="btn-salvar">
-              <i class="fa-solid fa-check"></i>
-
-              Alterar senha
+        <div class="form-acoes">
+            <a href="/configuracoes" class="painel-btn-secundario">
+                <i class="fa-solid fa-xmark"></i>
+                Cancelar
+            </a>
+            <button type="submit" class="painel-btn">
+                <i class="fa-solid fa-check"></i>
+                Alterar senha
             </button>
-          </div>
-        </form>
-      </section>
-    </main>
+        </div>
+    </form>
+</main>
 
-    <script src="/js/menu_lateral.js"></script>
-    <script src="/js/alterar_senha.js"></script>
-  </body>
+<%- include('partials/scripts', { scripts: ['/js/alterar_senha.js'] }) %>
+</body>
 </html>

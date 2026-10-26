@@ -1,0 +1,7 @@
+<script src="/js/menu_lateral.js"></script>
+
+<% if (typeof scripts !== "undefined" && Array.isArray(scripts)) { %>
+    <% scripts.forEach(function (arquivo) { %>
+        <script src="<%= arquivo %>"></script>
+    <% }); %>
+<% } %>

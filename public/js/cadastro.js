@@ -1,74 +1,103 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const formulario = document.getElementById("form-produto");
+    const campoArquivo = document.getElementById("arquivo-imagem");
+    const campoLink = document.getElementById("imagemLink");
+    const campoHidden = document.getElementById("imagem-data");
+    const preview = document.getElementById("preview-imagem");
 
-const formulario = document.querySelector("#form-produto");
-const campoImagem = document.querySelector("#imagem");
-const preview = document.querySelector("#preview-imagem");
+    if (!formulario || !campoArquivo || !campoHidden || !preview) {
+        return;
+    }
 
-let imagemSelecionada = "";
+    const LIMITE_BYTES = 2 * 1024 * 1024;
 
-// Mostra a imagem assim que escolher o arquivo
-campoImagem.addEventListener("change", function () {
-    const arquivo = this.files[0];
+    function mostrarPreview(src) {
+        if (src) {
+            preview.src = src;
+            preview.style.display = "block";
+            return;
+        }
 
-    if (!arquivo) {
-        imagemSelecionada = "";
-        preview.style.display = "none";
         preview.removeAttribute("src");
-        return;
-    }
-
-    if (!arquivo.type.startsWith("image/")) {
-        alert("Selecione um arquivo de imagem válido.");
-        this.value = "";
-        imagemSelecionada = "";
         preview.style.display = "none";
-        return;
     }
 
-    const leitor = new FileReader();
+    campoArquivo.addEventListener("change", function () {
+        const arquivo = campoArquivo.files && campoArquivo.files[0];
 
-    leitor.onload = function (evento) {
-        imagemSelecionada = evento.target.result;
-        preview.src = imagemSelecionada;
-        preview.style.display = "block";
-    };
+        campoHidden.value = "";
 
-    leitor.readAsDataURL(arquivo);
-});
+        if (!arquivo) {
+            const link = campoLink ? campoLink.value.trim() : "";
+            mostrarPreview(link);
+            return;
+        }
 
-// Salva o produto
-formulario.addEventListener("submit", function (event) {
-    event.preventDefault();
+        if (!arquivo.type.startsWith("image/")) {
+            window.alert("Selecione um arquivo de imagem válido (PNG, JPG, WEBP ou GIF).");
+            campoArquivo.value = "";
+            return;
+        }
 
-    const nome = document.querySelector("#nome").value.trim();
-    const preco = document.querySelector("#preco").value;
-    const categoria = document.querySelector("#categoria").value.trim();
+        if (arquivo.size > LIMITE_BYTES) {
+            window.alert("A imagem deve ter no máximo 2 MB.");
+            campoArquivo.value = "";
+            return;
+        }
 
-    if (!nome || !preco || !categoria) {
-        alert("Preencha todos os campos!");
-        return;
+        const leitor = new FileReader();
+
+        leitor.onload = function (evento) {
+            campoHidden.value = String(evento.target.result || "");
+            if (campoLink) {
+                campoLink.value = "";
+            }
+            mostrarPreview(campoHidden.value);
+        };
+
+        leitor.onerror = function () {
+            window.alert("Não foi possível ler a imagem selecionada.");
+            campoArquivo.value = "";
+            campoHidden.value = "";
+        };
+
+        leitor.readAsDataURL(arquivo);
+    });
+
+    if (campoLink) {
+        campoLink.addEventListener("input", function () {
+            const link = campoLink.value.trim();
+
+            if (link) {
+                campoHidden.value = "";
+                campoArquivo.value = "";
+                mostrarPreview(link);
+            } else if (!campoArquivo.files.length) {
+                mostrarPreview("");
+            }
+        });
     }
 
-    let produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+    formulario.addEventListener("submit", function (evento) {
+        const nome = formulario.querySelector("#nome");
+        const preco = formulario.querySelector("#preco");
+        const estoque = formulario.querySelector("#estoque");
 
-    const produto = {
-        id: Date.now(),
-        nome: nome,
-        preco: Number(preco),
-        categoria: categoria,
-        imagem: imagemSelecionada
-    };
+        if (!nome || !nome.value.trim()) {
+            evento.preventDefault();
+            window.alert("Informe o nome do produto.");
+            return;
+        }
 
-    produtos.push(produto);
+        if (!preco || preco.value === "" || Number(preco.value) < 0) {
+            evento.preventDefault();
+            window.alert("Informe um preço válido.");
+            return;
+        }
 
-    try {
-        localStorage.setItem("produtos", JSON.stringify(produtos));
-    } catch (erro) {
-        produtos.pop();
-        alert("Não foi possível salvar. A imagem pode ser muito grande. Escolha uma imagem menor.");
-        return;
-    }
-
-    alert("Produto cadastrado com sucesso!");
-
-    window.location.href = "/produtos";
+        if (!estoque || estoque.value === "" || Number(estoque.value) < 0) {
+            evento.preventDefault();
+            window.alert("Informe um estoque válido.");
+        }
+    });
 });

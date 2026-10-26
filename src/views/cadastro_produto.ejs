@@ -1,73 +1,126 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<%- include('partials/head', { titulo: titulo, css: [] }) %>
+<%- include('partials/menu') %>
+<%- include('partials/header') %>
 
-    <title>Rural Tech</title>
+<%
+    const dados = produto || {};
+    const editando = Boolean(dados.id_produto);
+    const imagemAtual = dados.imagem || "";
+%>
 
-    <!-- Removido o ../ do CSS -->
-    <link rel="stylesheet" href="/css/cadastro_produto.css" />
-    <link rel="stylesheet" href="/css/style.css" />
+<main class="painel-main">
+    <%- include('partials/mensagens') %>
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-  </head>
+    <section class="painel-hero">
+        <div>
+            <span class="eyebrow">
+                <i class="fa-solid fa-box"></i>
+                Catálogo da propriedade
+            </span>
+            <h1><%= editando ? 'Editar produto' : 'Novo produto' %></h1>
+            <p>Cadastre os dados do produto para usá-lo nas vendas, perdas, colheitas e relatórios.</p>
+        </div>
 
-  <body>
-    <%- include('partials/menu') %>
+        <div class="painel-hero-acoes">
+            <a href="/produtos" class="painel-btn-secundario">
+                <i class="fa-solid fa-arrow-left"></i>
+                Voltar para produtos
+            </a>
+        </div>
+    </section>
 
-    <header>
-      <button class="menu-btn" id="menuBtn">
-        <i class="fa-solid fa-bars"></i>
-      </button>
+    <form action="/cadastro-produto" method="POST" class="painel-form" id="form-produto" enctype="application/x-www-form-urlencoded">
+        <% if (editando) { %>
+            <input type="hidden" name="id" value="<%= dados.id_produto %>">
+        <% } %>
 
-      <!-- Removido o ../ da imagem -->
-      <img src="/img/logotcc.png" alt="Logo Rural Tech" />
+        <div class="painel-dica">
+            <i class="fa-solid fa-lightbulb"></i>
+            <div>
+                <strong>Preço e unidade são usados nas vendas</strong>
+                <p>O valor unitário cadastrado aqui preenche automaticamente o registro de vendas. Você poderá ajustar o preço apenas no cadastro do produto.</p>
+            </div>
+        </div>
 
-      <h2>Rural Tech</h2>
-    </header>
+        <div class="form-grade">
+            <div class="form-grupo largo">
+                <label for="nome">Nome do produto *</label>
+                <input type="text" id="nome" name="nome" maxlength="100" required value="<%= dados.nome || '' %>" placeholder="Ex: Milho safrinha">
+            </div>
 
-    <main>
-      <!-- Mudado de 'produtos.html' para a ROTA '/produtos' -->
-      <a href="/produtos" class="btn-voltar">
-        <i class="fa-solid fa-arrow-left"></i>
-        Voltar para produtos
-      </a>
+            <div class="form-grupo">
+                <label for="categoria">Categoria</label>
+                <input type="text" id="categoria" name="categoria" maxlength="100" list="categorias-produto" value="<%= dados.categoria || 'Grãos' %>" placeholder="Ex: Grãos">
+                <datalist id="categorias-produto">
+                    <% categorias.forEach(function (categoria) { %>
+                        <option value="<%= categoria %>"></option>
+                    <% }); %>
+                </datalist>
+            </div>
 
-      <h1>
-        <i class="fa-solid fa-box"></i>
-        Cadastro de Produtos
-      </h1>
+            <div class="form-grupo">
+                <label for="unidade">Unidade de medida</label>
+                <select id="unidade" name="unidade" required>
+                    <% unidades.forEach(function (unidade) { %>
+                        <option value="<%= unidade %>" <%= (dados.unidade || 'kg') === unidade ? 'selected' : '' %>><%= unidade %></option>
+                    <% }); %>
+                </select>
+            </div>
 
-      
-<form id="form-produto">
-  <label for="nome">Nome do Produto</label>
-  <input type="text" id="nome" required />
+            <div class="form-grupo">
+                <label for="preco">Preço unitário (R$) *</label>
+                <input type="number" id="preco" name="preco" min="0" step="0.01" required value="<%= dados.preco !== undefined && dados.preco !== null ? dados.preco : '' %>" placeholder="0,00">
+            </div>
 
-  <label for="preco">Preço</label>
-  <input type="number" id="preco" min="0" step="0.01" required />
+            <div class="form-grupo">
+                <label for="estoque">Estoque disponível *</label>
+                <input type="number" id="estoque" name="estoque" min="0" step="0.01" required value="<%= dados.estoque !== undefined && dados.estoque !== null ? dados.estoque : '' %>" placeholder="0">
+                <small>O estoque é reduzido automaticamente quando uma venda é registrada.</small>
+            </div>
 
-  <label for="categoria">Categoria</label>
-  <input type="text" id="categoria" required />
+            <div class="form-grupo largo">
+                <label for="descricao">Descrição <span class="opcional">(opcional)</span></label>
+                <input type="text" id="descricao" name="descricao" maxlength="255" value="<%= dados.descricao || '' %>" placeholder="Ex: Produção própria, grão seco">
+            </div>
 
-  <label for="imagem">Imagem do Produto</label>
-  <input type="file" id="imagem" accept="image/*" />
+            <div class="form-grupo">
+                <label for="arquivo-imagem">Imagem do produto <span class="opcional">(opcional)</span></label>
+                <input type="file" id="arquivo-imagem" accept="image/png, image/jpeg, image/webp, image/gif">
+                <small>PNG, JPG, WEBP ou GIF com até 2 MB.</small>
+            </div>
 
-  <img
-    id="preview-imagem"
-    alt="Prévia da imagem escolhida"
-    style="display:none; width:200px; max-width:100%; margin-top:10px; border-radius:8px;"
-  />
+            <div class="form-grupo">
+                <label for="imagemLink">Ou informe um link de imagem</label>
+                <input type="url" id="imagemLink" name="imagemLink" maxlength="1000" value="<%= (dados.imagem && !String(dados.imagem).startsWith('data:')) ? dados.imagem : '' %>" placeholder="https://...">
+                <small>O arquivo enviado tem prioridade sobre o link.</small>
+            </div>
 
-  <button type="submit">Salvar Produto</button>
-</form>
-    </main>
+            <div class="form-grupo largo">
+                <input type="hidden" name="imagem" id="imagem-data" value="">
+                <img
+                    id="preview-imagem"
+                    class="painel-preview"
+                    alt="Prévia da imagem do produto"
+                    src="<%= imagemAtual %>"
+                    style="<%= imagemAtual ? '' : 'display:none;' %>"
+                >
+                <small>Se nenhuma nova imagem for informada, a imagem atual será mantida.</small>
+            </div>
+        </div>
 
-    <!-- Removido o ../ dos scripts JS -->
-    <script src="/js/menu_lateral.js"></script>
-    <script src="/js/cadastro.js"></script>
-  </body>
+        <div class="form-acoes">
+            <a href="/produtos" class="painel-btn-secundario">
+                <i class="fa-solid fa-xmark"></i>
+                Cancelar
+            </a>
+            <button type="submit" class="painel-btn btn-salvar">
+                <i class="fa-solid fa-check"></i>
+                <%= editando ? 'Salvar alterações' : 'Cadastrar produto' %>
+            </button>
+        </div>
+    </form>
+</main>
+
+<%- include('partials/scripts', { scripts: ['/js/cadastro.js'] }) %>
+</body>
 </html>

@@ -1,91 +1,190 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<%- include('partials/head', { titulo: titulo, css: [] }) %>
+<%- include('partials/menu') %>
+<%- include('partials/header') %>
 
-    <title>Rural Tech - Produção</title>
+<main class="painel-main">
+    <%- include('partials/mensagens') %>
 
-    <link rel="stylesheet" href="/css/producao.css" />
-    <link rel="stylesheet" href="/css/style.css" />
-
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-  </head>
-
-  <body>
-    <%- include('partials/menu') %>
-
-    <header>
-      <button class="menu-btn" id="menuBtn">
-        <i class="fa-solid fa-bars"></i>
-      </button>
-
-      <!-- Removido o ../ da imagem -->
-      <img src="/img/logotcc.png" alt="Logo Rural Tech" />
-
-      <h2>Rural Tech</h2>
-    </header>
-
-    <main>
-      <section class="cabecalho-producao">
-        <span class="subtitulo"> PRODUÇÃO </span>
-
-        <h1>
-          <i class="fa-solid fa-seedling"></i>
-
-          Produção
-        </h1>
-
-        <p>Acompanhe e registre as informações da sua produção.</p>
-      </section>
-
-      <section class="opcoes-producao">
-        <h2>Gerenciamento da produção</h2>
-
-        <div class="cards-producao">
-          <!-- Mudado dados_colheita.html para a rota /dados-colheita -->
-          <a href="/dados-colheita" class="card-producao">
-            <div class="icone">
-              <i class="fa-solid fa-wheat-awn"></i>
-            </div>
-
-            <div>
-              <h3>Dados da Colheita</h3>
-
-              <p>Registre os dados das suas colheitas.</p>
-            </div>
-          </a>
-
-          <a href="/plantio" class="card-producao">
-            <div class="icone">
-              <i class="fa-solid fa-seedling"></i>
-            </div>
-
-            <div>
-              <h3>Plantio</h3>
-
-              <p>Registre e acompanhe seus plantios.</p>
-            </div>
-          </a>
-
-          <a href="#" class="card-producao">
-            <div class="icone">
-              <i class="fa-solid fa-chart-line"></i>
-            </div>
-
-            <div>
-              <h3>Acompanhamento</h3>
-
-              <p>Acompanhe o desenvolvimento da produção.</p>
-            </div>
-          </a>
+    <section class="painel-hero">
+        <div>
+            <span class="eyebrow">
+                <i class="fa-solid fa-seedling"></i>
+                Produção
+            </span>
+            <h1>Produção e plantio</h1>
+            <p>Acompanhe as colheitas registradas e o andamento dos plantios da propriedade.</p>
         </div>
-      </section>
-    </main>
 
-    <script src="/js/menu_lateral.js"></script>
-  </body>
+        <div class="painel-hero-acoes">
+            <a href="/dados-colheita" class="painel-btn">
+                <i class="fa-solid fa-plus"></i>
+                Registrar colheita
+            </a>
+            <a href="/plantio" class="painel-btn-secundario">
+                <i class="fa-solid fa-wheat-awn"></i>
+                Plantios
+            </a>
+        </div>
+    </section>
+
+    <section class="painel-resumo">
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-seedling"></i></div>
+            <div class="painel-card-info">
+                <span>Quantidade colhida</span>
+                <strong><%= formatarQuantidade(resumoColheitas.total_quantidade || 0) %></strong>
+                <small><%= formatarNumero(resumoColheitas.total_registros || 0, 0) %> colheita(s)</small>
+            </div>
+        </div>
+
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-weight-hanging"></i></div>
+            <div class="painel-card-info">
+                <span>Peso total</span>
+                <strong><%= formatarQuantidade(resumoColheitas.total_peso || 0) %> kg</strong>
+                <small>Peso informado nas colheitas</small>
+            </div>
+        </div>
+
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-wheat-awn"></i></div>
+            <div class="painel-card-info">
+                <span>Plantios</span>
+                <strong><%= formatarNumero(resumoPlantio.total_registros || 0, 0) %></strong>
+                <small>
+                    <%= formatarNumero(resumoPlantio.germinacao || 0, 0) %> em germinação,
+                    <%= formatarNumero(resumoPlantio.crescimento || 0, 0) %> em crescimento
+                </small>
+            </div>
+        </div>
+
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-check"></i></div>
+            <div class="painel-card-info">
+                <span>Prontos para colheita</span>
+                <strong><%= formatarNumero(resumoPlantio.colheita || 0, 0) %></strong>
+                <small>Plantios no status de colheita</small>
+            </div>
+        </div>
+    </section>
+
+    <section class="painel-secao">
+        <div class="painel-secao-topo">
+            <div>
+                <span class="painel-secao-label">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    Colheitas
+                </span>
+                <h2>Últimas colheitas</h2>
+            </div>
+            <a href="/dados-colheita" class="link-limpar">
+                Ver todas
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <% if (ultimasColheitas.length === 0) { %>
+            <div class="painel-vazio">
+                <i class="fa-solid fa-seedling"></i>
+                <h3>Nenhuma colheita registrada</h3>
+                <p>Registre a primeira colheita para acompanhar a quantidade e o peso produzidos.</p>
+                <div style="margin-top: 18px;">
+                    <a href="/dados-colheita" class="painel-btn">
+                        <i class="fa-solid fa-plus"></i>
+                        Registrar colheita
+                    </a>
+                </div>
+            </div>
+        <% } else { %>
+            <div class="painel-tabela-wrapper">
+                <table class="painel-tabela">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Peso (kg)</th>
+                            <th>Plantio</th>
+                            <th>Observações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% ultimasColheitas.forEach(function (colheita) { %>
+                            <tr>
+                                <td><%= formatarData(colheita.data_producao) %></td>
+                                <td><%= colheita.produto %></td>
+                                <td class="numero"><%= formatarQuantidade(colheita.quantidade) %> <%= colheita.unidade || '' %></td>
+                                <td class="numero"><%= formatarQuantidade(colheita.peso || 0) %></td>
+                                <td><%= colheita.data_plantio ? formatarData(colheita.data_plantio) : '-' %></td>
+                                <td class="observacao"><%= colheita.observacoes || '-' %></td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        <% } %>
+    </section>
+
+    <section class="painel-secao">
+        <div class="painel-secao-topo">
+            <div>
+                <span class="painel-secao-label">
+                    <i class="fa-solid fa-wheat-awn"></i>
+                    Plantio
+                </span>
+                <h2>Últimos plantios</h2>
+            </div>
+            <a href="/plantio" class="link-limpar">
+                Ver todos
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <% if (ultimosPlantios.length === 0) { %>
+            <div class="painel-vazio">
+                <i class="fa-solid fa-wheat-awn"></i>
+                <h3>Nenhum plantio registrado</h3>
+                <p>Cadastre o plantio para acompanhar a cultura, a área e o status de desenvolvimento.</p>
+                <div style="margin-top: 18px;">
+                    <a href="/plantio" class="painel-btn">
+                        <i class="fa-solid fa-plus"></i>
+                        Registrar plantio
+                    </a>
+                </div>
+            </div>
+        <% } else { %>
+            <div class="painel-tabela-wrapper">
+                <table class="painel-tabela">
+                    <thead>
+                        <tr>
+                            <th>Cultura</th>
+                            <th>Área / Talhão</th>
+                            <th>Data do plantio</th>
+                            <th>Status</th>
+                            <th>Observações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% ultimosPlantios.forEach(function (plantio) { %>
+                            <tr>
+                                <td><%= plantio.cultura %></td>
+                                <td><%= plantio.area %></td>
+                                <td><%= formatarData(plantio.data_plantio) %></td>
+                                <td>
+                                    <span class="badge <%= plantio.status === 'colheita' ? 'badge-sucesso' : (plantio.status === 'crescimento' ? 'badge-alerta' : 'badge-neutro') %>">
+                                        <%= rotuloStatusPlantio(plantio.status) %>
+                                    </span>
+                                </td>
+                                <td class="observacao"><%= plantio.observacoes || '-' %></td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        <% } %>
+    </section>
+</main>
+
+<%- include('partials/scripts', { scripts: [] }) %>
+</body>
 </html>

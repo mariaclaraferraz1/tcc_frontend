@@ -1,104 +1,192 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<%- include('partials/head', { titulo: titulo, css: [] }) %>
+<%- include('partials/menu') %>
+<%- include('partials/header') %>
 
-    <title>Rural Tech - Relatórios</title>
+<%
+    function formatarCelula(valor, formato) {
+        if (valor === null || valor === undefined || valor === '') {
+            return '-';
+        }
 
-    <link rel="stylesheet" href="/css/relatorios.css" />
-    <link rel="stylesheet" href="/css/style.css" />
+        if (formato === 'moeda') {
+            return formatarMoeda(valor);
+        }
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-  </head>
+        if (formato === 'data') {
+            return formatarData(valor);
+        }
 
-  <body>
-    <%- include('partials/menu') %>
+        if (formato === 'quantidade') {
+            return formatarQuantidade(valor);
+        }
 
-    <header>
-      <button class="menu-btn" id="menuBtn">
-        <i class="fa-solid fa-bars"></i>
-      </button>
+        if (formato === 'numero') {
+            return formatarNumero(valor, 0);
+        }
 
-      <img src="/img/logotcc.png" alt="Logo Rural Tech" />
+        if (formato === 'mes') {
+            return formatarMes(valor);
+        }
 
-      <h2>Rural Tech</h2>
-    </header>
+        if (formato === 'statusPlantio') {
+            return rotuloStatusPlantio(valor);
+        }
 
-    <main>
-      <section class="cabecalho-pagina">
-        <h1>Geração de Relatórios</h1>
+        return String(valor);
+    }
+%>
 
-        <p>Selecione o tipo de relatório e o período desejado.</p>
-      </section>
+<main class="painel-main">
+    <%- include('partials/mensagens') %>
 
-      <section class="filtros">
-        <h2>
-          <i class="fa-solid fa-filter"></i>
-          Filtros
-        </h2>
-
-        <div class="campo">
-          <label for="tipoRelatorio"> Tipo de relatório </label>
-
-          <select id="tipoRelatorio">
-            <option value="">Selecione o relatório</option>
-
-            <option value="producao">Relatório de Produção</option>
-
-            <option value="vendas">Relatório de Vendas</option>
-
-            <option value="gastos">Relatório de Gastos</option>
-
-            <option value="produtos">Relatório de Produtos</option>
-          </select>
+    <section class="painel-hero">
+        <div>
+            <span class="eyebrow">
+                <i class="fa-solid fa-chart-column"></i>
+                Análise
+            </span>
+            <h1>Relatórios</h1>
+            <p>Gere relatórios com os dados reais da propriedade, filtrando por tipo, período ou termo de busca.</p>
         </div>
 
-        <div class="campo">
-          <label for="dataInicial"> Data inicial </label>
+        <div class="painel-hero-acoes">
+            <a href="/consulta" class="painel-btn-secundario">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                Consulta geral
+            </a>
+        </div>
+    </section>
 
-          <input type="date" id="dataInicial" />
+    <form action="/relatorios" method="GET" class="painel-filtros" id="form-relatorio">
+        <div class="painel-filtros-titulo">
+            <i class="fa-solid fa-filter"></i>
+            Configurar relatório
         </div>
 
-        <div class="campo">
-          <label for="dataFinal"> Data final </label>
+        <div class="painel-filtros-grade">
+            <div class="form-grupo">
+                <label for="tipo">Tipo de relatório *</label>
+                <select id="tipo" name="tipo" required>
+                    <option value="">Selecione</option>
+                    <% tipos.forEach(function (item) { %>
+                        <option value="<%= item.valor %>" <%= tipo === item.valor ? 'selected' : '' %>><%= item.rotulo %></option>
+                    <% }); %>
+                </select>
+            </div>
 
-          <input type="date" id="dataFinal" />
+            <div class="form-grupo">
+                <label for="q">Buscar</label>
+                <input type="search" id="q" name="q" value="<%= filtros.q || '' %>" placeholder="Produto, cliente, descrição...">
+            </div>
+
+            <div class="form-grupo">
+                <label for="inicio">De</label>
+                <input type="date" id="inicio" name="inicio" value="<%= filtros.inicio || '' %>">
+            </div>
+
+            <div class="form-grupo">
+                <label for="fim">Até</label>
+                <input type="date" id="fim" name="fim" value="<%= filtros.fim || '' %>">
+            </div>
         </div>
 
-        <button type="button" class="btn-gerar" id="btnGerar">
-          <i class="fa-solid fa-file-lines"></i>
-
-          Gerar Relatório
-        </button>
-      </section>
-
-      <section class="area-relatorio" id="areaRelatorio">
-        <div class="icone-relatorio">
-          <i class="fa-solid fa-file-lines"></i>
+        <div class="painel-filtros-acoes">
+            <button type="submit" class="painel-btn btn-gerar">
+                <i class="fa-solid fa-chart-simple"></i>
+                Gerar relatório
+            </button>
+            <a href="/relatorios" class="link-limpar">
+                <i class="fa-solid fa-xmark"></i>
+                Limpar filtros
+            </a>
         </div>
+    </form>
 
-        <h2>Relatório ainda não gerado</h2>
+    <% if (!relatorio) { %>
+        <div class="painel-vazio">
+            <i class="fa-solid fa-file-lines"></i>
+            <h3>Selecione um tipo de relatório</h3>
+            <p>Escolha vendas, gastos, perdas, produção, produtos ou lucros e clique em "Gerar relatório".</p>
+        </div>
+    <% } else { %>
+        <section class="painel-secao">
+            <div class="relatorio-cabecalho">
+                <div>
+                    <h2><%= relatorio.titulo %></h2>
+                    <p>
+                        <% if (filtros.inicio || filtros.fim) { %>
+                            Período:
+                            <%= filtros.inicio ? formatarData(filtros.inicio) : 'início' %>
+                            até
+                            <%= filtros.fim ? formatarData(filtros.fim) : 'hoje' %>
+                        <% } else { %>
+                            Todos os registros disponíveis
+                        <% } %>
+                        <% if (filtros.q) { %>
+                            · Busca: "<%= filtros.q %>"
+                        <% } %>
+                    </p>
+                </div>
 
-        <p>
-          Preencha os filtros e clique em
-          <strong>"Gerar Relatório"</strong>
-          para visualizar os dados.
-        </p>
-      </section>
+                <div class="painel-acoes-rapidas">
+                    <button type="button" class="painel-btn-secundario" onclick="window.print()">
+                        <i class="fa-solid fa-print"></i>
+                        Imprimir
+                    </button>
+                    <button type="button" class="painel-btn-secundario btn-exportar" data-exportar="tabela-relatorio">
+                        <i class="fa-solid fa-file-csv"></i>
+                        Exportar CSV
+                    </button>
+                </div>
+            </div>
 
-      <button type="button" class="btn-exportar" id="btnExportar">
-        <i class="fa-solid fa-file-pdf"></i>
+            <% if (relatorio.resumo && relatorio.resumo.length > 0) { %>
+                <div class="relatorio-resumo">
+                    <% relatorio.resumo.forEach(function (item) { %>
+                        <div class="item <%= item.destaque ? 'destaque' : '' %>">
+                            <span><%= item.rotulo %></span>
+                            <strong><%= formatarCelula(item.valor, item.tipo) %></strong>
+                        </div>
+                    <% }); %>
+                </div>
+            <% } %>
 
-        Exportar PDF
-      </button>
-    </main>
+            <% if (!relatorio.registros || relatorio.registros.length === 0) { %>
+                <div class="painel-vazio">
+                    <i class="fa-solid fa-inbox"></i>
+                    <h3>Nenhum registro encontrado</h3>
+                    <p>Não há dados para os filtros informados. Ajuste o período ou a busca e gere novamente.</p>
+                </div>
+            <% } else { %>
+                <div class="painel-tabela-wrapper">
+                    <table class="painel-tabela" id="tabela-relatorio" data-titulo="<%= relatorio.titulo %>">
+                        <thead>
+                            <tr>
+                                <% relatorio.colunas.forEach(function (coluna) { %>
+                                    <th><%= coluna.rotulo %></th>
+                                <% }); %>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% relatorio.registros.forEach(function (registro) { %>
+                                <tr>
+                                    <% relatorio.colunas.forEach(function (coluna) { %>
+                                        <td><%= formatarCelula(registro[coluna.chave], coluna.tipo) %></td>
+                                    <% }); %>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
 
-    <script src="/js/menu_lateral.js"></script>
+                <p class="form-ajuda" style="margin-top: 10px;">
+                    <%= relatorio.registros.length %> registro(s) exibido(s).
+                </p>
+            <% } %>
+        </section>
+    <% } %>
+</main>
 
-    <script src="/js/relatorios.js"></script>
-  </body>
+<%- include('partials/scripts', { scripts: ['/js/relatorios.js'] }) %>
+</body>
 </html>

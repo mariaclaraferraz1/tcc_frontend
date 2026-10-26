@@ -1,80 +1,85 @@
 document.addEventListener("DOMContentLoaded", function () {
-
-    // ==============================
-    // ELEMENTOS DO MENU
-    // ==============================
-
     const menuLateral = document.querySelector(".menu-lateral");
     const fundoMenu = document.querySelector(".fundo-menu");
     const menuBtn = document.getElementById("menuBtn");
 
-    // Verifica se os elementos existem
-    if (!menuLateral || !fundoMenu || !menuBtn) {
-
-        console.error("Elementos do menu não encontrados.");
-
-        return;
-    }
-
-
-    // ==============================
-    // ABRIR / FECHAR MENU
-    // ==============================
-
-    menuBtn.addEventListener("click", function () {
-
-        menuLateral.classList.toggle("aberto");
-        fundoMenu.classList.toggle("ativo");
-
-    });
-
-
-    // ==============================
-    // FECHAR CLICANDO NO FUNDO
-    // ==============================
-
-    fundoMenu.addEventListener("click", function () {
-
-        menuLateral.classList.remove("aberto");
-        fundoMenu.classList.remove("ativo");
-
-    });
-
-
-    // ==============================
-    // IDENTIFICAR PÁGINA ATUAL
-    // ==============================
-
-    const paginaAtual = window.location.pathname
-        .split("/")
-        .pop();
-
-
-    // ==============================
-    // MARCAR PÁGINA ATUAL
-    // ==============================
-
-    const links = menuLateral.querySelectorAll("a");
-
-    links.forEach(function (link) {
-
-        const href = link.getAttribute("href");
-
-        if (!href) {
+    function fecharMenu() {
+        if (!menuLateral || !fundoMenu || !menuBtn) {
             return;
         }
 
-        const paginaLink = href
-            .split("/")
-            .pop()
-            .split("?")[0];
+        menuLateral.classList.remove("aberto");
+        fundoMenu.classList.remove("ativo");
+        menuBtn.setAttribute("aria-expanded", "false");
+    }
 
-        if (paginaLink === paginaAtual) {
+    if (menuLateral && fundoMenu && menuBtn) {
+        menuBtn.setAttribute("aria-expanded", "false");
 
-            link.classList.add("ativo");
+        menuBtn.addEventListener("click", function () {
+            const aberto = menuLateral.classList.toggle("aberto");
 
-        }
+            fundoMenu.classList.toggle("ativo", aberto);
+            menuBtn.setAttribute("aria-expanded", aberto ? "true" : "false");
+        });
 
+        fundoMenu.addEventListener("click", fecharMenu);
+
+        menuLateral.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", fecharMenu);
+        });
+
+        document.addEventListener("keydown", function (evento) {
+            if (evento.key === "Escape") {
+                fecharMenu();
+            }
+        });
+    }
+
+    // Fecha menus de ações (detalhes) ao clicar fora deles.
+    document.addEventListener("click", function (evento) {
+        document.querySelectorAll("details.produto-acoes[open]").forEach(function (detalhe) {
+            if (!detalhe.contains(evento.target)) {
+                detalhe.removeAttribute("open");
+            }
+        });
     });
 
+    document.addEventListener("keydown", function (evento) {
+        if (evento.key !== "Escape") {
+            return;
+        }
+
+        document.querySelectorAll("details.produto-acoes[open]").forEach(function (detalhe) {
+            detalhe.removeAttribute("open");
+        });
+    });
+
+    // Confirmação centralizada para formulários destrutivos.
+    document.querySelectorAll("form[data-confirmar]").forEach(function (formulario) {
+        formulario.addEventListener("submit", function (evento) {
+            const texto = formulario.getAttribute("data-confirmar");
+
+            if (texto && !window.confirm(texto)) {
+                evento.preventDefault();
+            }
+        });
+    });
+
+    // Evita envio duplicado após o primeiro clique.
+    document.querySelectorAll("form").forEach(function (formulario) {
+        formulario.addEventListener("submit", function (evento) {
+            if (evento.defaultPrevented) {
+                return;
+            }
+
+            const botoes = formulario.querySelectorAll('button[type="submit"]');
+
+            window.setTimeout(function () {
+                botoes.forEach(function (botao) {
+                    botao.disabled = true;
+                });
+            }, 0);
+        });
+    });
 });

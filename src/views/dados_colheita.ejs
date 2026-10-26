@@ -1,148 +1,238 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<%- include('partials/head', { titulo: titulo, css: [] }) %>
+<%- include('partials/menu') %>
+<%- include('partials/header') %>
 
-    <link rel="stylesheet" href="/css/dados_colheita.css" />
-    <link rel="stylesheet" href="/css/style.css" />
+<%
+    const dadosForm = dados || {};
+    const produtoSelecionado = String(dadosForm.idProduto || '');
+%>
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
+<main class="painel-main">
+    <%- include('partials/mensagens') %>
 
-    <title>Registro de Colheita</title>
-  </head>
-
-  <body>
-    <%- include('partials/menu') %>
-
-    <!-- ==============================
-         CABEÇALHO
-    =============================== -->
-
-    <header>
-      <button class="menu-btn" id="menuBtn">
-        <i class="fa-solid fa-bars"></i>
-      </button>
-
-      <img src="/img/logotcc.png" alt="Logo Rural Tech" />
-
-      <h2>Rural Tech</h2>
-    </header>
-
-    <!-- ==============================
-         TELA DE DADOS DA COLHEITA
-    =============================== -->
-
-    <main>
-      <h1>Registrar Colheita</h1>
-
-      <form action="#" method="post">
-        <!-- PRODUTO -->
-
+    <section class="painel-hero">
         <div>
-          <label for="produto"> Produto: </label>
-
-          <select id="produto" name="produto" required>
-            <option value="">Selecione o produto</option>
-          </select>
+            <span class="eyebrow">
+                <i class="fa-solid fa-seedling"></i>
+                Produção
+            </span>
+            <h1>Dados da colheita</h1>
+            <p>Registre a quantidade colhida, o peso e a data de plantio relacionada à colheita.</p>
         </div>
 
-        <br />
+        <div class="painel-hero-acoes">
+            <a href="/producao" class="painel-btn-secundario">
+                <i class="fa-solid fa-arrow-left"></i>
+                Voltar para produção
+            </a>
+        </div>
+    </section>
 
-        <!-- DATA DO PLANTIO -->
-
-        <div>
-          <label for="dataPlantio"> Data do plantio: </label>
-
-          <input type="date" id="dataPlantio" name="dataPlantio" required />
+    <section class="painel-resumo">
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-seedling"></i></div>
+            <div class="painel-card-info">
+                <span>Quantidade colhida</span>
+                <strong><%= formatarQuantidade(resumo.total_quantidade || 0) %></strong>
+                <small>Nos filtros atuais</small>
+            </div>
         </div>
 
-        <br />
-
-        <!-- QUANTIDADE COLHIDA -->
-
-        <div>
-          <label for="quantidade"> Quantidade colhida: </label>
-
-          <input
-            type="number"
-            id="quantidade"
-            name="quantidade"
-            placeholder="Ex: 10"
-            min="0"
-            required
-          />
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-weight-hanging"></i></div>
+            <div class="painel-card-info">
+                <span>Peso total</span>
+                <strong><%= formatarQuantidade(resumo.total_peso || 0) %> kg</strong>
+                <small>Somatório dos pesos</small>
+            </div>
         </div>
 
-        <br />
+        <div class="painel-card">
+            <div class="painel-card-icone"><i class="fa-solid fa-clipboard-list"></i></div>
+            <div class="painel-card-info">
+                <span>Registros</span>
+                <strong><%= formatarNumero(resumo.total_registros || 0, 0) %></strong>
+                <small>Colheitas cadastradas</small>
+            </div>
+        </div>
+    </section>
 
-        <!-- PESO -->
-
-        <div>
-          <label for="peso"> Peso: </label>
-
-          <input
-            type="number"
-            id="peso"
-            name="peso"
-            placeholder="Ex: 250"
-            min="0"
-            step="0.01"
-            required
-          />
-
-          <span>KG</span>
+    <form action="/dados-colheita" method="POST" class="painel-form">
+        <div class="painel-form-titulo">
+            <i class="fa-solid fa-plus"></i>
+            <div>
+                <h2>Registrar colheita</h2>
+                <p>Selecione o produto e informe a quantidade, o peso e as datas.</p>
+            </div>
         </div>
 
-        <br />
+        <% if (produtos.length === 0) { %>
+            <div class="painel-alerta aviso">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>Nenhum produto ativo disponível. <a href="/cadastro-produto">Cadastre um produto</a> para registrar colheitas.</span>
+            </div>
+        <% } %>
 
-        <!-- DATA DA COLHEITA -->
+        <div class="form-grade">
+            <div class="form-grupo largo">
+                <label for="idProduto">Produto *</label>
+                <select id="idProduto" name="idProduto" required>
+                    <option value="">Selecione o produto</option>
+                    <% produtos.forEach(function (produto) { %>
+                        <option value="<%= produto.id_produto %>" <%= produtoSelecionado === String(produto.id_produto) ? 'selected' : '' %>><%= produto.nome %> (<%= produto.unidade || 'kg' %>)</option>
+                    <% }); %>
+                </select>
+            </div>
 
-        <div>
-          <label for="dataColheita"> Data da colheita: </label>
+            <div class="form-grupo">
+                <label for="quantidade">Quantidade colhida *</label>
+                <input type="number" id="quantidade" name="quantidade" min="0.01" step="0.01" required value="<%= dadosForm.quantidade || '' %>" placeholder="Ex: 120">
+            </div>
 
-          <input type="date" id="dataColheita" name="dataColheita" required />
+            <div class="form-grupo">
+                <label for="peso">Peso (kg) *</label>
+                <input type="number" id="peso" name="peso" min="0" step="0.01" required value="<%= dadosForm.peso || '' %>" placeholder="Ex: 1200">
+            </div>
+
+            <div class="form-grupo">
+                <label for="dataProducao">Data da colheita *</label>
+                <input type="date" id="dataProducao" name="dataProducao" required value="<%= dadosForm.dataProducao || hoje %>">
+            </div>
+
+            <div class="form-grupo">
+                <label for="dataPlantio">Data do plantio <span class="opcional">(opcional)</span></label>
+                <input type="date" id="dataPlantio" name="dataPlantio" value="<%= dadosForm.dataPlantio || '' %>">
+                <small>Não pode ser posterior à data da colheita.</small>
+            </div>
+
+            <div class="form-grupo largo">
+                <label for="observacoes">Observações <span class="opcional">(opcional)</span></label>
+                <textarea id="observacoes" name="observacoes" maxlength="1000" placeholder="Informações sobre a colheita..."><%= dadosForm.observacoes || '' %></textarea>
+            </div>
         </div>
 
-        <br />
+        <div class="form-acoes">
+            <button type="reset" class="painel-btn-secundario">
+                <i class="fa-solid fa-eraser"></i>
+                Limpar campos
+            </button>
+            <button type="submit" class="painel-btn">
+                <i class="fa-solid fa-check"></i>
+                Salvar colheita
+            </button>
+        </div>
+    </form>
 
-        <!-- OBSERVAÇÕES -->
-
-        <div>
-          <label for="observacoes"> Observações: </label>
-
-          <br />
-
-          <textarea
-            id="observacoes"
-            name="observacoes"
-            rows="5"
-            cols="50"
-            placeholder="Digite alguma observação sobre a colheita..."
-          ></textarea>
+    <section class="painel-secao">
+        <div class="painel-secao-topo">
+            <div>
+                <span class="painel-secao-label">
+                    <i class="fa-solid fa-filter"></i>
+                    Histórico
+                </span>
+                <h2>Colheitas registradas</h2>
+            </div>
         </div>
 
-        <br />
+        <form action="/dados-colheita" method="GET" class="painel-filtros">
+            <div class="painel-filtros-titulo">
+                <i class="fa-solid fa-filter"></i>
+                Filtrar colheitas
+            </div>
 
-        <!-- BOTÕES -->
+            <div class="painel-filtros-grade">
+                <div class="form-grupo">
+                    <label for="filtro-q">Buscar</label>
+                    <input type="search" id="filtro-q" name="q" value="<%= filtros.q || '' %>" placeholder="Produto ou observação...">
+                </div>
 
-        <div>
-          <button type="reset">Cancelar</button>
+                <div class="form-grupo">
+                    <label for="filtro-produto">Produto</label>
+                    <select id="filtro-produto" name="idProduto">
+                        <option value="">Todos os produtos</option>
+                        <% produtos.forEach(function (produto) { %>
+                            <option value="<%= produto.id_produto %>" <%= String(filtros.idProduto || '') === String(produto.id_produto) ? 'selected' : '' %>><%= produto.nome %></option>
+                        <% }); %>
+                    </select>
+                </div>
 
-          <button type="submit">Salvar Colheita</button>
-        </div>
-      </form>
-    </main>
+                <div class="form-grupo">
+                    <label for="filtro-inicio">De</label>
+                    <input type="date" id="filtro-inicio" name="inicio" value="<%= filtros.inicio || '' %>">
+                </div>
 
-    <!-- ==============================
-         JAVASCRIPT
-    =============================== -->
+                <div class="form-grupo">
+                    <label for="filtro-fim">Até</label>
+                    <input type="date" id="filtro-fim" name="fim" value="<%= filtros.fim || '' %>">
+                </div>
+            </div>
 
-    <script src="/js/menu_lateral.js"></script>
+            <div class="painel-filtros-acoes">
+                <button type="submit" class="painel-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Filtrar
+                </button>
+                <a href="/dados-colheita" class="link-limpar">
+                    <i class="fa-solid fa-xmark"></i>
+                    Limpar filtros
+                </a>
+            </div>
+        </form>
 
-    <script src="/js/dados_colheita.js"></script>
-  </body>
+        <% if (colheitas.length === 0) { %>
+            <div class="painel-vazio">
+                <i class="fa-solid fa-seedling"></i>
+                <h3>Nenhuma colheita encontrada</h3>
+                <p>
+                    <% if (filtros.q || filtros.inicio || filtros.fim || filtros.idProduto) { %>
+                        Não há colheitas para os filtros informados. Ajuste os critérios ou limpe os filtros.
+                    <% } else { %>
+                        Registre a primeira colheita no formulário acima.
+                    <% } %>
+                </p>
+            </div>
+        <% } else { %>
+            <div class="painel-tabela-wrapper">
+                <table class="painel-tabela">
+                    <thead>
+                        <tr>
+                            <th>Data da colheita</th>
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Peso (kg)</th>
+                            <th>Plantio</th>
+                            <th>Observações</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% colheitas.forEach(function (colheita) { %>
+                            <tr>
+                                <td><%= formatarData(colheita.data_producao) %></td>
+                                <td><%= colheita.produto %></td>
+                                <td class="numero"><%= formatarQuantidade(colheita.quantidade) %> <%= colheita.unidade || '' %></td>
+                                <td class="numero"><%= formatarQuantidade(colheita.peso || 0) %></td>
+                                <td><%= colheita.data_plantio ? formatarData(colheita.data_plantio) : '-' %></td>
+                                <td class="observacao"><%= colheita.observacoes || '-' %></td>
+                                <td>
+                                    <div class="acoes">
+                                        <form action="/dados-colheita/<%= colheita.id_producao %>/excluir" method="POST" data-confirmar="Excluir esta colheita?">
+                                            <button type="submit" class="painel-btn-perigo painel-btn-mini">
+                                                <i class="fa-solid fa-trash"></i>
+                                                Excluir
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        <% } %>
+    </section>
+</main>
+
+<%- include('partials/scripts', { scripts: [] }) %>
+</body>
 </html>
