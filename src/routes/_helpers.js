@@ -3,8 +3,8 @@ const validation = require("../utils/validation");
 const LIMITE_BYTES = 2 * 1024 * 1024;
 const LIMITE_TEXTO = 3 * 1024 * 1024;
 const LIMITE_LINK = 2000;
-const REGEX_IMAGEM = /^data:image\/(png|jpe?g|webp|gif);base64,([a-z0-9+/=\r\n]+)$/i;
-const REGEX_COMPROVANTE = /^data:(image\/(png|jpe?g|webp|gif)|application\/pdf);base64,([a-z0-9+/=\r\n]+)$/i;
+const REGEX_IMAGEM = /^(data:image\/(png|jpe?g|webp|gif);base64,([a-z0-9+\/=\r\n]+)$|(https?:\/\/(www\.)?[^\s]+\.(png|jpe?g|webp|gif)))$/i;
+const REGEX_COMPROVANTE = /^data:(image\/(png|jpe?g|webp|gif)|application\/pdf);base64,([a-z0-9+\/=\r\n]+)$/i;
 
 function tamanhoBase64(conteudo) {
     const limpo = String(conteudo || "").replace(/\s/g, "");
