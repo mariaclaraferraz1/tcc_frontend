@@ -1,88 +1,62 @@
-const path = require("path");
-const express = require("express");
-
-const { testarConexao, descricaoConexao } = require("./src/config/db");
-const {
-    carregarSessao,
-    locais,
-    exigirLogin,
-    naoEncontrado,
-    tratarErro
-} = require("./src/middleware/sessao");
-
+const express = require('express');
+const path = require('path');
 const app = express();
-const PORTA = Number(process.env.PORT || 3000);
 
-// ---------------------------------------------------------------------------
-// Configuração do EJS e arquivos estáticos
-// ---------------------------------------------------------------------------
-app.set("views", path.join(__dirname, "src", "views"));
-app.set("view engine", "ejs");
-app.disable("x-powered-by");
+// CONFIGURAÇÃO DO EJS E PASTAS
+app.set('view engine', 'ejs');
+// Aponta para a pasta views (ajuste se a sua pasta views não estiver dentro de 'src')
+app.set('views', path.join(__dirname, 'src', 'views'));
 
-// Anexos enviados: o arquivo fica em public/uploads e só é servido com sessão ativa.
-app.use(
-    "/uploads",
-    carregarSessao,
-    exigirLogin,
-    express.static(path.join(__dirname, "public", "uploads"))
-);
+// ARQUIVOS ESTÁTICOS (CSS, Imagens, JS)
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'src', 'public')));
 
-app.use(express.static(path.join(__dirname, "public")));
+// LEITURA DE DADOS DE FORMULÁRIO
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-// Os formulários enviam anexos como data URL (base64); o servidor grava o arquivo
-// em public/uploads e mantém apenas o caminho no banco.
-app.use(express.urlencoded({ extended: true, limit: "3mb" }));
-app.use(express.json({ limit: "3mb" }));
+// ==========================================
+// ROTAS DO SISTEMA
+// ==========================================
 
-// ---------------------------------------------------------------------------
-// Sessão e variáveis disponíveis em todas as views
-// ---------------------------------------------------------------------------
-app.use(carregarSessao);
-app.use(locais);
+// Tela Principal (Login)
+app.get('/', (req, res) => {
+    res.render('login');
+});
 
-// ---------------------------------------------------------------------------
-// Rotas públicas (login, cadastro e logout)
-// ---------------------------------------------------------------------------
-app.use(require("./src/routes/authRoutes"));
+app.get('/login', (req, res) => {
+    res.render('login');
+});
 
-// ---------------------------------------------------------------------------
-// Rotas protegidas
-// ---------------------------------------------------------------------------
-app.use(exigirLogin);
+// AÇÃO DO FORMULÁRIO DE LOGIN (Força o envio para /inicio)
+app.post('/login', (req, res) => {
+    res.redirect('/inicio');
+});
 
-app.use(require("./src/routes/painelRoutes"));
-app.use(require("./src/routes/produtoRoutes"));
-app.use(require("./src/routes/vendaRoutes"));
-app.use(require("./src/routes/gastoRoutes"));
-app.use(require("./src/routes/perdaRoutes"));
-app.use(require("./src/routes/lucroRoutes"));
-app.use(require("./src/routes/relatorioRoutes"));
-app.use(require("./src/routes/consultaRoutes"));
-app.use(require("./src/routes/configuracaoRoutes"));
-app.use(require("./src/routes/producaoRoutes"));
-app.use(require("./src/routes/apiRoutes"));
+// Tela de Início
+app.get('/inicio', (req, res) => {
+    res.render('inicio');
+});
 
-// ---------------------------------------------------------------------------
-// 404 e tratamento central de erros
-// ---------------------------------------------------------------------------
-app.use(naoEncontrado);
-app.use(tratarErro);
+// Outras Telas do Sistema
+app.get('/criar-conta', (req, res) => res.render('criar_conta'));
+app.get('/produtos', (req, res) => res.render('produtos'));
+app.get('/cadastro-produto', (req, res) => res.render('cadastro_produto'));
+app.get('/producao', (req, res) => res.render('producao'));
+app.get('/comercial', (req, res) => res.render('vendas'));
+app.get('/relatorios', (req, res) => res.render('relatorios'));
+app.get('/consulta', (req, res) => res.render('consulta'));
+app.get('/configuracoes', (req, res) => res.render('configuracoes'));
 
-if (require.main === module) {
-    testarConexao()
-        .then(() => {
-            console.log(`Banco de dados conectado: ${descricaoConexao()}`);
-        })
-        .catch((erro) => {
-            console.warn(
-                `Atenção: não foi possível conectar ao banco (${descricaoConexao()}): ${erro.message}`
-            );
-        });
+// ==========================================
+// TRATAMENTO DE ERRO (SEMPRE POR ÚLTIMO)
+// ==========================================
+app.use((req, res) => {
+    res.status(404).send('Página não encontrada! Verifique a rota digitada.');
+});
 
-    app.listen(PORTA, () => {
-        console.log(`Servidor rodando em http://localhost:${PORTA}`);
-    });
-}
-
-module.exports = app;
+// INICIALIZAÇÃO DO SERVIDOR
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor rodando em http://localhost:${PORT}`);
+});
