@@ -4,6 +4,38 @@
 
 <%
     const dadosForm = dados || {};
+    const editando = Boolean(dadosForm.id);
+    const listaProdutos = produtos || [];
+    const culturas = Array.from(new Set(listaProdutos.map(function (produto) {
+        return produto.nome;
+    }))).sort(function (a, b) {
+        return String(a).localeCompare(String(b), "pt-BR");
+    });
+
+    function somarDiasPlantio(dataISO, dias) {
+        const partes = String(dataISO).split("-").map(Number);
+        const resultado = new Date(Date.UTC(partes[0], partes[1] - 1, partes[2] + dias));
+
+        return [
+            resultado.getUTCFullYear(),
+            String(resultado.getUTCMonth() + 1).padStart(2, "0"),
+            String(resultado.getUTCDate()).padStart(2, "0")
+        ].join("-");
+    }
+
+    const produtoSelecionado = listaProdutos.find(function (produto) {
+        return String(produto.id_produto) === String(dadosForm.idProduto || "");
+    }) || null;
+    const cicloInicial = produtoSelecionado && Number(produtoSelecionado.ciclo_dias) > 0
+        ? Math.trunc(Number(produtoSelecionado.ciclo_dias))
+        : null;
+    const dataBaseInicial = dadosForm.dataPlantio || hoje;
+    const previsaoInicial = cicloInicial && /^\d{4}-\d{2}-\d{2}$/.test(dataBaseInicial)
+        ? formatarData(somarDiasPlantio(dataBaseInicial, cicloInicial))
+        : "";
+    const cicloTextoInicial = produtoSelecionado
+        ? (cicloInicial ? cicloInicial + " dias" : "Sem ciclo cadastrado")
+        : "";
 %>
 
 <main class="painel-main">
@@ -40,44 +72,97 @@
         <div class="painel-card">
             <div class="painel-card-icone"><i class="fa-solid fa-seedling"></i></div>
             <div class="painel-card-info">
-                <span>Germinação</span>
-                <strong><%= formatarNumero(resumo.germinacao || 0, 0) %></strong>
-                <small>Em fase inicial</small>
+                <span>Em progresso</span>
+                <strong><%= formatarNumero(resumo.em_progresso || 0, 0) %></strong>
+                <small>Ainda não colhidos</small>
             </div>
         </div>
 
         <div class="painel-card">
             <div class="painel-card-icone"><i class="fa-solid fa-arrow-trend-up"></i></div>
             <div class="painel-card-info">
-                <span>Em crescimento</span>
-                <strong><%= formatarNumero(resumo.crescimento || 0, 0) %></strong>
-                <small>Em desenvolvimento</small>
+                <span>Prontos para colheita</span>
+                <strong><%= formatarNumero(resumo.prontos || 0, 0) %></strong>
+                <small>Previsão já atingida</small>
             </div>
         </div>
 
         <div class="painel-card">
             <div class="painel-card-icone"><i class="fa-solid fa-check"></i></div>
             <div class="painel-card-info">
-                <span>Prontos para colheita</span>
-                <strong><%= formatarNumero(resumo.colheita || 0, 0) %></strong>
-                <small>Podem ser colhidos</small>
+                <span>Colhidos</span>
+                <strong><%= formatarNumero(resumo.colhidos || 0, 0) %></strong>
+                <small>Colheita registrada</small>
             </div>
         </div>
     </section>
 
-    <form action="/plantio" method="POST" class="painel-form">
+    <% if (listaProdutos.length === 0) { %>
+        <div class="painel-alerta aviso" role="alert">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span>
+                Nenhum produto ativo cadastrado no estoque. Cadastre um produto com cultura, variedade e ciclo
+                antes de registrar o plantio.
+                <a href="/cadastro-produto">Cadastrar produto</a>
+            </span>
+        </div>
+    <% } %>
+
+    <form action="<%= editando ? '/plantio/' + dadosForm.id + '/editar' : '/plantio' %>" method="POST" class="painel-form" id="form-plantio">
         <div class="painel-form-titulo">
-            <i class="fa-solid fa-plus"></i>
+            <i class="fa-solid <%= editando ? 'fa-pen' : 'fa-plus' %>"></i>
             <div>
-                <h2>Registrar plantio</h2>
-                <p>Informe a cultura, a área e a data do plantio.</p>
+                <h2><%= editando ? 'Editar plantio' : 'Registrar plantio' %></h2>
+                <p>
+                    <%= editando
+                        ? 'Altere os dados do plantio. A previsão de colheita é recalculada ao salvar.'
+                        : 'Selecione um produto do estoque, informe a área e a data do plantio. Ele começará em progresso.' %>
+                </p>
+            </div>
+        </div>
+
+        <div class="painel-dica">
+            <i class="fa-solid fa-lightbulb"></i>
+            <div>
+                <strong>Cultura, variedade e ciclo vêm do estoque</strong>
+                <p>
+                    Só é possível plantar produtos já cadastrados. A previsão de colheita é uma estimativa
+                    calculada com a data do plantio mais o ciclo do produto, quando o ciclo estiver cadastrado.
+                    O plantio fica em progresso e só passa para "Colhido" quando você informar a data real
+                    da colheita.
+                </p>
             </div>
         </div>
 
         <div class="form-grade">
             <div class="form-grupo">
-                <label for="cultura">Cultura / variedade *</label>
-                <input type="text" id="cultura" name="cultura" maxlength="150" required value="<%= dadosForm.cultura || '' %>" placeholder="Ex: Milho safrinha">
+                <label for="cultura-plantio">Cultura *</label>
+                <select id="cultura-plantio" <%= listaProdutos.length === 0 ? 'disabled' : '' %>>
+                    <option value="">Selecione a cultura</option>
+                    <% culturas.forEach(function (cultura) { %>
+                        <option value="<%= cultura %>" <%= dadosForm.cultura === cultura ? 'selected' : '' %>><%= cultura %></option>
+                    <% }); %>
+                </select>
+                <small>Culturas disponíveis nos produtos ativos do seu estoque.</small>
+            </div>
+
+            <div class="form-grupo">
+                <label for="variedade-plantio">Variedade *</label>
+                <select id="variedade-plantio" name="idProduto" required <%= listaProdutos.length === 0 ? 'disabled' : '' %>>
+                    <option value="">Selecione a cultura primeiro</option>
+                    <% listaProdutos.forEach(function (produto) { %>
+                        <option
+                            value="<%= produto.id_produto %>"
+                            data-cultura="<%= produto.nome %>"
+                            data-variedade="<%= produto.variedade || '' %>"
+                            data-ciclo="<%= produto.ciclo_dias !== null && produto.ciclo_dias !== undefined ? produto.ciclo_dias : '' %>"
+                            <%= String(dadosForm.idProduto || '') === String(produto.id_produto) ? 'selected' : '' %>
+                        >
+                            <%= produto.variedade || 'Variedade padrão' %> — estoque: <%= formatarQuantidade(produto.estoque) %> <%= produto.unidade || 'kg' %>
+                        </option>
+                    <% }); %>
+                </select>
+                <small>A variedade é vinculada ao produto escolhido no estoque.</small>
             </div>
 
             <div class="form-grupo">
@@ -91,12 +176,45 @@
             </div>
 
             <div class="form-grupo">
-                <label for="status">Status *</label>
-                <select id="status" name="status" required>
-                    <% statusOpcoes.forEach(function (opcao) { %>
-                        <option value="<%= opcao.valor %>" <%= (dadosForm.status || 'germinacao') === opcao.valor ? 'selected' : '' %>><%= opcao.rotulo %></option>
-                    <% }); %>
-                </select>
+                <label for="<%= editando ? 'status' : 'status-visual' %>">Status *</label>
+                <% if (editando) { %>
+                    <select id="status" name="status" required>
+                        <% statusOpcoes.forEach(function (opcao) { %>
+                            <option value="<%= opcao.valor %>" <%= (dadosForm.status || 'em_progresso') === opcao.valor ? 'selected' : '' %>><%= opcao.rotulo %></option>
+                        <% }); %>
+                    </select>
+                    <small>O plantio fica em progresso até você registrar a colheita.</small>
+                <% } else { %>
+                    <input type="text" id="status-visual" class="painel-campo-calculado" readonly value="Em progresso">
+                    <input type="hidden" id="status" name="status" value="em_progresso">
+                    <small>Todo plantio começa em progresso. Ao colher, use a ação "Colher" na lista.</small>
+                <% } %>
+            </div>
+
+            <div class="form-grupo" id="grupo-data-colheita" <%= (dadosForm.status || 'em_progresso') === 'colhido' ? '' : 'hidden' %>>
+                <label for="dataColheita">Data da colheita *</label>
+                <input type="date" id="dataColheita" name="dataColheita" value="<%= dadosForm.dataColheita || '' %>">
+                <small>Informe a data real da colheita. Ela deve ser posterior à data do plantio.</small>
+            </div>
+
+            <div class="form-grupo">
+                <label for="ciclo-plantio">Ciclo do produto</label>
+                <input type="text" id="ciclo-plantio" class="painel-campo-calculado" readonly value="<%= cicloTextoInicial %>">
+                <small>Dias entre o plantio e a colheita, conforme o cadastro do produto.</small>
+            </div>
+
+            <div class="form-grupo largo">
+                <label for="previsao-colheita">Previsão de colheita</label>
+                <input type="text" id="previsao-colheita" class="painel-campo-calculado" readonly value="<%= previsaoInicial %>">
+                <small id="aviso-ciclo">
+                    <% if (produtoSelecionado && !cicloInicial) { %>
+                        Este produto não possui ciclo cadastrado; não é possível estimar a colheita.
+                    <% } else if (!produtoSelecionado) { %>
+                        Selecione um produto com ciclo cadastrado para gerar a previsão.
+                    <% } else { %>
+                        Previsão automática (data do plantio + ciclo). É apenas uma estimativa, não uma garantia de colheita.
+                    <% } %>
+                </small>
             </div>
 
             <div class="form-grupo largo">
@@ -106,13 +224,13 @@
         </div>
 
         <div class="form-acoes">
-            <button type="reset" class="painel-btn-secundario">
-                <i class="fa-solid fa-eraser"></i>
-                Limpar campos
-            </button>
-            <button type="submit" class="painel-btn">
+            <a href="/plantio" class="painel-btn-secundario">
+                <i class="fa-solid fa-xmark"></i>
+                <%= editando ? 'Cancelar edição' : 'Cancelar' %>
+            </a>
+            <button type="submit" class="painel-btn" <%= listaProdutos.length === 0 ? 'disabled' : '' %>>
                 <i class="fa-solid fa-check"></i>
-                Salvar plantio
+                <%= editando ? 'Salvar alterações' : 'Salvar plantio' %>
             </button>
         </div>
     </form>
@@ -137,7 +255,7 @@
             <div class="painel-filtros-grade">
                 <div class="form-grupo">
                     <label for="filtro-q">Buscar</label>
-                    <input type="search" id="filtro-q" name="q" value="<%= filtros.q || '' %>" placeholder="Cultura, área ou observação...">
+                    <input type="search" id="filtro-q" name="q" value="<%= filtros.q || '' %>" placeholder="Cultura, variedade, área ou observação...">
                 </div>
 
                 <div class="form-grupo">
@@ -191,8 +309,11 @@
                     <thead>
                         <tr>
                             <th>Cultura</th>
+                            <th>Variedade</th>
                             <th>Área / Talhão</th>
                             <th>Data do plantio</th>
+                            <th>Previsão de colheita</th>
+                            <th>Colheita realizada</th>
                             <th>Status</th>
                             <th>Observações</th>
                             <th>Ações</th>
@@ -202,16 +323,43 @@
                         <% plantios.forEach(function (plantio) { %>
                             <tr>
                                 <td><%= plantio.cultura %></td>
+                                <td><%= plantio.variedade || '—' %></td>
                                 <td><%= plantio.area %></td>
                                 <td><%= formatarData(plantio.data_plantio) %></td>
                                 <td>
-                                    <span class="badge <%= plantio.status === 'colheita' ? 'badge-sucesso' : (plantio.status === 'crescimento' ? 'badge-alerta' : 'badge-neutro') %>">
+                                    <% if (plantio.data_colheita_estimada) { %>
+                                        <%= formatarData(plantio.data_colheita_estimada) %>
+                                        <br>
+                                        <small>previsão (<%= plantio.ciclo_dias %> dias)</small>
+                                    <% } else { %>
+                                        <small>Sem dados de ciclo</small>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (plantio.data_colheita) { %>
+                                        <%= formatarData(plantio.data_colheita) %>
+                                    <% } else { %>
+                                        <small>—</small>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <span class="badge <%= plantio.status === 'colhido' ? 'badge-sucesso' : 'badge-alerta' %>">
                                         <%= rotuloStatusPlantio(plantio.status) %>
                                     </span>
                                 </td>
                                 <td class="observacao"><%= plantio.observacoes || '-' %></td>
                                 <td>
                                     <div class="acoes">
+                                        <% if (plantio.status !== 'colhido') { %>
+                                            <a href="/plantio?editar=<%= plantio.id_plantio %>&colher=1" class="painel-btn painel-btn-mini">
+                                                <i class="fa-solid fa-seedling"></i>
+                                                Colher
+                                            </a>
+                                        <% } %>
+                                        <a href="/plantio?editar=<%= plantio.id_plantio %>" class="painel-btn-secundario painel-btn-mini">
+                                            <i class="fa-solid fa-pen"></i>
+                                            Editar
+                                        </a>
                                         <form action="/plantio/<%= plantio.id_plantio %>/excluir" method="POST" data-confirmar="Excluir este plantio?">
                                             <button type="submit" class="painel-btn-perigo painel-btn-mini">
                                                 <i class="fa-solid fa-trash"></i>
@@ -229,6 +377,6 @@
     </section>
 </main>
 
-<%- include('partials/scripts', { scripts: [] }) %>
+<%- include('partials/scripts', { scripts: ['/js/plantio.js'] }) %>
 </body>
 </html>

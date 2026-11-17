@@ -15,7 +15,11 @@ router.get("/api/produtos", async (req, res) => {
             preco: Number(produto.preco || 0),
             unidade: produto.unidade,
             estoque: Number(produto.estoque || 0),
-            categoria: produto.categoria
+            categoria: produto.categoria,
+            variedade: produto.variedade || null,
+            ciclo_dias: produto.ciclo_dias === null || produto.ciclo_dias === undefined
+                ? null
+                : Number(produto.ciclo_dias)
         }))
     });
 });
@@ -40,7 +44,11 @@ router.get("/api/produtos/:id", async (req, res) => {
             preco: Number(produto.preco || 0),
             unidade: produto.unidade,
             estoque: Number(produto.estoque || 0),
-            categoria: produto.categoria
+            categoria: produto.categoria,
+            variedade: produto.variedade || null,
+            ciclo_dias: produto.ciclo_dias === null || produto.ciclo_dias === undefined
+                ? null
+                : Number(produto.ciclo_dias)
         }
     });
 });

@@ -58,9 +58,8 @@ const MOTIVOS_PERDA = [
 ];
 
 const STATUS_PLANTIO = [
-    { valor: "germinacao", rotulo: "Germinação" },
-    { valor: "crescimento", rotulo: "Em crescimento" },
-    { valor: "colheita", rotulo: "Pronto para colheita" }
+    { valor: "em_progresso", rotulo: "Em progresso" },
+    { valor: "colhido", rotulo: "Colhido" }
 ];
 
 module.exports = {

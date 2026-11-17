@@ -60,6 +60,9 @@ router.post("/cadastro-produto", async (req, res) => {
     const descricao = validation.texto(req.body.descricao, 255);
     const unidade = validation.texto(req.body.unidade, 30) || "kg";
     const categoria = validation.texto(req.body.categoria, 100) || "Outros";
+    const variedade = validation.texto(req.body.variedade, 100);
+    const cicloDiasTexto = validation.texto(req.body.ciclo_dias, 10);
+    const cicloDias = validation.inteiro(req.body.ciclo_dias);
     const preco = validation.numero(req.body.preco);
     const estoque = validation.numero(req.body.estoque);
     const imagem = normalizarImagem(req.body.imagem || req.body.imagemLink);
@@ -74,6 +77,8 @@ router.post("/cadastro-produto", async (req, res) => {
         descricao,
         unidade,
         categoria,
+        variedade,
+        ciclo_dias: cicloDiasTexto,
         preco: preco === null ? "" : preco,
         estoque: estoque === null ? "" : estoque,
         imagem: imagem.valor || null
@@ -101,6 +106,12 @@ router.post("/cadastro-produto", async (req, res) => {
         return renderizarComErro("Informe um estoque válido (maior ou igual a zero).");
     }
 
+    if (cicloDiasTexto && (cicloDias === null || cicloDias <= 0 || cicloDias > 3650)) {
+        return renderizarComErro(
+            "Informe o ciclo até a colheita em dias (entre 1 e 3650) ou deixe o campo em branco."
+        );
+    }
+
     if (imagem.erro) {
         return renderizarComErro(imagem.erro);
     }
@@ -122,6 +133,8 @@ router.post("/cadastro-produto", async (req, res) => {
         descricao,
         unidade,
         categoria,
+        variedade: variedade || null,
+        ciclo_dias: cicloDiasTexto ? cicloDias : null,
         preco,
         estoque,
         imagem: imagemFinal

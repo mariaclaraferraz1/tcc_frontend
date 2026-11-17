@@ -102,7 +102,7 @@
             <div class="form-grupo">
                 <label for="dataPlantio">Data do plantio <span class="opcional">(opcional)</span></label>
                 <input type="date" id="dataPlantio" name="dataPlantio" value="<%= dadosForm.dataPlantio || '' %>">
-                <small>Não pode ser posterior à data da colheita.</small>
+                <small>Deve ser anterior à data da colheita (não pode ser no mesmo dia).</small>
             </div>
 
             <div class="form-grupo largo">

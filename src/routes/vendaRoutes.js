@@ -4,7 +4,7 @@ const produtoModel = require("../models/produtoModel");
 const clienteModel = require("../models/clienteModel");
 const { comTransacao, buscarUm } = require("../config/db");
 const validation = require("../utils/validation");
-const { arredondar, hojeISO } = require("../utils/format");
+const { arredondar, formatarQuantidade, hojeISO } = require("../utils/format");
 const { filtrosBasicos } = require("./_helpers");
 const { FORMAS_PAGAMENTO } = require("../config/constantes");
 
@@ -142,8 +142,37 @@ router.post("/vendas", async (req, res) => {
 
             produtoVendido = linhas[0];
 
+            const estoqueDisponivel = Number(produtoVendido.estoque) || 0;
+
+            if (quantidade > estoqueDisponivel) {
+                const erro = new Error(
+                    `Estoque insuficiente para ${produtoVendido.nome}. Disponível: ` +
+                    `${formatarQuantidade(estoqueDisponivel)} ${produtoVendido.unidade || "kg"}.`
+                );
+                erro.status = 400;
+                throw erro;
+            }
+
             const precoUnitario = arredondar(produtoVendido.preco || 0);
             const valorTotal = arredondar(quantidade * precoUnitario);
+
+            // A condição de estoque na atualização impede que duas vendas
+            // simultâneas deixem o estoque negativo, mesmo com o FOR UPDATE.
+            const [atualizacao] = await conexao.execute(
+                `UPDATE produtos
+                 SET estoque = estoque - ?
+                 WHERE id_produto = ? AND id_usuario = ? AND ativo = 1 AND estoque >= ?`,
+                [quantidade, idProduto, idUsuario, quantidade]
+            );
+
+            if (atualizacao.affectedRows === 0) {
+                const erro = new Error(
+                    `Estoque insuficiente para ${produtoVendido.nome}. Disponível: ` +
+                    `${formatarQuantidade(estoqueDisponivel)} ${produtoVendido.unidade || "kg"}.`
+                );
+                erro.status = 400;
+                throw erro;
+            }
 
             await conexao.execute(
                 `INSERT INTO vendas
@@ -162,13 +191,6 @@ router.post("/vendas", async (req, res) => {
                     observacoes || null,
                     dataVenda
                 ]
-            );
-
-            await conexao.execute(
-                `UPDATE produtos
-                 SET estoque = GREATEST(estoque - ?, 0)
-                 WHERE id_produto = ? AND id_usuario = ?`,
-                [quantidade, idProduto, idUsuario]
             );
         });
 

@@ -159,8 +159,11 @@ function formatarMes(valor) {
 
 function rotuloStatusPlantio(status) {
     const rotulos = {
-        germinacao: "Germinação",
-        crescimento: "Em crescimento",
+        em_progresso: "Em progresso",
+        colhido: "Colhido",
+        // Status legados mantidos apenas como fallback de leitura.
+        germinacao: "Em progresso",
+        crescimento: "Em progresso",
         colheita: "Pronto para colheita"
     };
 

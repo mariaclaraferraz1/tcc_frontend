@@ -11,9 +11,9 @@ function montarFiltros(idUsuario, filtros = {}) {
     const busca = String(filtros.q || "").trim();
 
     if (busca) {
-        condicoes.push("(nome LIKE ? OR descricao LIKE ? OR categoria LIKE ?)");
+        condicoes.push("(nome LIKE ? OR descricao LIKE ? OR categoria LIKE ? OR variedade LIKE ?)");
         const termo = `%${busca}%`;
-        parametros.push(termo, termo, termo);
+        parametros.push(termo, termo, termo, termo);
     }
 
     if (filtros.categoria) {
@@ -42,20 +42,21 @@ async function listar(idUsuario, filtros = {}) {
 
     return query(
         `SELECT id_produto, nome, descricao, unidade, preco, estoque,
-                categoria, imagem, ativo, criado_em, atualizado_em
+                categoria, variedade, ciclo_dias, imagem, ativo, criado_em, atualizado_em
          FROM produtos
          ${where}
-         ORDER BY nome ASC`,
+         ORDER BY nome ASC, variedade ASC`,
         parametros
     );
 }
 
 async function listarAtivos(idUsuario) {
     return query(
-        `SELECT id_produto, nome, descricao, unidade, preco, estoque, categoria
+        `SELECT id_produto, nome, descricao, unidade, preco, estoque, categoria,
+                variedade, ciclo_dias
          FROM produtos
          WHERE ativo = 1 AND id_usuario = ?
-         ORDER BY nome ASC`,
+         ORDER BY nome ASC, variedade ASC`,
         [idUsuario]
     );
 }
@@ -63,7 +64,7 @@ async function listarAtivos(idUsuario) {
 async function buscarPorId(idProduto, idUsuario) {
     return buscarUm(
         `SELECT id_produto, nome, descricao, unidade, preco, estoque,
-                categoria, imagem, ativo, criado_em, atualizado_em
+                categoria, variedade, ciclo_dias, imagem, ativo, criado_em, atualizado_em
          FROM produtos
          WHERE id_produto = ? AND id_usuario = ?
          LIMIT 1`,
@@ -74,8 +75,9 @@ async function buscarPorId(idProduto, idUsuario) {
 async function criar(idUsuario, dados) {
     const resultado = await executar(
         `INSERT INTO produtos
-            (id_usuario, nome, descricao, unidade, preco, estoque, categoria, imagem, ativo)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)`,
+            (id_usuario, nome, descricao, unidade, preco, estoque, categoria,
+             variedade, ciclo_dias, imagem, ativo)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)`,
         [
             idUsuario,
             dados.nome,
@@ -84,6 +86,8 @@ async function criar(idUsuario, dados) {
             dados.preco,
             dados.estoque,
             dados.categoria || "Outros",
+            dados.variedade || null,
+            dados.ciclo_dias || null,
             dados.imagem || null
         ]
     );
@@ -95,7 +99,7 @@ async function atualizar(idProduto, idUsuario, dados) {
     await executar(
         `UPDATE produtos
          SET nome = ?, descricao = ?, unidade = ?, preco = ?, estoque = ?,
-             categoria = ?, imagem = ?
+             categoria = ?, variedade = ?, ciclo_dias = ?, imagem = ?
          WHERE id_produto = ? AND id_usuario = ?`,
         [
             dados.nome,
@@ -104,6 +108,8 @@ async function atualizar(idProduto, idUsuario, dados) {
             dados.preco,
             dados.estoque,
             dados.categoria || "Outros",
+            dados.variedade || null,
+            dados.ciclo_dias || null,
             dados.imagem || null,
             idProduto,
             idUsuario

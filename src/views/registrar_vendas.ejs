@@ -59,7 +59,7 @@
                 <i class="fa-solid fa-lightbulb"></i>
                 <div>
                     <strong>Estoque e valor calculados pelo sistema</strong>
-                    <p>O total é calculado com o preço cadastrado no produto. Ao salvar, o estoque disponível é reduzido automaticamente.</p>
+                    <p>O total é calculado com o preço cadastrado no produto. A venda é bloqueada quando a quantidade ultrapassa o estoque disponível, que é reduzido automaticamente ao salvar.</p>
                 </div>
             </div>
 
@@ -106,6 +106,14 @@
                 <div class="form-grupo">
                     <label for="quantidade">Quantidade vendida *</label>
                     <input type="number" id="quantidade" name="quantidade" min="0.01" step="0.01" required value="<%= dadosForm.quantidade || '' %>" placeholder="Ex: 50" data-calcular-venda>
+                    <small id="estoque-disponivel">Selecione um produto para ver o estoque disponível.</small>
+                </div>
+
+                <div class="form-grupo largo" id="aviso-estoque-grupo" style="display: none;">
+                    <div class="painel-alerta aviso" role="alert">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <span id="aviso-estoque"></span>
+                    </div>
                 </div>
 
                 <div class="form-grupo">

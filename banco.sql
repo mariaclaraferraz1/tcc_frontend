@@ -79,6 +79,8 @@ CREATE TABLE IF NOT EXISTS produtos (
     preco DECIMAL(12,2) NOT NULL DEFAULT 0.00,
     estoque DECIMAL(12,2) NOT NULL DEFAULT 0.00,
     categoria VARCHAR(100) NOT NULL DEFAULT 'Outros',
+    variedade VARCHAR(100) DEFAULT NULL,
+    ciclo_dias INT DEFAULT NULL,
     imagem MEDIUMTEXT DEFAULT NULL,
     ativo TINYINT(1) NOT NULL DEFAULT 1,
     criado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -195,20 +197,29 @@ CREATE TABLE IF NOT EXISTS producao (
 CREATE TABLE IF NOT EXISTS plantio (
     id_plantio INT NOT NULL AUTO_INCREMENT,
     id_usuario INT NOT NULL,
+    id_produto INT DEFAULT NULL,
     cultura VARCHAR(150) NOT NULL,
+    variedade VARCHAR(100) DEFAULT NULL,
     area VARCHAR(150) NOT NULL,
     data_plantio DATE NOT NULL,
-    status ENUM('germinacao', 'crescimento', 'colheita') NOT NULL DEFAULT 'germinacao',
+    ciclo_dias INT DEFAULT NULL,
+    data_colheita_estimada DATE DEFAULT NULL,
+    data_colheita DATE DEFAULT NULL,
+    status ENUM('em_progresso', 'colhido') NOT NULL DEFAULT 'em_progresso',
     observacoes TEXT DEFAULT NULL,
     criado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     atualizado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id_plantio),
     KEY idx_plantio_usuario (id_usuario),
+    KEY idx_plantio_produto (id_produto),
     KEY idx_plantio_data (data_plantio),
     KEY idx_plantio_status (status),
     CONSTRAINT fk_plantio_usuario
         FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario)
-        ON DELETE CASCADE ON UPDATE CASCADE
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_plantio_produto
+        FOREIGN KEY (id_produto) REFERENCES produtos (id_produto)
+        ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ===========================================================================
@@ -320,6 +331,8 @@ CALL add_column_if_not_exists('produtos', 'unidade', 'VARCHAR(30) NOT NULL DEFAU
 CALL add_column_if_not_exists('produtos', 'preco', 'DECIMAL(12,2) NOT NULL DEFAULT 0.00');
 CALL add_column_if_not_exists('produtos', 'estoque', 'DECIMAL(12,2) NOT NULL DEFAULT 0.00');
 CALL add_column_if_not_exists('produtos', 'categoria', 'VARCHAR(100) NOT NULL DEFAULT ''Outros''');
+CALL add_column_if_not_exists('produtos', 'variedade', 'VARCHAR(100) DEFAULT NULL');
+CALL add_column_if_not_exists('produtos', 'ciclo_dias', 'INT DEFAULT NULL');
 CALL add_column_if_not_exists('produtos', 'imagem', 'MEDIUMTEXT DEFAULT NULL');
 CALL add_column_if_not_exists('produtos', 'ativo', 'TINYINT(1) NOT NULL DEFAULT 1');
 CALL add_column_if_not_exists('produtos', 'criado_em', 'DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP');
@@ -414,6 +427,31 @@ CALL add_index_if_not_exists('producao', 'idx_producao_produto', 'KEY `idx_produ
 CALL add_index_if_not_exists('producao', 'idx_producao_data', 'KEY `idx_producao_data` (`data_producao`)');
 
 -- ---------------------------------------------------------------------------
+-- plantio
+-- ---------------------------------------------------------------------------
+CALL add_column_if_not_exists('plantio', 'id_produto', 'INT DEFAULT NULL');
+CALL add_column_if_not_exists('plantio', 'variedade', 'VARCHAR(100) DEFAULT NULL');
+CALL add_column_if_not_exists('plantio', 'ciclo_dias', 'INT DEFAULT NULL');
+CALL add_column_if_not_exists('plantio', 'data_colheita_estimada', 'DATE DEFAULT NULL');
+CALL add_column_if_not_exists('plantio', 'data_colheita', 'DATE DEFAULT NULL');
+CALL add_index_if_not_exists('plantio', 'idx_plantio_produto', 'KEY `idx_plantio_produto` (`id_produto`)');
+
+-- O status passa a representar o andamento real: em progresso ou colhido.
+-- A alteração intermediária mantém os valores legados para que a conversão
+-- abaixo não trunque nenhum registro antes de serem normalizados.
+ALTER TABLE plantio
+    MODIFY COLUMN status ENUM('germinacao', 'crescimento', 'colheita', 'em_progresso', 'colhido')
+    NOT NULL DEFAULT 'em_progresso';
+
+UPDATE plantio
+SET status = 'em_progresso'
+WHERE status IN ('germinacao', 'crescimento', 'colheita');
+
+ALTER TABLE plantio
+    MODIFY COLUMN status ENUM('em_progresso', 'colhido')
+    NOT NULL DEFAULT 'em_progresso';
+
+-- ---------------------------------------------------------------------------
 -- Normalização de dados legados (não remove nada)
 -- ---------------------------------------------------------------------------
 -- Produtos antigos passam a pertencer ao usuário mais antigo da base.
@@ -475,6 +513,7 @@ CALL add_fk_if_not_exists('perdas', 'fk_perdas_produto', 'id_produto', 'produtos
 CALL add_fk_if_not_exists('producao', 'fk_producao_usuario', 'id_usuario', 'usuarios', 'id_usuario', 'CASCADE');
 CALL add_fk_if_not_exists('producao', 'fk_producao_produto', 'id_produto', 'produtos', 'id_produto', 'RESTRICT');
 CALL add_fk_if_not_exists('plantio', 'fk_plantio_usuario', 'id_usuario', 'usuarios', 'id_usuario', 'CASCADE');
+CALL add_fk_if_not_exists('plantio', 'fk_plantio_produto', 'id_produto', 'produtos', 'id_produto', 'SET NULL');
 CALL add_fk_if_not_exists('sessoes', 'fk_sessoes_usuario', 'id_usuario', 'usuarios', 'id_usuario', 'CASCADE');
 CALL add_fk_if_not_exists('clientes', 'fk_clientes_usuario', 'id_usuario', 'usuarios', 'id_usuario', 'CASCADE');
 

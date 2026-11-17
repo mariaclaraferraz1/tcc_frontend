@@ -52,8 +52,8 @@
                 <span>Plantios</span>
                 <strong><%= formatarNumero(resumoPlantio.total_registros || 0, 0) %></strong>
                 <small>
-                    <%= formatarNumero(resumoPlantio.germinacao || 0, 0) %> em germinação,
-                    <%= formatarNumero(resumoPlantio.crescimento || 0, 0) %> em crescimento
+                    <%= formatarNumero(resumoPlantio.em_progresso || 0, 0) %> em progresso,
+                    <%= formatarNumero(resumoPlantio.colhidos || 0, 0) %> colhidos
                 </small>
             </div>
         </div>
@@ -62,8 +62,8 @@
             <div class="painel-card-icone"><i class="fa-solid fa-check"></i></div>
             <div class="painel-card-info">
                 <span>Prontos para colheita</span>
-                <strong><%= formatarNumero(resumoPlantio.colheita || 0, 0) %></strong>
-                <small>Plantios no status de colheita</small>
+                <strong><%= formatarNumero(resumoPlantio.prontos || 0, 0) %></strong>
+                <small>Previsão já atingida</small>
             </div>
         </div>
     </section>
@@ -171,7 +171,7 @@
                                 <td><%= plantio.area %></td>
                                 <td><%= formatarData(plantio.data_plantio) %></td>
                                 <td>
-                                    <span class="badge <%= plantio.status === 'colheita' ? 'badge-sucesso' : (plantio.status === 'crescimento' ? 'badge-alerta' : 'badge-neutro') %>">
+                                    <span class="badge <%= plantio.status === 'colhido' ? 'badge-sucesso' : 'badge-alerta' %>">
                                         <%= rotuloStatusPlantio(plantio.status) %>
                                     </span>
                                 </td>

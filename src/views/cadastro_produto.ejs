@@ -44,8 +44,15 @@
 
         <div class="form-grade">
             <div class="form-grupo largo">
-                <label for="nome">Nome do produto *</label>
-                <input type="text" id="nome" name="nome" maxlength="100" required value="<%= dados.nome || '' %>" placeholder="Ex: Milho safrinha">
+                <label for="nome">Cultura / nome do produto *</label>
+                <input type="text" id="nome" name="nome" maxlength="100" required value="<%= dados.nome || '' %>" placeholder="Ex: Milho">
+                <small>Este nome aparece como a cultura disponível no plantio.</small>
+            </div>
+
+            <div class="form-grupo">
+                <label for="variedade">Variedade <span class="opcional">(opcional)</span></label>
+                <input type="text" id="variedade" name="variedade" maxlength="100" value="<%= dados.variedade || '' %>" placeholder="Ex: Safrinha">
+                <small>Usada para diferenciar produtos da mesma cultura no plantio.</small>
             </div>
 
             <div class="form-grupo">
@@ -76,6 +83,12 @@
                 <label for="estoque">Estoque disponível *</label>
                 <input type="number" id="estoque" name="estoque" min="0" step="0.01" required value="<%= dados.estoque !== undefined && dados.estoque !== null ? dados.estoque : '' %>" placeholder="0">
                 <small>O estoque é reduzido automaticamente quando uma venda é registrada.</small>
+            </div>
+
+            <div class="form-grupo">
+                <label for="ciclo_dias">Ciclo até a colheita (dias) <span class="opcional">(opcional)</span></label>
+                <input type="number" id="ciclo_dias" name="ciclo_dias" min="1" max="3650" step="1" value="<%= dados.ciclo_dias !== undefined && dados.ciclo_dias !== null ? dados.ciclo_dias : '' %>" placeholder="Ex: 120">
+                <small>Usado para calcular a previsão de colheita no plantio. Sem esse dado, a previsão não é gerada.</small>
             </div>
 
             <div class="form-grupo largo">

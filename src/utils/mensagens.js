@@ -135,6 +135,14 @@ const mensagens = {
         tipo: "sucesso",
         texto: "Plantio registrado com sucesso."
     },
+    "plantio-atualizado": {
+        tipo: "sucesso",
+        texto: "Plantio atualizado e previsão de colheita recalculada."
+    },
+    "plantio-colhido": {
+        tipo: "sucesso",
+        texto: "Colheita registrada: o plantio foi marcado como colhido."
+    },
     "plantio-removido": {
         tipo: "sucesso",
         texto: "Plantio excluído com sucesso."

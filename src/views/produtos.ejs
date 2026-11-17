@@ -146,6 +146,12 @@
                             <h3><%= produto.nome %></h3>
                             <p>
                                 <%= formatarMoeda(produto.preco) %> / <%= produto.unidade || 'kg' %>
+                                <% if (produto.variedade) { %>
+                                    · <%= produto.variedade %>
+                                <% } %>
+                                <% if (produto.ciclo_dias) { %>
+                                    · ciclo de <%= produto.ciclo_dias %> dias
+                                <% } %>
                                 <% if (produto.descricao) { %>
                                     · <%= produto.descricao %>
                                 <% } %>
